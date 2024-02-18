@@ -123,8 +123,8 @@ void CreateTestLevel()
 	Ptr<CMeshData> pMeshData = nullptr;
 	CGameObject* Plane = nullptr;
 
-	pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\untitled.fbx");
-	//pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\untitled.mdat");
+	//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\untitled.fbx");
+	pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\untitled.mdat");
 	Plane = pMeshData->Instantiate();
 	Plane->Transform()->SetRelativeScale(Vec3(0.3f, 0.3f, 0.3f));
 	//pObj->Animator3D()->CreateAnimation(L"Walk", 0, 2, 7);
@@ -171,8 +171,8 @@ void CreateTestLevel()
 		Ptr<CMeshData> HouseMeshData = nullptr;
 		CGameObject* pHouse = nullptr;
 
-		HouseMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\House.fbx");
-		//HouseMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\House.mdat");
+		//HouseMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\House.fbx");
+		HouseMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\House.mdat");
 		pHouse = HouseMeshData->Instantiate();
 		CPlayerScript* PS = Plane->GetScript<CPlayerScript>();
 		PS->SetEnemy(pHouse);
@@ -185,26 +185,26 @@ void CreateTestLevel()
 
 	}
 
-		Ptr<CMeshData> Meteo1MeshData = nullptr;
-		CGameObject* pMeteo1 = nullptr;
-		Meteo1MeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\04_meteo.fbx");
+		//Ptr<CMeshData> Meteo1MeshData = nullptr;
+		//CGameObject* pMeteo1 = nullptr;
+		//Meteo1MeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\04_meteo.fbx");
 
-		//for (int i = 0; i < 10; ++i)
-		//{
-		//MeteoMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\01_meteo.mdat");
-			pMeteo1 = Meteo1MeshData->Instantiate();
-			pMeteo1->AddComponent(new MeteoScript);
-		//MeteoScript * MS = pMeteo->GetScript<MeteoScript>();
-		//MS->begin();
-		//Vec3 MeteoPosition = MS->GetSpawnPosition();
-			pMeteo1->Transform()->SetRelativeScale(Vec3(100.0f, 100.0f, 100.0f));
-		//pMeteo->AddComponent(new CCollider2D);
-		//pMeteo->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-		//pMeteo->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
-			pMeteo1->SetName(L"Meteo");
-		//SpawnGameObject(pMeteo, Vec3(MeteoPosition), L"Monster");
-		SpawnGameObject(pMeteo1, Vec3(400, 600, 1200), L"Monster");
-		//}
+		////for (int i = 0; i < 10; ++i)
+		////{
+		////MeteoMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\01_meteo.mdat");
+		//	pMeteo1 = Meteo1MeshData->Instantiate();
+		//	pMeteo1->AddComponent(new MeteoScript);
+		////MeteoScript * MS = pMeteo->GetScript<MeteoScript>();
+		////MS->begin();
+		////Vec3 MeteoPosition = MS->GetSpawnPosition();
+		//	pMeteo1->Transform()->SetRelativeScale(Vec3(100.0f, 100.0f, 100.0f));
+		////pMeteo->AddComponent(new CCollider2D);
+		////pMeteo->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		////pMeteo->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
+		//	pMeteo1->SetName(L"Meteo");
+		////SpawnGameObject(pMeteo, Vec3(MeteoPosition), L"Monster");
+		//SpawnGameObject(pMeteo1, Vec3(400, 600, 1200), L"Monster");
+		////}
 
 
 		//Ptr<CMeshData> Meteo2MeshData = nullptr;
@@ -306,7 +306,7 @@ void CreateTestLevel()
 			Mercury->SetName(L"02_Mercury");
 			Mercury->AddComponent(new CTransform);
 
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\02_Mercury.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\02_Mercury.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\02_Mercury.mdat", L"meshdata\\02_Mercury.mdat");
 			Mercury = pMeshData->Instantiate();
 
@@ -319,7 +319,7 @@ void CreateTestLevel()
 		{	//陛己
 			CGameObject* Venus = new CGameObject;
 			Venus->SetName(L"03_Venus");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\03_Venus.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\03_Venus.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\03_Venus.mdat", L"meshdata\\03_Venus.mdat");
 			Venus = pMeshData->Instantiate();
 			Venus->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 20.f));
@@ -332,7 +332,7 @@ void CreateTestLevel()
 		{	//瘤备
 			CGameObject* Earth = new CGameObject;
 			Earth->SetName(L"04_Earth");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\04_Earth.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\04_Earth.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\04_Earth.mdat", L"meshdata\\04_Earth.mdat");
 			Earth = pMeshData->Instantiate();
 
@@ -354,7 +354,7 @@ void CreateTestLevel()
 		{	//拳己
 			CGameObject* Mars = new CGameObject;
 			Mars->SetName(L"05_Mars");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\05_Mars.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\05_Mars.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\05_Mars.mdat", L"meshdata\\05_Mars.mdat");
 			Mars = pMeshData->Instantiate();
 
@@ -367,7 +367,7 @@ void CreateTestLevel()
 		{	//格己
 			CGameObject* Jupiter = new CGameObject;
 			Jupiter->SetName(L"06_Jupiter");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\06_Jupiter.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\06_Jupiter.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\06_Jupiter.mdat", L"meshdata\\06_Jupiter.mdat");
 			Jupiter = pMeshData->Instantiate();
 
@@ -380,7 +380,7 @@ void CreateTestLevel()
 		{	//配己
 			CGameObject* Saturn = new CGameObject;
 			Saturn->SetName(L"07_Saturn");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\07_Saturn.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\07_Saturn.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\07_Saturn.mdat", L"meshdata\\07_Saturn.mdat");
 			Saturn = pMeshData->Instantiate();
 
@@ -393,7 +393,7 @@ void CreateTestLevel()
 		{	//配己 绊府
 			CGameObject* SaturnRing = new CGameObject;
 			SaturnRing->SetName(L"07_SaturnRing");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\07_SaturnRing.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\07_SaturnRing.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\07_SaturnRing.mdat", L"meshdata\\07_SaturnRing.mdat");
 			SaturnRing = pMeshData->Instantiate();
 
@@ -406,7 +406,7 @@ void CreateTestLevel()
 		{	//玫空己
 			CGameObject* Uranus = new CGameObject;
 			Uranus->SetName(L"08_Uranus");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\08_Uranus.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\08_Uranus.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\08_Uranus.mdat", L"meshdata\\08_Uranus.mdat");
 			Uranus = pMeshData->Instantiate();
 
@@ -419,7 +419,7 @@ void CreateTestLevel()
 		{	//玫空己 绊府
 			CGameObject* UranusRing = new CGameObject;
 			UranusRing->SetName(L"08_UranusRing");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\08_UranusRing.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\08_UranusRing.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\08_UranusRing.mdat", L"meshdata\\08_UranusRing.mdat");
 			UranusRing = pMeshData->Instantiate();
 
@@ -433,7 +433,7 @@ void CreateTestLevel()
 		{	//秦空己
 			CGameObject* Neptune = new CGameObject;
 			Neptune->SetName(L"09_Neptune");
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\09_Neptune.fbx");
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\09_Neptune.fbx");
 			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\09_Neptune.mdat", L"meshdata\\09_Neptune.mdat");
 			Neptune = pMeshData->Instantiate();
 
