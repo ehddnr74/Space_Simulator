@@ -18,8 +18,8 @@ private:
 
     Vec3        OffSet;
     Vec3        ShootDir;
+    Vec3        vFront;
 
-    bool        Shooting;
 
 public:
     virtual void begin() override;
@@ -37,8 +37,8 @@ public:
     void SetBullet(CGameObject* bullet) { Bullet = bullet; }
 
     void SetEnemy(CGameObject* enemy) { Enemy = enemy; }
+    Vec3 GetvFront() { return vFront; }
 
-    void SetShooting(bool SS) { Shooting = SS; }
 
 private:
     void Shoot();
