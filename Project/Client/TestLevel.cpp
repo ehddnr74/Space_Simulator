@@ -313,7 +313,7 @@ void CreateTestLevel()
 			Mercury->AddComponent(new CPlanet_Lotating);
 			Mercury->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 1.0f, 0.f));
 			Mercury->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
-			SpawnGameObject(Mercury, Vec3(5000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(Mercury, Vec3(0.f, 0.f, 5000.f), L"Default");
 		}
 
 		{	//금성
@@ -326,7 +326,7 @@ void CreateTestLevel()
 
 			Venus->AddComponent(new CPlanet_Lotating);
 			Venus->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(Venus, Vec3(7000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(Venus, Vec3(0.f, 0.f, 7000.f), L"Default");
 		}
 
 		{	//지구
@@ -339,7 +339,7 @@ void CreateTestLevel()
 			Earth->AddComponent(new CPlanet_Lotating);
 			Earth->Transform()->SetRelativeScale(Vec3(0.8f, 0.8f, 0.8f));
 			Earth->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(Earth, Vec3(9000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(Earth, Vec3(0.f, 0.f, 9000.f), L"Default");
 		}
 
 		{	//달
@@ -361,7 +361,7 @@ void CreateTestLevel()
 			Mars->AddComponent(new CPlanet_Lotating);
 			Mars->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 50.f));
 			Mars->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(Mars, Vec3(11000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(Mars, Vec3(0.f, 0.f, 11000.f), L"Default");
 		}
 
 		{	//목성
@@ -374,7 +374,7 @@ void CreateTestLevel()
 			Jupiter->AddComponent(new CPlanet_Lotating);
 			Jupiter->Transform()->SetRelativeScale(Vec3(5.f, 5.f, 5.f));
 			Jupiter->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(Jupiter, Vec3(20000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(Jupiter, Vec3(0.f, 0.f, 20000.f), L"Default");
 		}
 
 		{	//토성
@@ -387,7 +387,7 @@ void CreateTestLevel()
 			Saturn->AddComponent(new CPlanet_Lotating);
 			Saturn->Transform()->SetRelativeScale(Vec3(0.01f, 0.01f, 0.01f));
 			Saturn->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(Saturn, Vec3(30000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(Saturn, Vec3(0.f, 0.f, 30000.f), L"Default");
 		}
 
 		{	//토성 고리
@@ -400,7 +400,7 @@ void CreateTestLevel()
 			SaturnRing->AddComponent(new CPlanet_Lotating);
 			SaturnRing->Transform()->SetRelativeScale(Vec3(0.01f, 0.01f, 0.01f));
 			SaturnRing->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(SaturnRing, Vec3(30000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(SaturnRing, Vec3(0.f, 0.f, 30000.f), L"Default");
 		}
 
 		{	//천왕성
@@ -413,7 +413,7 @@ void CreateTestLevel()
 			Uranus->AddComponent(new CPlanet_Lotating);
 			Uranus->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
 			Uranus->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(Uranus, Vec3(40000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(Uranus, Vec3(0.f, 0.f, 40000.f), L"Default");
 		}
 
 		{	//천왕성 고리
@@ -427,7 +427,7 @@ void CreateTestLevel()
 			UranusRing->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
 			UranusRing->Transform()->SetRelativeRot(Vec3(-1.0f, 0.f, 0.f));
 			UranusRing->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(UranusRing, Vec3(40000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(UranusRing, Vec3(0.f, 0.f, 40000.f), L"Default");
 		}
 
 		{	//해왕성
@@ -440,7 +440,7 @@ void CreateTestLevel()
 			Neptune->AddComponent(new CPlanet_Lotating);
 			Neptune->Transform()->SetRelativeScale(Vec3(30.f, 30.f, 30.f));
 			Neptune->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(Neptune, Vec3(48000.f, 0.f, 0.f), L"Default");
+			SpawnGameObject(Neptune, Vec3(0.f, 0.f, 48000.f), L"Default");
 		}
 	}
 
