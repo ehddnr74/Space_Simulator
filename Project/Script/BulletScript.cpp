@@ -58,4 +58,9 @@ void BulletScript::BeginOverlap(CCollider2D* _Other)
 	{
 		DestroyObject(GetOwner());
 	}
+
+	if (L"Monster" == _Other->GetOwner()->GetName())
+	{
+		DestroyObject(GetOwner());
+	}
 }

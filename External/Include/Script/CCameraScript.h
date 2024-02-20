@@ -4,6 +4,7 @@ class CCameraScript
     : public CScript
 {
 private:
+    CGameObject* Empty;
     float       m_fCamSpeed;
 
     Vec3        OffSet;
