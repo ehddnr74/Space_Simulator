@@ -307,7 +307,7 @@ void CreateTestLevel()
 			Mercury->AddComponent(new CTransform);
 
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\02_Mercury.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\02_Mercury.mdat", L"meshdata\\02_Mercury.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\02_Mercury.mdat");
 			Mercury = pMeshData->Instantiate();
 
 			Mercury->AddComponent(new CPlanet_Lotating);
@@ -320,7 +320,8 @@ void CreateTestLevel()
 			CGameObject* Venus = new CGameObject;
 			Venus->SetName(L"03_Venus");
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\03_Venus.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\03_Venus.mdat", L"meshdata\\03_Venus.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\03_Venus.mdat");
+			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\03_Venus.mdat", L"meshdata\\03_Venus.mdat");
 			Venus = pMeshData->Instantiate();
 			Venus->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 20.f));
 
@@ -333,7 +334,8 @@ void CreateTestLevel()
 			CGameObject* Earth = new CGameObject;
 			Earth->SetName(L"04_Earth");
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\04_Earth.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\04_Earth.mdat", L"meshdata\\04_Earth.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\04_Earth.mdat");
+			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\04_Earth.mdat", L"meshdata\\04_Earth.mdat");
 			Earth = pMeshData->Instantiate();
 
 			Earth->AddComponent(new CPlanet_Lotating);
@@ -355,7 +357,8 @@ void CreateTestLevel()
 			CGameObject* Mars = new CGameObject;
 			Mars->SetName(L"05_Mars");
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\05_Mars.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\05_Mars.mdat", L"meshdata\\05_Mars.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\05_Mars.mdat");
+			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\05_Mars.mdat", L"meshdata\\05_Mars.mdat");
 			Mars = pMeshData->Instantiate();
 
 			Mars->AddComponent(new CPlanet_Lotating);
@@ -368,7 +371,8 @@ void CreateTestLevel()
 			CGameObject* Jupiter = new CGameObject;
 			Jupiter->SetName(L"06_Jupiter");
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\06_Jupiter.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\06_Jupiter.mdat", L"meshdata\\06_Jupiter.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\06_Jupiter.mdat");
+			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\06_Jupiter.mdat", L"meshdata\\06_Jupiter.mdat");
 			Jupiter = pMeshData->Instantiate();
 
 			Jupiter->AddComponent(new CPlanet_Lotating);
@@ -381,7 +385,8 @@ void CreateTestLevel()
 			CGameObject* Saturn = new CGameObject;
 			Saturn->SetName(L"07_Saturn");
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\07_Saturn.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\07_Saturn.mdat", L"meshdata\\07_Saturn.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\07_Saturn.mdat");
+			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\07_Saturn.mdat", L"meshdata\\07_Saturn.mdat");
 			Saturn = pMeshData->Instantiate();
 
 			Saturn->AddComponent(new CPlanet_Lotating);
@@ -394,7 +399,8 @@ void CreateTestLevel()
 			CGameObject* SaturnRing = new CGameObject;
 			SaturnRing->SetName(L"07_SaturnRing");
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\07_SaturnRing.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\07_SaturnRing.mdat", L"meshdata\\07_SaturnRing.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\07_SaturnRing.mdat");
+			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\07_SaturnRing.mdat", L"meshdata\\07_SaturnRing.mdat");
 			SaturnRing = pMeshData->Instantiate();
 
 			SaturnRing->AddComponent(new CPlanet_Lotating);
@@ -407,7 +413,8 @@ void CreateTestLevel()
 			CGameObject* Uranus = new CGameObject;
 			Uranus->SetName(L"08_Uranus");
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\08_Uranus.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\08_Uranus.mdat", L"meshdata\\08_Uranus.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\08_Uranus.mdat");
+			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\08_Uranus.mdat", L"meshdata\\08_Uranus.mdat");
 			Uranus = pMeshData->Instantiate();
 
 			Uranus->AddComponent(new CPlanet_Lotating);
@@ -420,7 +427,8 @@ void CreateTestLevel()
 			CGameObject* UranusRing = new CGameObject;
 			UranusRing->SetName(L"08_UranusRing");
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\08_UranusRing.fbx");
-			pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\08_UranusRing.mdat", L"meshdata\\08_UranusRing.mdat");
+			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\08_UranusRing.mdat");
+			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\08_UranusRing.mdat", L"meshdata\\08_UranusRing.mdat");
 			UranusRing = pMeshData->Instantiate();
 
 			UranusRing->AddComponent(new CPlanet_Lotating);

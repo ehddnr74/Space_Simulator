@@ -106,25 +106,39 @@ void CPlayerScript::Booster()
 
 void CPlayerScript::CreateBullet()
 {
-	Bullet = new CGameObject;
-	Bullet->SetName(L"Bullet");
-	Bullet->AddComponent(new CTransform);
-	Bullet->AddComponent(new CMeshRender);
+	//Bullet = new CGameObject;
+	//Bullet->SetName(L"Bullet");
+	//Bullet->AddComponent(new CTransform);
+	//Bullet->AddComponent(new CMeshRender);
+	//Bullet->AddComponent(new BulletScript);
+	//BulletScript* BS = Bullet->GetScript<BulletScript>();
+	//BS->SetPlayerScript(this);
+
+	////Bullet->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
+	////Bullet->Transform()->SetRelativeRot(Vec3(ParentRot));
+	//Bullet->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	//Bullet->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+
+
+	//Bullet->AddComponent(new CCollider2D);
+	//Bullet->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	//Bullet->Collider2D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+
+	//SpawnGameObject(Bullet, Vec3(0.f, 0.f, 0.f), L"Player");
+
+	Ptr<CMeshData> BulletMeshData = nullptr;
+	CGameObject* Bullet = nullptr;
+
+	BulletMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\08_Uranus.mdat");
+	Bullet = BulletMeshData->Instantiate();
 	Bullet->AddComponent(new BulletScript);
 	BulletScript* BS = Bullet->GetScript<BulletScript>();
 	BS->SetPlayerScript(this);
-
-	//Bullet->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
-	//Bullet->Transform()->SetRelativeRot(Vec3(ParentRot));
-	Bullet->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	Bullet->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-
-
 	Bullet->AddComponent(new CCollider2D);
 	Bullet->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	Bullet->Collider2D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-
-	SpawnGameObject(Bullet, Vec3(0.f, 0.f, 0.f), L"Player");
+	Bullet->Collider2D()->SetOffsetScale(Vec3(1000.f, 1000.f, 1000.f));
+	Bullet->SetName(L"Bullet");
+	SpawnGameObject(Bullet, Vec3(0.f, 0.f, 200.f), L"Player");
 }
 
 void CPlayerScript::BeginOverlap(CCollider2D* _Other)

@@ -55,7 +55,7 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
-	case (UINT)SCRIPT_TYPE::ULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
 		return new BulletScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -93,7 +93,7 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
-	case SCRIPT_TYPE::ULLETSCRIPT:
+	case SCRIPT_TYPE::BULLETSCRIPT:
 		return L"BulletScript";
 		break;
 
