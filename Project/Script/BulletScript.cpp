@@ -28,7 +28,7 @@ void BulletScript::begin()
 	ParentPos += OffsetX * 50.f;
 	ParentPos += ShootDir * 500.f;
 
-	Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
+	Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
 	Transform()->SetRelativeRot(Vec3(ParentRot));
 	Transform()->SetRelativePos(Vec3(ParentPos));
 }
