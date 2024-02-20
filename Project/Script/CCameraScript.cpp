@@ -40,12 +40,35 @@ void CCameraScript::begin()
 	//Vec3 MuzzlePos = Muzzle->Transform()->GetRelativePos();
 	//MuzzlePos = Transform()->GetRelativePos() + OffSet;
 
+
+	Empty = new CGameObject;
+	Empty->SetName(L"Empty");
+	Empty->AddComponent(new CTransform);
+	Empty->AddComponent(new CMeshRender);
+	Empty->Transform()->SetRelativeScale(Vec3(0.001f, 0.001f, 0.001f));
+	//Empty->Transform()->SetRelativePos()
+	Empty->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	Empty->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+
+	Empty->AddComponent(new CCollider2D);
+	Empty->Collider2D()->SetOffsetPos(Vec3(0.0f, 0.0f, 0.0f));
+	Empty->Collider2D()->SetOffsetScale(Vec3(200000.f, 200000.f, 200000.f));
+
+	SpawnGameObject(Empty, Vec3(0.f, 0.f, 300.f), L"Player");
+
 	
 }
 
 
 void CCameraScript::tick()
 {
+	vFront = Transform()->GetRelativeDir(DIR_TYPE::FRONT);
+	Vec3 EmptyPos = Empty->Transform()->GetRelativePos();
+	Vec3 vPos = Transform()->GetRelativePos();
+
+	EmptyPos = vPos + vFront * 300;
+	EmptyPos.y -= vUp.y * 70;
+	Empty->Transform()->SetRelativePos(EmptyPos);
 	Camera3DMove();
 }
 
@@ -57,7 +80,7 @@ void CCameraScript::Camera3DMove()
 	Vec3 vPos = Transform()->GetRelativePos();
 	Vec3 vRot = Transform()->GetRelativeRot();
 
-	vFront = Transform()->GetRelativeDir(DIR_TYPE::FRONT);
+	//vFront = Transform()->GetRelativeDir(DIR_TYPE::FRONT);
 	vUp = Transform()->GetRelativeDir(DIR_TYPE::UP);
 	vRight = Transform()->GetRelativeDir(DIR_TYPE::RIGHT);
 	Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos();

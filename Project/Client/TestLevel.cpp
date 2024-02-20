@@ -168,20 +168,26 @@ void CreateTestLevel()
 	pMainCam->AddChild(Plane);
 
 	{
-		Ptr<CMeshData> HouseMeshData = nullptr;
-		CGameObject* pHouse = nullptr;
+		Ptr<CMeshData> MonsterMeshData = nullptr;
+		CGameObject* Monster = nullptr;
 
-		//HouseMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\House.fbx");
-		HouseMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\House.mdat");
-		pHouse = HouseMeshData->Instantiate();
-		CPlayerScript* PS = Plane->GetScript<CPlayerScript>();
-		PS->SetEnemy(pHouse);
-		pHouse->Transform()->SetRelativeScale(Vec3(0.5f, 0.5f, 0.5f));
-		pHouse->AddComponent(new CCollider2D);
-		pHouse->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-		pHouse->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
-		pHouse->SetName(L"House");
-		SpawnGameObject(pHouse, Vec3(200.f, 300.f, 1000.f), L"Monster");
+		MonsterMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Enemy.fbx");
+		//HouseMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\test78678678.mdat");
+		Monster = MonsterMeshData->Instantiate();
+		Monster->AddComponent(new CMonsterScript);
+		CMonsterScript* MS = Monster->GetScript<CMonsterScript>();
+		CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
+		MS->SetPlayerScript(CPS);
+		//CPlayerScript* PS = Plane->GetScript<CPlayerScript>();
+		//PS->SetEnemy(pHouse);
+		Monster->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 50.f));
+		Monster->Transform()->SetRelativeRot(Vec3(50.f, 0.f, 0.f));
+		Monster->AddComponent(new CCollider2D);
+		Monster->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		Monster->Collider2D()->SetOffsetScale(Vec3(8.f, 8.f, 8.f));
+		Monster->SetName(L"Monster");
+		SpawnGameObject(Monster, Vec3(0.f, 0.f, 3000.f), L"Monster");
+		MS->begin();
 
 	}
 
