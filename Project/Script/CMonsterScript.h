@@ -9,10 +9,15 @@ class CMonsterScript :
 private:
     CPlayerScript* PlayerScript;
     CCameraScript* CameraScript;
+    CGameObject* Bullet;
 
     double MoveTime;
+    double ShotTime;
     int HP;
     int RandomPos;
+    bool Bulletbool;
+
+
 
 public:
     virtual void begin() override;
@@ -20,6 +25,10 @@ public:
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
     void SetPlayerScript(CPlayerScript* CS) { PlayerScript = CS; }
+
+    void CreateMonsterBullet();
+
+    void SetBulletBool(bool b) { Bulletbool = b; }
 
     CLONE(CMonsterScript);
 public:
