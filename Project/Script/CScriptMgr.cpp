@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CScriptMgr.h"
 
+#include "BlackholeScript.h"
 #include "BulletScript.h"
 #include "CCameraMoveScript.h"
 #include "CCameraScript.h"
@@ -14,6 +15,7 @@
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"BlackholeScript");
 	_vec.push_back(L"BulletScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CCameraScript");
@@ -28,6 +30,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
+	if (L"BlackholeScript" == _strScriptName)
+		return new BlackholeScript;
 	if (L"BulletScript" == _strScriptName)
 		return new BulletScript;
 	if (L"CCameraMoveScript" == _strScriptName)
@@ -55,7 +59,10 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
-	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::LACKHOLESCRIPT:
+		return new BlackholeScript;
+		break;
+	case (UINT)SCRIPT_TYPE::ULLETSCRIPT:
 		return new BulletScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -82,7 +89,7 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::TESTSCRIPT:
 		return new CTestScript;
 		break;
-	case (UINT)SCRIPT_TYPE::METEOSCRIPT:
+	case (UINT)SCRIPT_TYPE::ETEOSCRIPT:
 		return new MeteoScript;
 		break;
 	}
@@ -93,7 +100,11 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
-	case SCRIPT_TYPE::BULLETSCRIPT:
+	case SCRIPT_TYPE::LACKHOLESCRIPT:
+		return L"BlackholeScript";
+		break;
+
+	case SCRIPT_TYPE::ULLETSCRIPT:
 		return L"BulletScript";
 		break;
 
@@ -129,7 +140,7 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CTestScript";
 		break;
 
-	case SCRIPT_TYPE::METEOSCRIPT:
+	case SCRIPT_TYPE::ETEOSCRIPT:
 		return L"MeteoScript";
 		break;
 

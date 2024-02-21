@@ -1,6 +1,8 @@
 x64/
 x86/
 .vs/
+External/
+OutputFile/
 
 *.meta
 *.obj
