@@ -56,7 +56,7 @@ VS_OUT VS_Std3D(VS_IN _in)
 
 float4 PS_Std3D(VS_OUT _in) : SV_Target
 {
-    float4 vOutColor = float4(0.5f, 0.5f, 0.5f, 1.f);
+    float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
         
     float3 vViewNormal = _in.vViewNormal;
     

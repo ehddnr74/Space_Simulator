@@ -40,15 +40,15 @@ void CCollider2D::finaltick()
 		m_matCollider2D *= matWorld;
 	}
 	
-	// DebugShape 요청
-	Vec4 vColor = Vec4(0.f, 1.f, 0.f, 1.f);
-	if (0 < m_iCollisionCount)
-		vColor = Vec4(1.f, 0.f, 0.f, 1.f);
+	//// DebugShape 요청
+	//Vec4 vColor = Vec4(0.f, 1.f, 0.f, 1.f);
+	//if (0 < m_iCollisionCount)
+	//	vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
-	if (COLLIDER2D_TYPE::SPHERE == m_Shape)
-		DrawDebugSphere(m_matCollider2D, vColor, 0.f);
-	else
-		DrawDebugCube(m_matCollider2D, vColor, 0.f);
+	//if (COLLIDER2D_TYPE::SPHERE == m_Shape)
+	//	DrawDebugSphere(m_matCollider2D, vColor, 0.f);
+	//else
+	//	DrawDebugCube(m_matCollider2D, vColor, 0.f);
 }
 
 

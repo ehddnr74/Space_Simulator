@@ -15,6 +15,7 @@
 #include <Script\CCameraScript.h>
 #include <Script\CPlanet_Lotating.h>
 #include <Script\MeteoScript.h>
+#include <Script\BlackholeScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -30,12 +31,15 @@ void CreateTestLevel()
 
 	// Layer 이름설정
 	pCurLevel->GetLayer(0)->SetName(L"Default");
-	pCurLevel->GetLayer(6)->SetName(L"sun");
 	pCurLevel->GetLayer(1)->SetName(L"Tile");
 	pCurLevel->GetLayer(2)->SetName(L"Player");
 	pCurLevel->GetLayer(3)->SetName(L"Monster");
 	pCurLevel->GetLayer(4)->SetName(L"PlayerProjectile");
 	pCurLevel->GetLayer(5)->SetName(L"MonsterProjectile");
+	pCurLevel->GetLayer(6)->SetName(L"sun");
+	pCurLevel->GetLayer(7)->SetName(L"blackhole");
+	pCurLevel->GetLayer(8)->SetName(L"Volcanic");
+	pCurLevel->GetLayer(9)->SetName(L"Nar_Shaddaa");
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
 
@@ -92,8 +96,8 @@ void CreateTestLevel()
 	pLightObj->AddComponent(new CLight3D);
 
 	pLightObj->Transform()->SetRelativeRot(Vec3(XM_PI/* / 4.f*/, XM_PI /*/ 4.f*/, XM_PI));//0.f));
-	pLightObj->Light3D()->SetLightType(LIGHT_TYPE::POINT);
-	//pLightObj->Light3D()->SetLightType(LIGHT_TYPE::DIRECTIONAL);
+	//pLightObj->Light3D()->SetLightType(LIGHT_TYPE::POINT);
+	pLightObj->Light3D()->SetLightType(LIGHT_TYPE::DIRECTIONAL);
 	pLightObj->Light3D()->SetRadius(100000.f);
 	pLightObj->Light3D()->SetLightColor(Vec3(1.f, 1.f, 1.f));
 	pLightObj->Light3D()->SetLightAmbient(Vec3(0.f, 0.f, 0.f));
@@ -117,9 +121,6 @@ void CreateTestLevel()
 	// FBX Loading
 	// ============	
 
-
-
-
 	Ptr<CMeshData> pMeshData = nullptr;
 	CGameObject* Plane = nullptr;
 
@@ -137,7 +138,6 @@ void CreateTestLevel()
 
 	CCameraScript* CCS = pMainCam->GetScript<CCameraScript>();
 	CCS->SetTarget(Plane);
-
 
 	//Plane->AddComponent(new CCollider2D);
 	//Plane->Collider2D()->SetOffsetPos(Vec3(0.f, -300.f, 0.f));
@@ -252,33 +252,6 @@ void CreateTestLevel()
 	//	pHouse2->SetName(L"House2");
 	//	SpawnGameObject(pHouse2, Vec3(1500.f, 2500.f, 3000.f), L"Monster");
 	//}
-
-
-		//pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\Monster.mdat");		
-		//for (int i = 0; i < 10; ++i)
-		//{
-		//	pObj = pMeshData->Instantiate();
-		//	pObj->Animator3D()->CreateAnimation(L"Walk", 0, 2, 7);
-		//	pObj->Animator3D()->Play(L"Walk", true);
-		//	pObj->SetName(L"Monster");
-		//	SpawnGameObject(pObj, Vec3((i + 1) * 50.f, 200.f, 500.f), 0);
-		//}
-
-
-	//// LandScape Object
-	//CGameObject* pLandScape = new CGameObject;
-	//pLandScape->SetName(L"LandScape");
-
-	//pLandScape->AddComponent(new CTransform);
-	//pLandScape->AddComponent(new CLandScape);
-
-	//pLandScape->Transform()->SetRelativeScale(Vec3(500.f, 3000.f, 500.f));
-
-	//pLandScape->LandScape()->SetFace(64, 64);
-	//pLandScape->LandScape()->SetFrustumCheck(false);
-	////pLandScape->LandScape()->SetHeightMap(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\HeightMap_01.jpg"));
-
-	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 	
 	// ============
 	// SolarSystem Loading
@@ -458,7 +431,128 @@ void CreateTestLevel()
 		}
 	}
 
+	// ============
+	// BlackHole
+	// ============	
+	{
+		Ptr<CMeshData> BlackHoleMeshData = nullptr;
+
+		{	//blackhole
+			CGameObject* BlackHole = new CGameObject;
+			BlackHole->SetName(L"blackhole");
+			BlackHole->AddComponent(new CTransform);
+			BlackHole->AddComponent(new CMeshRender);
+			BlackHole->AddComponent(new CCollider2D);
+
+			BlackHole->AddComponent(new CPlanet_Lotating);
+			BlackHole->AddComponent(new BlackholeScript);
+
+			//블랙홀 스크립트 안에 플레이어 스크립트 정보를 넣어준다.
+			BlackholeScript* BS = BlackHole->GetScript<BlackholeScript>();
+			CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
+			BS->SetPlayerScript(CPS);
+
+			BlackHole->Transform()->SetRelativeScale(Vec3(1000.f, 1000.f, 1000.f));
+			BlackHole->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+			BlackHole->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+			BlackHole->Collider2D()->SetOffsetScale(Vec3(5.f, 5.f, 5.f));
+
+			BlackHole->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+			BlackHole->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			BlackHole->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"BlackholeMtrl"), 0);
+			SpawnGameObject(BlackHole, Vec3(0.f, 0.f, 55000.f), L"blackhole");
+		}
+
+		//blackhole ring
+		{
+			CGameObject* pBlackhole_Ring = nullptr;
+
+			BlackHoleMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\blackholerring.fbx");
+			//BlackHoleMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\House.mdat");
+			pBlackhole_Ring = BlackHoleMeshData->Instantiate();
+			pBlackhole_Ring->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
+			pBlackhole_Ring->Transform()->SetRelativeRot(Vec3(50.f, 0.f, 0.f));
+			pBlackhole_Ring->SetName(L"BlackHole_Ring");
+			SpawnGameObject(pBlackhole_Ring, Vec3(0.f, 0.f, 55000.f), L"Default");
+		}
+	}
+
+	// ============
+	// BossStage_Map
+	// ============	
+	{
+		Ptr<CMeshData> BossStageMeshData = nullptr;
+
+		{	//Volcanic
+			CGameObject* Volcanic = new CGameObject;
+			Volcanic->SetName(L"Volcanic");
+			Volcanic->AddComponent(new CTransform);
+			Volcanic->AddComponent(new CMeshRender);
+			Volcanic->AddComponent(new CPlanet_Lotating);
+
+			Volcanic->Transform()->SetRelativeScale(Vec3(2000.f, 2000.f, 2000.f));
+			Volcanic->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+			Volcanic->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+			Volcanic->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			Volcanic->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"VolcanicMtrl"), 0);
+			Volcanic->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Volcanic_01.png"));
+			SpawnGameObject(Volcanic, Vec3(-2000.f, 277.f, 1010000.f), L"Volcanic");
+		}
+
+		{	//Volcanic
+			CGameObject* Nar_Shaddaa = new CGameObject;
+			Nar_Shaddaa->SetName(L"Nar_Shaddaa");
+			Nar_Shaddaa->AddComponent(new CTransform);
+			Nar_Shaddaa->AddComponent(new CMeshRender);
+			Nar_Shaddaa->AddComponent(new CPlanet_Lotating);
+
+			Nar_Shaddaa->Transform()->SetRelativeScale(Vec3(2000.f, 2000.f, 2000.f));
+			Nar_Shaddaa->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+			Nar_Shaddaa->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+			Nar_Shaddaa->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			Nar_Shaddaa->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Nar_ShaddaaDMtrl"), 0);
+			Nar_Shaddaa->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Nar_Shaddaa01.png"));
+			SpawnGameObject(Nar_Shaddaa, Vec3(5000.f, 0.f, 1005000.f), L"Nar_Shaddaa");
+		}
+
+		//Boss
+		{
+			CGameObject* Boss = nullptr;
+
+			BossStageMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss_test1.fbx");
+			//BossStageMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\House.mdat");
+			Boss = BossStageMeshData->Instantiate();
+			Boss->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 50.f));
+			Boss->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+			//Boss->AddComponent(new CCollider2D);
+			//Boss->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+			//Boss->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
+			Boss->SetName(L"BlackHole_Ring");
+			SpawnGameObject(Boss, Vec3(0.f, 1000.f, 1003000), L"Default");
+		}
+
+		//CGameObject* Empty = new CGameObject;
+		//Empty->SetName(L"Empty");
+		//Empty->AddComponent(new CTransform);
+		//Empty->AddComponent(new CMeshRender);
+		//Empty->Transform()->SetRelativeScale(Vec3(0.001f, 0.001f, 0.001f));
+		////Empty->Transform()->SetRelativePos()
+		//Empty->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		//Empty->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+
+		//Empty->AddComponent(new CCollider2D);
+		//Empty->Collider2D()->SetOffsetPos(Vec3(15000.f, -80000.f, 180000.f));
+		//Empty->Collider2D()->SetOffsetScale(Vec3(400000.f, 400000.f, 400000.f));
+
+		//SpawnGameObject(Empty, Vec3(0.f, 0.f, 300.f), L"Player");
+	}
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"blackhole");
 }

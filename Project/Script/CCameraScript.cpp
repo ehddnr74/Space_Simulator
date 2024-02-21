@@ -51,8 +51,8 @@ void CCameraScript::begin()
 	Empty->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
 	Empty->AddComponent(new CCollider2D);
-	Empty->Collider2D()->SetOffsetPos(Vec3(0.0f, 0.0f, 0.0f));
-	Empty->Collider2D()->SetOffsetScale(Vec3(200000.f, 200000.f, 200000.f));
+	Empty->Collider2D()->SetOffsetPos(Vec3(15000.f, -80000.f, 180000.f));
+	Empty->Collider2D()->SetOffsetScale(Vec3(400000.f, 400000.f, 400000.f));
 
 	SpawnGameObject(Empty, Vec3(0.f, 0.f, 300.f), L"Player");
 

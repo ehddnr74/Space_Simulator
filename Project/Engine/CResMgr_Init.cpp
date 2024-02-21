@@ -1074,4 +1074,19 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"LandScapeShader"));
 	AddRes(L"LandScapeMtrl", pMtrl);
+
+	// BlackholeMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"BlackholeMtrl", pMtrl);
+
+	// VolcanicMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"VolcanicMtrl", pMtrl);
+
+	// Nar_ShaddaaDMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"Nar_ShaddaaDMtrl", pMtrl);
 }
