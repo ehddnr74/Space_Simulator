@@ -13,7 +13,7 @@ BulletScript::BulletScript()
 }
 
 BulletScript::~BulletScript()
-{
+{			
 }
 
 void BulletScript::begin()

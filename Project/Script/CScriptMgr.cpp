@@ -12,6 +12,7 @@
 #include "CPlayerScript.h"
 #include "CTestScript.h"
 #include "MeteoScript.h"
+#include "MonsterBulletScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
@@ -26,6 +27,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CTestScript");
 	_vec.push_back(L"MeteoScript");
+	_vec.push_back(L"MonsterBulletScript");
 }
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
@@ -52,6 +54,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CTestScript;
 	if (L"MeteoScript" == _strScriptName)
 		return new MeteoScript;
+	if (L"MonsterBulletScript" == _strScriptName)
+		return new MonsterBulletScript;
 	return nullptr;
 }
 
@@ -59,10 +63,10 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
-	case (UINT)SCRIPT_TYPE::LACKHOLESCRIPT:
+	case (UINT)SCRIPT_TYPE::BLACKHOLESCRIPT:
 		return new BlackholeScript;
 		break;
-	case (UINT)SCRIPT_TYPE::ULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
 		return new BulletScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -89,8 +93,11 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::TESTSCRIPT:
 		return new CTestScript;
 		break;
-	case (UINT)SCRIPT_TYPE::ETEOSCRIPT:
+	case (UINT)SCRIPT_TYPE::METEOSCRIPT:
 		return new MeteoScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MONSTERBULLETSCRIPT:
+		return new MonsterBulletScript;
 		break;
 	}
 	return nullptr;
@@ -100,11 +107,11 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
-	case SCRIPT_TYPE::LACKHOLESCRIPT:
+	case SCRIPT_TYPE::BLACKHOLESCRIPT:
 		return L"BlackholeScript";
 		break;
 
-	case SCRIPT_TYPE::ULLETSCRIPT:
+	case SCRIPT_TYPE::BULLETSCRIPT:
 		return L"BulletScript";
 		break;
 
@@ -140,8 +147,12 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CTestScript";
 		break;
 
-	case SCRIPT_TYPE::ETEOSCRIPT:
+	case SCRIPT_TYPE::METEOSCRIPT:
 		return L"MeteoScript";
+		break;
+
+	case SCRIPT_TYPE::MONSTERBULLETSCRIPT:
+		return L"MonsterBulletScript";
 		break;
 
 	}

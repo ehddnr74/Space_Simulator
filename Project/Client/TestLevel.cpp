@@ -61,18 +61,18 @@ void CreateTestLevel()
 	SpawnGameObject(pMainCam, Vec3(0.f, 0.f, 0.f), 0);
 	pMainCam->Transform()->SetMainCamera(pMainCam);
 
-	//// UI cameara
-	////CGameObject* pUICam = new CGameObject;
-	////pUICam->SetName(L"UICamera");
+	// UI cameara
+	CGameObject* pUICam = new CGameObject;
+	pUICam->SetName(L"UICamera");
 
-	////pUICam->AddComponent(new CTransform);
-	////pUICam->AddComponent(new CCamera);
+	pUICam->AddComponent(new CTransform);
+	pUICam->AddComponent(new CCamera);
 
-	////pUICam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
-	////pUICam->Camera()->SetCameraIndex(1);		// Sub 카메라로 지정
-	////pUICam->Camera()->SetLayerMask(31, true);	// 31번 레이어만 체크
+	pUICam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	pUICam->Camera()->SetCameraIndex(1);		// Sub 카메라로 지정
+	pUICam->Camera()->SetLayerMask(31, true);	// 31번 레이어만 체크
 
-	////SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
+	SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// SkyBox 추가
@@ -150,6 +150,19 @@ void CreateTestLevel()
 	SpawnGameObject(Plane, Vec3(53.f, -170.f, 500.f), L"Player");
 
 	//Plane->AddChild(pMainCam);
+
+		////레이저
+	 //   Ptr<CMeshData> LazerData = nullptr;
+	 //   CGameObject* Lazer = nullptr;
+
+		//Lazer->SetName(L"Lazer");
+		//Lazer->AddComponent(new CTransform);
+
+		//LazerData = CResMgr::GetInst()->LoadFBX(L"fbx\\asdfasdf.fbx");
+		//Lazer = LazerData->Instantiate();
+
+		//Lazer->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
+		//SpawnGameObject(Lazer, Vec3(0.f, 0.f, 1000.f), L"Default");
 
 
 	//CGameObject* Muzzle = new CGameObject;
@@ -547,6 +560,7 @@ void CreateTestLevel()
 			Nar_Shaddaa->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 			Nar_Shaddaa->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Nar_ShaddaaDMtrl"), 0);
 			Nar_Shaddaa->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Nar_Shaddaa01.png"));
+
 			SpawnGameObject(Nar_Shaddaa, Vec3(5000.f, 0.f, 1005000.f), L"Nar_Shaddaa");
 		}
 

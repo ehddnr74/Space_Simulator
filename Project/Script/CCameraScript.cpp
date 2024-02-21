@@ -112,7 +112,7 @@ void CCameraScript::Camera3DMove()
 
 	if (KEY_PRESSED(KEY::A))
 	{
-		vRot.z += DT * 1.0f;
+		vRot.y -= DT * 1.0f;
 		//vPos -= DT * vRight * fSpeed;
 		if (TarGetRot.z <= XM_PI / 20.f)
 		{
@@ -123,7 +123,7 @@ void CCameraScript::Camera3DMove()
 
 	if (KEY_PRESSED(KEY::D))
 	{
-		vRot.z -= DT * 1.0f;
+		vRot.y += DT * 1.0f;
 		//vPos += DT * vRight * fSpeed;
 
 		if (TarGetRot.z >= -(XM_PI / 20.f))
