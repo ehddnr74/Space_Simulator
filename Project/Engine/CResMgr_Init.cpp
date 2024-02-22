@@ -436,7 +436,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddInputLayout(DXGI_FORMAT_R32G32B32_FLOAT, "NORMAL", 0, 0);
 	AddInputLayout(DXGI_FORMAT_R32G32B32_FLOAT, "TANGENT", 0, 0);
 	AddInputLayout(DXGI_FORMAT_R32G32B32_FLOAT, "BINORMAL", 0, 0);
-	
+
 	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "BLENDWEIGHT", 0, 0);
 	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "BLENDINDICES", 0, 0);
 
@@ -675,7 +675,6 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->AddTexParam(TEX_0, "Output Texture");
 
 
-
 	// ============================
 	// Std3DShader
 	// RS_TYPE : CULL_BACK
@@ -690,8 +689,9 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreatePixelShader(L"shader\\std3d.fx", "PS_Std3D");
 
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
-	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetDSType(DS_TYPE::NO_WRITE);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
 
 	// Parameter	
 	pShader->AddScalarParam(FLOAT_0, "Spec Coeff");
@@ -713,7 +713,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreateVertexShader(L"shader\\skybox.fx", "VS_SkyBoxShader");
 	pShader->CreatePixelShader(L"shader\\skybox.fx", "PS_SkyBoxShader");
 
-	pShader->SetRSType(RS_TYPE::CULL_FRONT);	
+	pShader->SetRSType(RS_TYPE::CULL_FRONT);
 	pShader->SetDSType(DS_TYPE::LESS_EQUAL);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
 
@@ -735,7 +735,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreateVertexShader(L"shader\\decal.fx", "VS_Decal");
 	pShader->CreatePixelShader(L"shader\\decal.fx", "PS_Decal");
 
-	pShader->SetRSType(RS_TYPE::CULL_FRONT);	
+	pShader->SetRSType(RS_TYPE::CULL_FRONT);
 	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
 	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DECAL);
@@ -781,7 +781,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreateVertexShader(L"shader\\std3d_deferred.fx", "VS_Std3D_Deferred");
 	pShader->CreatePixelShader(L"shader\\std3d_deferred.fx", "PS_Std3D_Deferred");
 
-	pShader->SetRSType(RS_TYPE::CULL_BACK);	
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
 	pShader->SetDSType(DS_TYPE::LESS_EQUAL);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DEFERRED);
 
@@ -808,7 +808,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_LIGHT);
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
 	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
-	pShader->SetBSType(BS_TYPE::ONE_ONE);	
+	pShader->SetBSType(BS_TYPE::ONE_ONE);
 
 	AddRes(pShader->GetKey(), pShader);
 
@@ -833,7 +833,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 
-	
+
 	// =====================================
 	// MergeShader
 	// MRT              : SwapChain
@@ -926,6 +926,30 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	AddRes(pShader->GetKey(), pShader);
 
+	// ============================
+	// EarthShader
+	// RS_TYPE : CULL_BACK
+	// DS_TYPE : NO_WRITE
+	// BS_TYPE : DEFAULT
+	// Domain : MASK
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"EarthShader");
+
+	pShader->CreateVertexShader(L"shader\\earth.fx", "VS_Std3D");
+	pShader->CreatePixelShader(L"shader\\earth.fx", "PS_Std3D");
+
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::LESS);
+	//pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+
+	// Parameter	
+	pShader->AddScalarParam(FLOAT_0, "Spec Coeff");
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	pShader->AddTexParam(TEX_1, "Normal Texture");
+
+	AddRes(pShader->GetKey(), pShader);
 }
 
 void CResMgr::CreateDefaultComputeShader()
@@ -1048,7 +1072,7 @@ void CResMgr::CreateDefaultMaterial()
 	// DirLightMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"DirLightShader"));
-	AddRes(L"DirLightMtrl", pMtrl);	
+	AddRes(L"DirLightMtrl", pMtrl);
 
 	// PointLightMtrl
 	pMtrl = new CMaterial(true);
@@ -1058,7 +1082,7 @@ void CResMgr::CreateDefaultMaterial()
 	// MergeMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"MergeShader"));
-	AddRes(L"MergeMtrl", pMtrl);	
+	AddRes(L"MergeMtrl", pMtrl);
 
 	// ShadowMapMtrl
 	pMtrl = new CMaterial(true);
@@ -1068,7 +1092,7 @@ void CResMgr::CreateDefaultMaterial()
 	// TessMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"TessShader"));
-	AddRes(L"TessMtrl", pMtrl);	
+	AddRes(L"TessMtrl", pMtrl);
 
 	// LandScapeMtrl
 	pMtrl = new CMaterial(true);
@@ -1080,13 +1104,38 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
 	AddRes(L"BlackholeMtrl", pMtrl);
 
+	// SiriusMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"SiriusMtrl", pMtrl);
+
 	// VolcanicMtrl	
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
 	AddRes(L"VolcanicMtrl", pMtrl);
 
+	// Volcanic_CloudMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"Volcanic_CloudMtrl", pMtrl);
+
+	// Volcanic_CloudMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"Volcanic_LavaMtrl", pMtrl);
+
 	// Nar_ShaddaaDMtrl	
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
 	AddRes(L"Nar_ShaddaaDMtrl", pMtrl);
+
+	// EarthMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"EarthShader"));
+	AddRes(L"EarthMtrl", pMtrl);
+
+	// Earth_CloudMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"Earth_CloudMtrl", pMtrl);
 }

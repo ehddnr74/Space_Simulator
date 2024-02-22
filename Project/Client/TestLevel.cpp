@@ -39,7 +39,12 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(6)->SetName(L"sun");
 	pCurLevel->GetLayer(7)->SetName(L"blackhole");
 	pCurLevel->GetLayer(8)->SetName(L"Volcanic");
-	pCurLevel->GetLayer(9)->SetName(L"Nar_Shaddaa");
+	pCurLevel->GetLayer(9)->SetName(L"Volcanic_Cloud");
+	pCurLevel->GetLayer(10)->SetName(L"Volcanic_Lava");
+	pCurLevel->GetLayer(11)->SetName(L"Nar_Shaddaa");
+	pCurLevel->GetLayer(12)->SetName(L"Sirius");
+	pCurLevel->GetLayer(13)->SetName(L"Earth_Cloud");
+	pCurLevel->GetLayer(14)->SetName(L"Earth");
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
 
@@ -355,16 +360,38 @@ void CreateTestLevel()
 
 		{	//지구
 			CGameObject* Earth = new CGameObject;
-			Earth->SetName(L"04_Earth");
-			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\04_Earth.fbx");
-			pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\04_Earth.mdat");
-			//pMeshData = CResMgr::GetInst()->Load<CMeshData>(L"meshdata\\04_Earth.mdat", L"meshdata\\04_Earth.mdat");
-			Earth = pMeshData->Instantiate();
+			Earth->SetName(L"Earth");
 
+			Earth->AddComponent(new CTransform);
+			Earth->AddComponent(new CMeshRender);
 			Earth->AddComponent(new CPlanet_Lotating);
-			Earth->Transform()->SetRelativeScale(Vec3(0.8f, 0.8f, 0.8f));
+
+			Earth->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 			Earth->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-			SpawnGameObject(Earth, Vec3(0.f, 0.f, 9000.f), L"Default");
+
+			Earth->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			Earth->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"EarthMtrl"), 0);
+			Earth->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\solarsystem\\Earth.png"));
+
+			SpawnGameObject(Earth, Vec3(0.f, 0.f, 9000.f), L"Earth");
+		}
+
+		{	//지구 구름
+			CGameObject* Earth_Cloud = new CGameObject;
+			Earth_Cloud->SetName(L"Earth_Cloud");
+
+			Earth_Cloud->AddComponent(new CTransform);
+			Earth_Cloud->AddComponent(new CMeshRender);
+			Earth_Cloud->AddComponent(new CPlanet_Lotating);
+
+			Earth_Cloud->Transform()->SetRelativeScale(Vec3(105.f, 105.f, 105.f));
+			Earth_Cloud->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+			Earth_Cloud->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			Earth_Cloud->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Earth_CloudMtrl"), 0);
+			Earth_Cloud->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\solarsystem\\Earth_Cloud.png"));
+
+			SpawnGameObject(Earth_Cloud, Vec3(0.f, 0.f, 9000.f), L"Earth_Cloud");
 		}
 
 		{	//달
@@ -527,6 +554,24 @@ void CreateTestLevel()
 	{
 		Ptr<CMeshData> BossStageMeshData = nullptr;
 
+		{	//Sirius
+			CGameObject* Sirius = new CGameObject;
+			Sirius->SetName(L"Sirius");
+			Sirius->AddComponent(new CTransform);
+			Sirius->AddComponent(new CMeshRender);
+			Sirius->AddComponent(new CPlanet_Lotating);
+
+			Sirius->Transform()->SetRelativeScale(Vec3(5000.f, 5000.f, 5000.f));
+			Sirius->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+			Sirius->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+			Sirius->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			Sirius->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"SiriusMtrl"), 0);
+			Sirius->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Sirius.jpg"));
+			SpawnGameObject(Sirius, Vec3(-1000.f, 277.f, 1000000.f), L"Sirius");
+		}
+
 		{	//Volcanic
 			CGameObject* Volcanic = new CGameObject;
 			Volcanic->SetName(L"Volcanic");
@@ -562,6 +607,24 @@ void CreateTestLevel()
 			Nar_Shaddaa->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Nar_Shaddaa01.png"));
 
 			SpawnGameObject(Nar_Shaddaa, Vec3(5000.f, 0.f, 1005000.f), L"Nar_Shaddaa");
+		}
+
+		{	//Volcanic_Lava
+			CGameObject* Volcanic_Lava = new CGameObject;
+			Volcanic_Lava->SetName(L"Volcanic_Lava");
+			Volcanic_Lava->AddComponent(new CTransform);
+			Volcanic_Lava->AddComponent(new CMeshRender);
+			Volcanic_Lava->AddComponent(new CPlanet_Lotating);
+
+			Volcanic_Lava->Transform()->SetRelativeScale(Vec3(2005.f, 2005.f, 2005.f));
+			Volcanic_Lava->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+			Volcanic_Lava->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+			Volcanic_Lava->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			Volcanic_Lava->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Volcanic_LavaMtrl"), 0);
+			Volcanic_Lava->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Volcanic\\Volcanic_Lava.png"));
+			SpawnGameObject(Volcanic_Lava, Vec3(-2000.f, 277.f, 1010000.f), L"Volcanic_Lava");
 		}
 
 		//Boss

@@ -63,10 +63,10 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
-	case (UINT)SCRIPT_TYPE::BLACKHOLESCRIPT:
+	case (UINT)SCRIPT_TYPE::LACKHOLESCRIPT:
 		return new BlackholeScript;
 		break;
-	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::ULLETSCRIPT:
 		return new BulletScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -93,10 +93,10 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::TESTSCRIPT:
 		return new CTestScript;
 		break;
-	case (UINT)SCRIPT_TYPE::METEOSCRIPT:
+	case (UINT)SCRIPT_TYPE::ETEOSCRIPT:
 		return new MeteoScript;
 		break;
-	case (UINT)SCRIPT_TYPE::MONSTERBULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::ONSTERBULLETSCRIPT:
 		return new MonsterBulletScript;
 		break;
 	}
@@ -107,11 +107,11 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
-	case SCRIPT_TYPE::BLACKHOLESCRIPT:
+	case SCRIPT_TYPE::LACKHOLESCRIPT:
 		return L"BlackholeScript";
 		break;
 
-	case SCRIPT_TYPE::BULLETSCRIPT:
+	case SCRIPT_TYPE::ULLETSCRIPT:
 		return L"BulletScript";
 		break;
 
@@ -147,11 +147,11 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CTestScript";
 		break;
 
-	case SCRIPT_TYPE::METEOSCRIPT:
+	case SCRIPT_TYPE::ETEOSCRIPT:
 		return L"MeteoScript";
 		break;
 
-	case SCRIPT_TYPE::MONSTERBULLETSCRIPT:
+	case SCRIPT_TYPE::ONSTERBULLETSCRIPT:
 		return L"MonsterBulletScript";
 		break;
 

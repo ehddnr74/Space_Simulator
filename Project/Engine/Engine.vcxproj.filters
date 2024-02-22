@@ -667,5 +667,8 @@
     <FxCompile Include="copybone.fx">
       <Filter>Source\08. ShaderCode\Compute\CopyBone</Filter>
     </FxCompile>
+    <FxCompile Include="earth.fx">
+      <Filter>Source\08. ShaderCode\Render\3D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
