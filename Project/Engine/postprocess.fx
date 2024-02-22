@@ -44,9 +44,9 @@ float4 PS_GrayShader(VS_OUT _in) : SV_Target
 	
     float vAver = (vColor.r + vColor.g + vColor.b) / 3.f;
 
-    //vColor = float4(vAver, vAver, vAver, 1.f);
+    vColor = float4(vAver, 0.f, 0.f, 1.f);
 	
-    vColor = float4(1.f, 0.f, 0.f, 1.f);
+    //vColor = float4(1.f, 0.f, 0.f, 0.5f);
   
 	return vColor;
 }

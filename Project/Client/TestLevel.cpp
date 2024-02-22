@@ -45,6 +45,7 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(12)->SetName(L"Sirius");
 	pCurLevel->GetLayer(13)->SetName(L"Earth_Cloud");
 	pCurLevel->GetLayer(14)->SetName(L"Earth");
+	pCurLevel->GetLayer(15)->SetName(L"sun_postprocess");
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
 
@@ -327,6 +328,22 @@ void CreateTestLevel()
 			Sun->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\solarsystem\\sun.jpg"));
 
 			SpawnGameObject(Sun, Vec3(0.f, 0.f, 0.f), L"sun");
+		}
+
+		{	//태양 PostProcess
+			CGameObject* sun_postprocess = new CGameObject;
+			sun_postprocess->SetName(L"sun_postprocess");
+			sun_postprocess->AddComponent(new CTransform);
+			sun_postprocess->AddComponent(new CMeshRender);
+		
+			sun_postprocess->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+			sun_postprocess->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+		
+			sun_postprocess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+			sun_postprocess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DistortionMtrl"), 0);
+			sun_postprocess->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\noise\\noise_01.png"));
+		
+			SpawnGameObject(sun_postprocess, Vec3(0.f, 0.f, 2000.f), L"sun_postprocess");
 		}
 
 		{	//수성
@@ -657,6 +674,16 @@ void CreateTestLevel()
 		//Empty->Collider2D()->SetOffsetScale(Vec3(400000.f, 400000.f, 400000.f));
 
 		//SpawnGameObject(Empty, Vec3(0.f, 0.f, 300.f), L"Player");
+
+		{	//Test
+			CGameObject* pPostProcess = new CGameObject;
+			pPostProcess->SetName(L"PostProcess");
+			pPostProcess->AddComponent(new CTransform);
+			pPostProcess->AddComponent(new CMeshRender);
+			pPostProcess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+			pPostProcess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl"), 0);
+			SpawnGameObject(pPostProcess, Vec3(0.f, 0.f, 0.f), 0);
+		}
 	}
 
 	// 충돌 시킬 레이어 짝 지정

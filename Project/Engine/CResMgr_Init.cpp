@@ -940,9 +940,9 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreatePixelShader(L"shader\\earth.fx", "PS_Std3D");
 
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
-	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetDSType(DS_TYPE::NO_WRITE); //깊이테스트는 진행하지만 자신의 깊이를 남기지 않는다.
 	//pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT); //불투명한 물체 렌더 후 렌더.
 
 	// Parameter	
 	pShader->AddScalarParam(FLOAT_0, "Spec Coeff");
