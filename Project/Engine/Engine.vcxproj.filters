@@ -670,5 +670,8 @@
     <FxCompile Include="earth.fx">
       <Filter>Source\08. ShaderCode\Render\3D</Filter>
     </FxCompile>
+    <FxCompile Include="razer.fx">
+      <Filter>Source\08. ShaderCode\Render\3D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

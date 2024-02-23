@@ -57,6 +57,8 @@
     <ClInclude Include="MonsterBulletScript.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="BossScript.h" />
+    <ClInclude Include="BossBulletScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -104,5 +106,7 @@
     <ClCompile Include="MonsterBulletScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="BossScript.cpp" />
+    <ClCompile Include="BossBulletScript.cpp" />
   </ItemGroup>
 </Project>

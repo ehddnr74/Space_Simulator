@@ -950,6 +950,29 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->AddTexParam(TEX_1, "Normal Texture");
 
 	AddRes(pShader->GetKey(), pShader);
+	// ============================
+	// RazerShader
+	// RS_TYPE : CULL_BACK
+	// DS_TYPE : LESS
+	// BS_TYPE : DEFAULT
+	// Domain : MASK
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"RazerShader");
+
+	pShader->CreateVertexShader(L"shader\\razer.fx", "VS_Std3D");
+	pShader->CreatePixelShader(L"shader\\razer.fx", "PS_Std3D");
+
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+
+	// Parameter	
+	pShader->AddScalarParam(FLOAT_0, "Spec Coeff");
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	pShader->AddTexParam(TEX_1, "Normal Texture");
+
+	AddRes(pShader->GetKey(), pShader);
 }
 
 void CResMgr::CreateDefaultComputeShader()
@@ -1119,7 +1142,7 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
 	AddRes(L"Volcanic_CloudMtrl", pMtrl);
 
-	// Volcanic_CloudMtrl	
+	// Volcanic_Lava	
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
 	AddRes(L"Volcanic_LavaMtrl", pMtrl);
@@ -1138,4 +1161,9 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
 	AddRes(L"Earth_CloudMtrl", pMtrl);
+
+	// RazerMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"RazerShader"));
+	AddRes(L"RazerMtrl", pMtrl);
 }

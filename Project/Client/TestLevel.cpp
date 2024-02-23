@@ -16,6 +16,7 @@
 #include <Script\CPlanet_Lotating.h>
 #include <Script\MeteoScript.h>
 #include <Script\BlackholeScript.h>
+#include <Script\BossScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -46,6 +47,8 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(13)->SetName(L"Earth_Cloud");
 	pCurLevel->GetLayer(14)->SetName(L"Earth");
 	pCurLevel->GetLayer(15)->SetName(L"sun_postprocess");
+	pCurLevel->GetLayer(16)->SetName(L"Boss");
+	pCurLevel->GetLayer(17)->SetName(L"test");
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
 
@@ -311,6 +314,20 @@ void CreateTestLevel()
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
 
+		{	//razer test
+			CGameObject* test = new CGameObject;
+			test->SetName(L"test");
+			test->AddComponent(new CTransform);
+			test->AddComponent(new CMeshRender);
+
+			test->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 500.f));
+
+			test->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			test->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
+
+			SpawnGameObject(test, Vec3(0.f, 0.f, 2500.f), L"test");
+		}
+
 		{	//태양
 			CGameObject* Sun = new CGameObject;
 			Sun->SetName(L"sun");
@@ -330,21 +347,21 @@ void CreateTestLevel()
 			SpawnGameObject(Sun, Vec3(0.f, 0.f, 0.f), L"sun");
 		}
 
-		{	//태양 PostProcess
-			CGameObject* sun_postprocess = new CGameObject;
-			sun_postprocess->SetName(L"sun_postprocess");
-			sun_postprocess->AddComponent(new CTransform);
-			sun_postprocess->AddComponent(new CMeshRender);
-		
-			sun_postprocess->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
-			sun_postprocess->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
-		
-			sun_postprocess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-			sun_postprocess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DistortionMtrl"), 0);
-			sun_postprocess->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\noise\\noise_01.png"));
-		
-			SpawnGameObject(sun_postprocess, Vec3(0.f, 0.f, 2000.f), L"sun_postprocess");
-		}
+		//{	//태양 PostProcess
+		//	CGameObject* sun_postprocess = new CGameObject;
+		//	sun_postprocess->SetName(L"sun_postprocess");
+		//	sun_postprocess->AddComponent(new CTransform);
+		//	sun_postprocess->AddComponent(new CMeshRender);
+		//
+		//	sun_postprocess->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+		//	sun_postprocess->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+		//
+		//	sun_postprocess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+		//	sun_postprocess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DistortionMtrl"), 0);
+		//	sun_postprocess->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\noise\\noise_01.png"));
+		//
+		//	SpawnGameObject(sun_postprocess, Vec3(0.f, 0.f, 2000.f), L"sun_postprocess");
+		//}
 
 		{	//수성
 			CGameObject* Mercury = new CGameObject;
@@ -569,8 +586,6 @@ void CreateTestLevel()
 	// BossStage_Map
 	// ============	
 	{
-		Ptr<CMeshData> BossStageMeshData = nullptr;
-
 		{	//Sirius
 			CGameObject* Sirius = new CGameObject;
 			Sirius->SetName(L"Sirius");
@@ -586,7 +601,7 @@ void CreateTestLevel()
 			Sirius->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 			Sirius->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"SiriusMtrl"), 0);
 			Sirius->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Sirius.jpg"));
-			SpawnGameObject(Sirius, Vec3(-1000.f, 277.f, 1000000.f), L"Sirius");
+			SpawnGameObject(Sirius, Vec3(-16778.000f, 277.f, 992468.000f), L"Sirius");
 		}
 
 		{	//Volcanic
@@ -604,26 +619,8 @@ void CreateTestLevel()
 			Volcanic->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 			Volcanic->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"VolcanicMtrl"), 0);
 			Volcanic->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Volcanic_01.png"));
-			SpawnGameObject(Volcanic, Vec3(-2000.f, 277.f, 1010000.f), L"Volcanic");
-		}
 
-		{	//Volcanic
-			CGameObject* Nar_Shaddaa = new CGameObject;
-			Nar_Shaddaa->SetName(L"Nar_Shaddaa");
-			Nar_Shaddaa->AddComponent(new CTransform);
-			Nar_Shaddaa->AddComponent(new CMeshRender);
-			Nar_Shaddaa->AddComponent(new CPlanet_Lotating);
-
-			Nar_Shaddaa->Transform()->SetRelativeScale(Vec3(2000.f, 2000.f, 2000.f));
-			Nar_Shaddaa->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
-
-			Nar_Shaddaa->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-
-			Nar_Shaddaa->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-			Nar_Shaddaa->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Nar_ShaddaaDMtrl"), 0);
-			Nar_Shaddaa->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Nar_Shaddaa01.png"));
-
-			SpawnGameObject(Nar_Shaddaa, Vec3(5000.f, 0.f, 1005000.f), L"Nar_Shaddaa");
+			SpawnGameObject(Volcanic, Vec3(5000.f, 0.f, 1005000.f), L"Volcanic");
 		}
 
 		{	//Volcanic_Lava
@@ -641,23 +638,57 @@ void CreateTestLevel()
 			Volcanic_Lava->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 			Volcanic_Lava->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Volcanic_LavaMtrl"), 0);
 			Volcanic_Lava->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Volcanic\\Volcanic_Lava.png"));
-			SpawnGameObject(Volcanic_Lava, Vec3(-2000.f, 277.f, 1010000.f), L"Volcanic_Lava");
+
+			SpawnGameObject(Volcanic_Lava, Vec3(5000.f, 0.f, 1005000.f), L"Volcanic_Lava");
+		}
+
+		{	//Nar_Shaddaa
+			CGameObject* Nar_Shaddaa = new CGameObject;
+			Nar_Shaddaa->SetName(L"Nar_Shaddaa");
+			Nar_Shaddaa->AddComponent(new CTransform);
+			Nar_Shaddaa->AddComponent(new CMeshRender);
+			Nar_Shaddaa->AddComponent(new CPlanet_Lotating);
+
+			Nar_Shaddaa->Transform()->SetRelativeScale(Vec3(2000.f, 2000.f, 2000.f));
+			Nar_Shaddaa->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+			Nar_Shaddaa->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+			Nar_Shaddaa->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			Nar_Shaddaa->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Nar_ShaddaaDMtrl"), 0);
+			Nar_Shaddaa->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Nar_Shaddaa01.png"));
+
+			SpawnGameObject(Nar_Shaddaa, Vec3(0.0f, 400.000f, 1008815.000f), L"Nar_Shaddaa");
 		}
 
 		//Boss
 		{
+			Ptr<CMeshData> BossStageMeshData = nullptr;
 			CGameObject* Boss = nullptr;
 
-			BossStageMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss_test1.fbx");
+			BossStageMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss.fbx");
 			//BossStageMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\House.mdat");
 			Boss = BossStageMeshData->Instantiate();
+
+			Boss->AddComponent(new CCollider2D);
+			Boss->AddComponent(new BossScript);
+
+			BossScript* BS = Boss->GetScript<BossScript>();
+			CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
+			BS->SetPlayerScript(CPS);
+
 			Boss->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 50.f));
-			Boss->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
-			//Boss->AddComponent(new CCollider2D);
+
+
+
+			Boss->Transform()->SetRelativeRot(Vec3(144.2f, 51.559f, 43.7f));
+
 			//Boss->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
 			//Boss->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
-			Boss->SetName(L"BlackHole_Ring");
-			SpawnGameObject(Boss, Vec3(0.f, 1000.f, 1003000), L"Default");
+
+			Boss->SetName(L"Boss");
+			SpawnGameObject(Boss, Vec3(241.000f, -1457.000f, 1000452.000f), L"Boss");
+			//SpawnGameObject(Boss, Vec3(0.0f, 0.0f, 5000.f), L"Boss");
 		}
 
 		//CGameObject* Empty = new CGameObject;
@@ -675,15 +706,15 @@ void CreateTestLevel()
 
 		//SpawnGameObject(Empty, Vec3(0.f, 0.f, 300.f), L"Player");
 
-		{	//Test
-			CGameObject* pPostProcess = new CGameObject;
-			pPostProcess->SetName(L"PostProcess");
-			pPostProcess->AddComponent(new CTransform);
-			pPostProcess->AddComponent(new CMeshRender);
-			pPostProcess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-			pPostProcess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl"), 0);
-			SpawnGameObject(pPostProcess, Vec3(0.f, 0.f, 0.f), 0);
-		}
+		//{	// PostProcess Test 
+		//	CGameObject* pPostProcess = new CGameObject;
+		//	pPostProcess->SetName(L"PostProcess");
+		//	pPostProcess->AddComponent(new CTransform);
+		//	pPostProcess->AddComponent(new CMeshRender);
+		//	pPostProcess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+		//	pPostProcess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl"), 0);
+		//	SpawnGameObject(pPostProcess, Vec3(0.f, 0.f, 0.f), 0);
+		//}
 	}
 
 	// 충돌 시킬 레이어 짝 지정

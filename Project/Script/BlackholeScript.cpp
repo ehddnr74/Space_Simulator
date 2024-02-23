@@ -20,11 +20,16 @@ void BlackholeScript::begin()
 void BlackholeScript::tick()
 {
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+	Vec3 CameraRot = CameraScript->GetOwner()->Transform()->GetRelativeRot();
+
 
 	if (Tele_in)
 	{
-		CameraPos = Vec3(1637.662f, 1713.724f, 1005604.875f);
+		CameraPos = Vec3(23797.109f, -2210.932f, 990286.562f);
+		//CameraRot = Vec3(1.47715068f, 3.29867244f, 0.0349065848f);
 		CameraScript->GetOwner()->Transform()->SetRelativePos(CameraPos);
+		//CameraScript->GetOwner()->Transform()->SetRelativeRot(CameraRot);
+
 		Tele_in = false;
 	}
 }
