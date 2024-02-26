@@ -645,7 +645,8 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreateVertexShader(L"shader\\postprocess.fx", "VS_Distortion");
 	pShader->CreatePixelShader(L"shader\\postprocess.fx", "PS_Distortion");
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
-	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	//pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 
 	// Parameter
@@ -973,6 +974,30 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->AddTexParam(TEX_1, "Normal Texture");
 
 	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// BlackHoleShader
+	// RS_TYPE : CULL_BACK
+	// DS_TYPE : LESS
+	// BS_TYPE : DEFAULT
+	// Domain : MASK
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"BlackHoleShader");
+
+	pShader->CreateVertexShader(L"shader\\std3d.fx", "VS_Std3D");
+	pShader->CreatePixelShader(L"shader\\std3d.fx", "PS_Std3D");
+
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+
+	// Parameter	
+	pShader->AddScalarParam(FLOAT_0, "Spec Coeff");
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	pShader->AddTexParam(TEX_1, "Normal Texture");
+
+	AddRes(pShader->GetKey(), pShader);
 }
 
 void CResMgr::CreateDefaultComputeShader()
@@ -1124,8 +1149,18 @@ void CResMgr::CreateDefaultMaterial()
 
 	// BlackholeMtrl	
 	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"BlackHoleShader"));
 	AddRes(L"BlackholeMtrl", pMtrl);
+
+	// BlackholeRingMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"BlackholeRingMtrl", pMtrl);
+
+	// SiriusMtrl	
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	AddRes(L"sunMtrl", pMtrl);
 
 	// SiriusMtrl	
 	pMtrl = new CMaterial(true);
@@ -1149,7 +1184,7 @@ void CResMgr::CreateDefaultMaterial()
 
 	// Nar_ShaddaaDMtrl	
 	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3DShader"));
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"BlackHoleShader"));
 	AddRes(L"Nar_ShaddaaDMtrl", pMtrl);
 
 	// EarthMtrl	

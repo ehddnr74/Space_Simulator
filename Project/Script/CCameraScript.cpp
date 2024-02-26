@@ -6,8 +6,6 @@
 
 #include "CPlayerScript.h"
 
-#include "HitPostScript.h"
-
 CCameraScript::CCameraScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERASCRIPT)
 	, vFront(Vec3(0.f, 0.f, 0.f))
@@ -18,7 +16,7 @@ CCameraScript::CCameraScript()
 	, CameraPos(Vec3(0.f, 0.f, 0.f))
 	, PrevMousePos(Vec2(0.f, 0.f))
 	, OffSet(Vec3(0.f, 0.f, 0.f))
-	, HitPost(false)
+
 {
 }
 
@@ -29,10 +27,10 @@ CCameraScript::~CCameraScript()
 void CCameraScript::begin()
 {
 	//Vec3 vPos = Transform()->GetRelativePos();
-	
+
 	//Transform()->SetMainCamera(this->GetOwner());
 	Vec3 TarGetPos = m_Target->Transform()->GetRelativePos();
-	OffSet = Vec3(0.f,0.f,-500.f);
+	OffSet = Vec3(0.f, 0.f, -500.f);
 	//CameraPos = TarGetPos - CameraPos;
 	//Transform()->SetRelativePos(CameraPos);
 
@@ -42,7 +40,7 @@ void CCameraScript::begin()
 	//Vec3 MuzzlePos = Muzzle->Transform()->GetRelativePos();
 	//MuzzlePos = Transform()->GetRelativePos() + OffSet;
 
-
+	//우주선 collider
 	Empty = new CGameObject;
 	Empty->SetName(L"Empty");
 	Empty->AddComponent(new CTransform);
@@ -57,8 +55,6 @@ void CCameraScript::begin()
 	Empty->Collider2D()->SetOffsetScale(Vec3(200000.f, 200000.f, 200000.f));
 
 	SpawnGameObject(Empty, Vec3(0.f, 0.f, 300.f), L"Player");
-
-	
 }
 
 
@@ -148,28 +144,25 @@ void CCameraScript::Camera3DMove()
 		vRot.x -= DT * vMouseDir.y * 5.f;
 	}
 
-
-
-
 	if (m_Target != nullptr)
 	{
 		if (PlayerScript->GetBooster()) // 부스터가 켜져있는상태
 		{
 			vPos += DT * vFront * fSpeed * 2;
 
-			if (TarGetPos.z <= 550.f)
+			if (TarGetPos.z <= 230.f)
 			{
 
-				TarGetPos.z += 50.f * DT;
+				TarGetPos.z += 80.f * DT;
 				m_Target->Transform()->SetRelativePos(TarGetPos);
 			}
 		}
 
 		if (PlayerScript->GetBooster() == false) // 부스터가 꺼져있는상태
 
-			if (TarGetPos.z >= 500.f && TarGetPos.z <= 551.f)
+			if (TarGetPos.z >= 180.f && TarGetPos.z <= 231.f)
 			{
-				TarGetPos.z -= DT * 50.f;
+				TarGetPos.z -= DT * 80.f;
 				m_Target->Transform()->SetRelativePos(TarGetPos);
 			}
 	}
@@ -178,19 +171,4 @@ void CCameraScript::Camera3DMove()
 	m_Target->Transform()->SetRelativePos(TarGetPos);
 	Transform()->SetRelativeRot(vRot);
 
-
-	if (HitPost)
-	{
-		HitPost = false;
-		HitPostProcess = new CGameObject;
-		HitPostProcess->SetName(L"HitPost");
-		HitPostProcess->AddComponent(new CTransform);
-		HitPostProcess->AddComponent(new CMeshRender);
-		HitPostProcess->AddComponent(new HitPostScript);
-		HitPostScript* HPS = HitPostProcess->GetScript<HitPostScript>();
-		HPS->SetCameraScript(this);
-		HitPostProcess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-		HitPostProcess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl"), 0);
-		SpawnGameObject(HitPostProcess, Vec3(0.f, 0.f, 0.f), 0);
-	}
 }

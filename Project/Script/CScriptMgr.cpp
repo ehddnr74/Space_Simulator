@@ -79,16 +79,16 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
-	case (UINT)SCRIPT_TYPE::BLACKHOLESCRIPT:
+	case (UINT)SCRIPT_TYPE::LACKHOLESCRIPT:
 		return new BlackholeScript;
 		break;
-	case (UINT)SCRIPT_TYPE::BOSSBULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::OSSBULLETSCRIPT:
 		return new BossBulletScript;
 		break;
-	case (UINT)SCRIPT_TYPE::BOSSSCRIPT:
+	case (UINT)SCRIPT_TYPE::OSSSCRIPT:
 		return new BossScript;
 		break;
-	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::ULLETSCRIPT:
 		return new BulletScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -115,18 +115,6 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::TESTSCRIPT:
 		return new CTestScript;
 		break;
-	case (UINT)SCRIPT_TYPE::HITPOSTSCRIPT:
-		return new HitPostScript;
-		break;
-	case (UINT)SCRIPT_TYPE::HYPERLOOPSCRIPT:
-		return new HyperLoopScript;
-		break;
-	case (UINT)SCRIPT_TYPE::METEOSCRIPT:
-		return new MeteoScript;
-		break;
-	case (UINT)SCRIPT_TYPE::MONSTERBULLETSCRIPT:
-		return new MonsterBulletScript;
-		break;
 	}
 	return nullptr;
 }
@@ -135,19 +123,19 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
-	case SCRIPT_TYPE::BLACKHOLESCRIPT:
+	case SCRIPT_TYPE::LACKHOLESCRIPT:
 		return L"BlackholeScript";
 		break;
 
-	case SCRIPT_TYPE::BOSSBULLETSCRIPT:
+	case SCRIPT_TYPE::OSSBULLETSCRIPT:
 		return L"BossBulletScript";
 		break;
 
-	case SCRIPT_TYPE::BOSSSCRIPT:
+	case SCRIPT_TYPE::OSSSCRIPT:
 		return L"BossScript";
 		break;
 
-	case SCRIPT_TYPE::BULLETSCRIPT:
+	case SCRIPT_TYPE::ULLETSCRIPT:
 		return L"BulletScript";
 		break;
 
@@ -182,23 +170,6 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 	case SCRIPT_TYPE::TESTSCRIPT:
 		return L"CTestScript";
 		break;
-
-	case SCRIPT_TYPE::HITPOSTSCRIPT:
-		return L"HitPostScript";
-		break;
-
-	case SCRIPT_TYPE::HYPERLOOPSCRIPT:
-		return L"HyperLoopScript";
-		break;
-
-	case SCRIPT_TYPE::METEOSCRIPT:
-		return L"MeteoScript";
-		break;
-
-	case SCRIPT_TYPE::MONSTERBULLETSCRIPT:
-		return L"MonsterBulletScript";
-		break;
-
 	}
 	return nullptr;
 }
