@@ -80,7 +80,7 @@ void CCameraScript::Camera3DMove()
 	Vec3 vPos = Transform()->GetRelativePos();
 	Vec3 vRot = Transform()->GetRelativeRot();
 
-	//vFront = Transform()->GetRelativeDir(DIR_TYPE::FRONT);
+	vFront = Transform()->GetRelativeDir(DIR_TYPE::FRONT);
 	vUp = Transform()->GetRelativeDir(DIR_TYPE::UP);
 	vRight = Transform()->GetRelativeDir(DIR_TYPE::RIGHT);
 	Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos();

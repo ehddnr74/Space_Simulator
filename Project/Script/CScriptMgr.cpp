@@ -2,6 +2,8 @@
 #include "CScriptMgr.h"
 
 #include "BlackholeScript.h"
+#include "BossBulletScript.h"
+#include "BossScript.h"
 #include "BulletScript.h"
 #include "CCameraMoveScript.h"
 #include "CCameraScript.h"
@@ -17,6 +19,8 @@
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"BlackholeScript");
+	_vec.push_back(L"BossBulletScript");
+	_vec.push_back(L"BossScript");
 	_vec.push_back(L"BulletScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CCameraScript");
@@ -34,6 +38,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
 	if (L"BlackholeScript" == _strScriptName)
 		return new BlackholeScript;
+	if (L"BossBulletScript" == _strScriptName)
+		return new BossBulletScript;
+	if (L"BossScript" == _strScriptName)
+		return new BossScript;
 	if (L"BulletScript" == _strScriptName)
 		return new BulletScript;
 	if (L"CCameraMoveScript" == _strScriptName)
@@ -66,7 +74,13 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::LACKHOLESCRIPT:
 		return new BlackholeScript;
 		break;
-	case (UINT)SCRIPT_TYPE::ULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::BOSSBULLETSCRIPT:
+		return new BossBulletScript;
+		break;
+	case (UINT)SCRIPT_TYPE::BOSSSCRIPT:
+		return new BossScript;
+		break;
+	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
 		return new BulletScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -93,10 +107,10 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::TESTSCRIPT:
 		return new CTestScript;
 		break;
-	case (UINT)SCRIPT_TYPE::ETEOSCRIPT:
+	case (UINT)SCRIPT_TYPE::METEOSCRIPT:
 		return new MeteoScript;
 		break;
-	case (UINT)SCRIPT_TYPE::ONSTERBULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::MONSTERBULLETSCRIPT:
 		return new MonsterBulletScript;
 		break;
 	}
@@ -111,7 +125,15 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"BlackholeScript";
 		break;
 
-	case SCRIPT_TYPE::ULLETSCRIPT:
+	case SCRIPT_TYPE::BOSSBULLETSCRIPT:
+		return L"BossBulletScript";
+		break;
+
+	case SCRIPT_TYPE::BOSSSCRIPT:
+		return L"BossScript";
+		break;
+
+	case SCRIPT_TYPE::BULLETSCRIPT:
 		return L"BulletScript";
 		break;
 
@@ -147,11 +169,11 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CTestScript";
 		break;
 
-	case SCRIPT_TYPE::ETEOSCRIPT:
+	case SCRIPT_TYPE::METEOSCRIPT:
 		return L"MeteoScript";
 		break;
 
-	case SCRIPT_TYPE::ONSTERBULLETSCRIPT:
+	case SCRIPT_TYPE::MONSTERBULLETSCRIPT:
 		return L"MonsterBulletScript";
 		break;
 
