@@ -6,6 +6,8 @@
 
 #include "CPlayerScript.h"
 
+#include "HitPostScript.h"
+
 CCameraScript::CCameraScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERASCRIPT)
 	, vFront(Vec3(0.f, 0.f, 0.f))
@@ -16,7 +18,7 @@ CCameraScript::CCameraScript()
 	, CameraPos(Vec3(0.f, 0.f, 0.f))
 	, PrevMousePos(Vec2(0.f, 0.f))
 	, OffSet(Vec3(0.f, 0.f, 0.f))
-
+	, HitPost(false)
 {
 }
 
@@ -176,4 +178,19 @@ void CCameraScript::Camera3DMove()
 	m_Target->Transform()->SetRelativePos(TarGetPos);
 	Transform()->SetRelativeRot(vRot);
 
+
+	if (HitPost)
+	{
+		HitPost = false;
+		HitPostProcess = new CGameObject;
+		HitPostProcess->SetName(L"HitPost");
+		HitPostProcess->AddComponent(new CTransform);
+		HitPostProcess->AddComponent(new CMeshRender);
+		HitPostProcess->AddComponent(new HitPostScript);
+		HitPostScript* HPS = HitPostProcess->GetScript<HitPostScript>();
+		HPS->SetCameraScript(this);
+		HitPostProcess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+		HitPostProcess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl"), 0);
+		SpawnGameObject(HitPostProcess, Vec3(0.f, 0.f, 0.f), 0);
+	}
 }

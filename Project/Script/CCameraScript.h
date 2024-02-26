@@ -6,8 +6,9 @@ class CCameraScript
 private:
     CGameObject* Empty;
     float       m_fCamSpeed;
-
     Vec3        OffSet;
+    bool        HitPost;
+
 
 
     //bool SetOff;
@@ -21,6 +22,9 @@ private:
     Vector3 CameraPos;
     CGameObject* Muzzle;
     CGameObject* m_Target;
+    CGameObject* HitPostProcess;
+
+   
 
 public:
     virtual void begin() override;
@@ -34,6 +38,8 @@ public:
     Vec3 GetvFront() { return vFront; }
     Vec3 GetvUp() { return vUp; }
     Vec3 GetvRight() { return vRight; }
+
+    void SetHitPost(bool hitpost) { HitPost = hitpost; }
 
 private:
     void Camera3DMove();

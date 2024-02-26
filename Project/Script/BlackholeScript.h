@@ -10,8 +10,10 @@ private:
     CPlayerScript* PlayerScript;
     CGameObject* m_TargetObject;
     CGameObject* Camera;
+    CGameObject* Distortion;
 
     bool Tele_in = false;
+    bool Dist = false;
 
 public:
 
