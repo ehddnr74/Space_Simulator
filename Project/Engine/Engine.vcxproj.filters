@@ -673,5 +673,8 @@
     <FxCompile Include="razer.fx">
       <Filter>Source\08. ShaderCode\Render\3D</Filter>
     </FxCompile>
+    <FxCompile Include="Fading.fx">
+      <Filter>Source\08. ShaderCode\Render\2D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -14,5 +14,15 @@ public:
 public:
     CMeshRender();
     ~CMeshRender();
+
+    void SetRatio(float ratio)
+    {
+        GetMaterial(0)->SetScalarParam(FLOAT_3, &ratio);
+    }
+
+    void SetHitRatio(float hitratio)
+    {
+        GetMaterial(0)->SetScalarParam(FLOAT_2, &hitratio);
+    }
 };
 

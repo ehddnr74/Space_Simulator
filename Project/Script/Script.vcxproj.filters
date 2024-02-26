@@ -69,6 +69,9 @@
     <ClInclude Include="HitPostScript.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="Fading.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -126,6 +129,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="HitPostScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Fading.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

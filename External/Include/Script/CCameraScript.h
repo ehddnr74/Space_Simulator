@@ -5,10 +5,11 @@ class CCameraScript
 {
 private:
     CGameObject* Empty;
+    CGameObject* Fadein;
     float       m_fCamSpeed;
     Vec3        OffSet;
     bool        HitPost;
-
+    bool        _Fading;
 
 
     //bool SetOff;

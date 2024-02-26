@@ -18,12 +18,15 @@ void HitPostScript::begin()
 
 void HitPostScript::tick()
 {
-		HitPostProcessTime += DT;
+	ratio -= DT * 0.5f;
+	GetOwner()->MeshRender()->SetHitRatio(ratio);
 
-		if (HitPostProcessTime >= 0.3f)
-		{
-			DestroyObject(GetOwner());
-		}
+	HitPostProcessTime += DT;
+
+	if (HitPostProcessTime >= 1.f)
+	{
+		DestroyObject(GetOwner());
+	}
 }
 
 void HitPostScript::BeginOverlap(CCollider2D* _Other)

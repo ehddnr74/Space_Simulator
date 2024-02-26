@@ -9,6 +9,7 @@ private:
     CGameObject* Camera;
 
     double HitPostProcessTime;
+    float ratio;
 
 public:
 

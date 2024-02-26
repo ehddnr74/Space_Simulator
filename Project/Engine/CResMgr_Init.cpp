@@ -560,6 +560,26 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	AddRes(pShader->GetKey(), pShader);
 
+	// =================
+	// Fading Shader
+	// RS_TYPE  : CULL_NONE
+	// DS_TYPE  : NO_TEST_NO_WRITE
+	// BS_TYPE  : AlphaBlend
+	// ==================
+
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"FadingShader");
+	pShader->CreateVertexShader(L"shader\\Fading.fx", "VS_Fading");
+	pShader->CreatePixelShader(L"shader\\Fading.fx", "PS_Fading");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+
+	AddRes(pShader->GetKey(), pShader);
+
 
 
 
@@ -630,6 +650,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreatePixelShader(L"shader\\postprocess.fx", "PS_GrayShader");
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
 	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddRes(pShader->GetKey(), pShader);
 
@@ -1201,4 +1222,9 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"RazerShader"));
 	AddRes(L"RazerMtrl", pMtrl);
+
+	// FadingMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"FadingShader"));
+	AddRes(L"FadingMtrl", pMtrl);
 }

@@ -24,6 +24,30 @@ void BlackholeScript::tick()
 	Vec3 CameraRot = CameraScript->GetOwner()->Transform()->GetRelativeRot();
 
 
+	float Distance = Transform()->GetRelativePos().z - CameraPos.z;
+
+	if (Dist == false && Distance <= 10000.f)
+	{
+		Dist = true;
+		Distortion = new CGameObject;
+		Distortion->SetName(L"Distortion");
+		Distortion->AddComponent(new CTransform);
+		Distortion->AddComponent(new CMeshRender);
+		Distortion->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+		Distortion->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DistortionMtrl"), 0);
+		Distortion->Transform()->SetRelativeScale(200.f, 200.f, 200.f);
+		SpawnGameObject(Distortion, Vec3(0.f, 0.f, 0.f), 0);
+	}
+
+	if (Distortion != nullptr)
+	{
+		if (Distance >= 10000.f)
+		{
+			Dist = false;
+			DestroyObject(Distortion);
+		}
+	}
+
 	if (Tele_in)
 	{
 		//CameraPos = Vec3(23797.109f, -2210.932f, 990286.562f);
