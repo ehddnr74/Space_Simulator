@@ -66,6 +66,9 @@
     <ClInclude Include="HyperLoopScript.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="HitPostScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -120,6 +123,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="HyperLoopScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="HitPostScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>

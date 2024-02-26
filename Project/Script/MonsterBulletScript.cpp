@@ -47,5 +47,7 @@ void MonsterBulletScript::BeginOverlap(CCollider2D* _Other)
 	{
 		DestroyObject(GetOwner());
 		MonsterScript->SetBulletBool(false);
+
+		CameraScript->SetHitPost(true);
 	}
 }

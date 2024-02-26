@@ -102,8 +102,8 @@ void BossScript::tick()
 		ShotTime = 0.f;
 		Bulletbool = true;
 		//CreateBossBullet();
-		//CreateBossMissile();
-		CreateBossRazer();
+		CreateBossMissile();
+		//CreateBossRazer();
 	}
 }
 
@@ -152,7 +152,7 @@ void BossScript::CreateBossMissile()
 	Missile->AddComponent(new CCollider2D);
 	Missile->AddComponent(new BossBulletScript);
 
-	Missile->Transform()->SetRelativeScale(Vec3(1000.f, 1000.f, 1000.f));
+	Missile->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
 
 	BossBulletScript* BBS = Missile->GetScript<BossBulletScript>();
 	BBS->SetPlayerScript(PlayerScript);
