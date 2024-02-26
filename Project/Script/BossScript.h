@@ -16,6 +16,12 @@ private:
     double MoveTime;
     double ShotTime;
     bool Bulletbool;
+    bool Bossnear;
+
+    double BossnearTime;
+
+    double ContactTime;
+    bool ContackFinish;
 
 public:
     virtual void begin() override;
@@ -27,6 +33,8 @@ public:
     void CreateBossBullet();
     void CreateBossMissile();
     void CreateBossRazer();
+
+    void ContactBoss();
 
     void SetBulletBool(bool b) { Bulletbool = b; }
 

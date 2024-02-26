@@ -10,6 +10,10 @@ BossScript::BossScript()
 	, MoveTime(0.f)
 	, Bulletbool(false)
 	, ShotTime(3.0f)
+	, ContactTime(0.f)
+	, ContackFinish(false)
+	, Bossnear(false)
+	, BossnearTime(0.f)
 {
 }
 
@@ -24,6 +28,63 @@ void BossScript::begin()
 
 void BossScript::tick()
 {
+	Vec3 CameraPos = CameraScript->Transform()->GetRelativePos();
+	// 카메라와 보스 거리 계산
+	float Distance = Transform()->GetRelativePos().z - CameraScript->Transform()->GetRelativePos().z;
+
+	if (ContackFinish == false)
+	{
+		ContactTime += DT;
+	}
+	//if (ContackFinish == false && 0.f <= ContactTime && ContactTime <= 2.25f)
+	//{
+	//	Vec3 CameraRot = CameraScript->Transform()->GetRelativeRot();
+	//	if (CameraRot.y >= -(XM_PI / 2.4))
+	//	{
+	//		CameraRot.y -= DT * 0.5f;
+	//			CameraScript->Transform()->SetRelativeRot(CameraRot);
+	//	}
+	//	
+	//}
+	//if (ContackFinish == false && 2.25f <= ContactTime && ContactTime <= 4.0f)
+	//{
+	//	Vec3 CameraRot = CameraScript->Transform()->GetRelativeRot();
+	//	CameraRot.y -= DT * 0.5f;
+	//	CameraScript->Transform()->SetRelativeRot(CameraRot);
+	//}
+	if (Bossnear == false && ContackFinish == false && ContactTime >= 1.5f && CameraPos.z <= 998000.f)
+	{
+		if(CameraPos.z >=997900.f)
+			Bossnear = true;
+
+		Vec3 CameraFront = CameraScript->GetOwner()->Transform()->GetRelativeDir(DIR_TYPE::FRONT);
+
+		CameraPos += CameraFront * DT * 2000.f;
+		CameraScript->Transform()->SetRelativePos(CameraPos);
+
+		//ContactBoss();
+	}
+
+	if (ContackFinish == false && Bossnear)
+	{
+		BossnearTime += DT;
+		if (BossnearTime >= 8.0f)
+		{
+			ContackFinish = true;
+			CameraScript->Transform()->SetRelativePos(Vec3(23797.109f, -2210.932f, 990286.562f));
+			PlayerScript->Transform()->SetRelativeScale(0.3f, 0.3f, 0.3f);
+		}
+	}
+	
+	
+
+	//if (ContackFinish == false && ContactTime > 8.5f)
+	//{
+	//	CameraScript->Transform()->SetRelativePos(Vec3(23797.109f, -2210.932f, 990286.562f));
+	//	ContackFinish = true;
+	//	ContactTime = 0.0f;
+	//}
+	
 	//Vec3 Rot = Transform()->GetRelativeRot();
 	//Rot.z += DT * 1.0f;
 	//
@@ -132,4 +193,23 @@ void BossScript::CreateBossRazer()
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 
 	SpawnGameObject(Razer, BossPos, L"Boss");
+}
+
+void BossScript::ContactBoss()
+{
+	Vec3 CameraPos = CameraScript->Transform()->GetRelativePos();
+	Vec3 CameraFront = CameraScript->GetvFront();
+	Vec3 BossPos = Transform()->GetRelativePos();
+
+	//if (CameraPos.y - BossPos.y < 1500.f)
+	//{
+	//	CameraPos.x += DT * 200.f;
+	//	CameraScript->Transform()->SetRelativePos(CameraPos);
+	//}
+
+	Vec3 CameraToBossDir = (BossPos - CameraPos).Normalize();
+	CameraPos -= -CameraToBossDir * DT * 400.f;
+
+	CameraScript->Transform()->SetRelativePos(CameraPos);
+	
 }

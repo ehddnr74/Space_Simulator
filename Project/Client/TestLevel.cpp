@@ -661,36 +661,6 @@ void CreateTestLevel()
 			SpawnGameObject(Nar_Shaddaa, Vec3(0.0f, 400.000f, 1008815.000f), L"Nar_Shaddaa");
 		}
 
-		//Boss
-		{
-			Ptr<CMeshData> BossStageMeshData = nullptr;
-			CGameObject* Boss = nullptr;
-
-			BossStageMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss.fbx");
-			//BossStageMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\House.mdat");
-			Boss = BossStageMeshData->Instantiate();
-
-			Boss->AddComponent(new CCollider2D);
-			Boss->AddComponent(new BossScript);
-
-			BossScript* BS = Boss->GetScript<BossScript>();
-			CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
-			BS->SetPlayerScript(CPS);
-
-			Boss->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 50.f));
-
-
-
-			Boss->Transform()->SetRelativeRot(Vec3(144.2f, 51.559f, 43.7f));
-
-			//Boss->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-			//Boss->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
-
-			Boss->SetName(L"Boss");
-			SpawnGameObject(Boss, Vec3(241.000f, -1457.000f, 1000452.000f), L"Boss");
-			//SpawnGameObject(Boss, Vec3(0.0f, 0.0f, 5000.f), L"Boss");
-		}
-
 		//CGameObject* Empty = new CGameObject;
 		//Empty->SetName(L"Empty");
 		//Empty->AddComponent(new CTransform);
