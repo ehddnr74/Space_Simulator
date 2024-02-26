@@ -17,6 +17,7 @@
 #include <Script\MeteoScript.h>
 #include <Script\BlackholeScript.h>
 #include <Script\BossScript.h>
+#include <Script\HyperLoopScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -49,6 +50,7 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(15)->SetName(L"sun_postprocess");
 	pCurLevel->GetLayer(16)->SetName(L"Boss");
 	pCurLevel->GetLayer(17)->SetName(L"test");
+	pCurLevel->GetLayer(18)->SetName(L"hyperloop");
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
 
@@ -687,7 +689,39 @@ void CreateTestLevel()
 		//}
 	}
 
+	// ============
+	// HyperLoop
+	// ============	
+	{
+		Ptr<CMeshData> HyperLoopMeshData = nullptr;
+
+		CGameObject* HyperLoop = new CGameObject;
+		HyperLoopMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\HyperLoop.fbx");
+		//pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\05_Mars.mdat");
+		HyperLoop = HyperLoopMeshData->Instantiate();
+
+		HyperLoop->AddComponent(new CPlanet_Lotating);
+		HyperLoop->AddComponent(new CCollider2D);
+		HyperLoop->AddComponent(new HyperLoopScript);
+
+		HyperLoopScript* HL = HyperLoop->GetScript<HyperLoopScript>();
+		CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
+		HL->SetPlayerScript(CPS);
+
+		//HyperLoop->GetScript<CPlanet_Lotating>()->SetRot(Vec3(100.f, 0.f, 0.f));
+
+		HyperLoop->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
+		HyperLoop->Transform()->SetRelativeRot(Vec3(1.5f, 0.f, 0.f));
+
+		HyperLoop->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		HyperLoop->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
+
+		HyperLoop->SetName(L"hyperloop");
+		SpawnGameObject(HyperLoop, Vec3(0.f, 0.f, 13000.f), L"hyperloop");
+	}
+
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"blackhole");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"hyperloop");
 }

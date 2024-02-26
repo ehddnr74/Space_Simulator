@@ -57,8 +57,15 @@
     <ClInclude Include="MonsterBulletScript.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="BossScript.h" />
-    <ClInclude Include="BossBulletScript.h" />
+    <ClInclude Include="BossBulletScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="BossScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="HyperLoopScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -106,7 +113,14 @@
     <ClCompile Include="MonsterBulletScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="BossScript.cpp" />
-    <ClCompile Include="BossBulletScript.cpp" />
+    <ClCompile Include="BossBulletScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="BossScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="HyperLoopScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

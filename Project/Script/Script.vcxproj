@@ -186,6 +186,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CTestScript.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="HyperLoopScript.h" />
     <ClInclude Include="MeteoScript.h" />
     <ClInclude Include="MonsterBulletScript.h" />
     <ClInclude Include="pch.h" />
@@ -204,6 +205,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CTestScript.cpp" />
+    <ClCompile Include="HyperLoopScript.cpp" />
     <ClCompile Include="MeteoScript.cpp" />
     <ClCompile Include="MonsterBulletScript.cpp" />
     <ClCompile Include="pch.cpp">
