@@ -36,6 +36,7 @@ VS_OUT VS_GrayShader(VS_IN _in)
     return output;
 }
 
+#define hitratio g_float_2;
 
 float4 PS_GrayShader(VS_OUT _in) : SV_Target
 {
@@ -46,9 +47,11 @@ float4 PS_GrayShader(VS_OUT _in) : SV_Target
     //float4 vColor = g_tex_0.Sample(g_sam_0, _in.vUV);	
     float4 vColor = g_tex_0.Sample(g_sam_0, vScreenUV);
 	
-    float vAver = (vColor.r + vColor.g + vColor.b) / 3.f;
+    //float vAver = (vColor.r + vColor.g + vColor.b) / 3.f;
 
-    vColor = float4(vAver, 0.f, 0.f, 1.f);
+    float a = hitratio;
+
+    vColor = float4(1.0f, 0.f, 0.f, a);
 	
     //vColor = float4(1.f, 0.f, 0.f, 0.5f);
   
