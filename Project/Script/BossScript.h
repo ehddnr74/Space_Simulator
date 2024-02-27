@@ -5,23 +5,32 @@
 
 class BossScript : public CScript
 {
+
+public:
+    enum class BossState
+    {
+        Razer,
+        Missile,
+        MonsterSpawn,
+      //VolcanicAbsorb,
+      //SiriusAbsorb,
+        TelePort,
+        ForceShield,
+        Die,
+    };
+
 private:
+    BossState eBossState;
     CPlayerScript* PlayerScript;
     CCameraScript* CameraScript;
     CGameObject* Bullet;
     CGameObject* Missile;
 
     int HP;
-    int RandomPos;
     double MoveTime;
     double ShotTime;
     bool Bulletbool;
-    bool Bossnear;
-
-    double BossnearTime;
-
-    double ContactTime;
-    bool ContackFinish;
+    bool RoomEffectCheck;
 
 public:
     virtual void begin() override;
@@ -33,8 +42,8 @@ public:
     void CreateBossBullet();
     void CreateBossMissile();
     void CreateBossRazer();
+    void CreateRoomEffect();
 
-    void ContactBoss();
 
     void SetBulletBool(bool b) { Bulletbool = b; }
 
@@ -42,5 +51,14 @@ public:
 public:
     BossScript();
     ~BossScript();
+
+private:
+    void razer();
+    void missile();
+    void monsterspawn();
+    void teleport();
+    void forceshield();
+    void die();
+
 };
 

@@ -3,7 +3,9 @@
 
 #include "BlackholeScript.h"
 #include "BossBulletScript.h"
+#include "BossPlanets.h"
 #include "BossScript.h"
+#include "BossShiled.h"
 #include "BulletScript.h"
 #include "CCameraMoveScript.h"
 #include "CCameraScript.h"
@@ -23,7 +25,9 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"BlackholeScript");
 	_vec.push_back(L"BossBulletScript");
+	_vec.push_back(L"BossPlanets");
 	_vec.push_back(L"BossScript");
+	_vec.push_back(L"BossShiled");
 	_vec.push_back(L"BulletScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CCameraScript");
@@ -46,8 +50,12 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new BlackholeScript;
 	if (L"BossBulletScript" == _strScriptName)
 		return new BossBulletScript;
+	if (L"BossPlanets" == _strScriptName)
+		return new BossPlanets;
 	if (L"BossScript" == _strScriptName)
 		return new BossScript;
+	if (L"BossShiled" == _strScriptName)
+		return new BossShiled;
 	if (L"BulletScript" == _strScriptName)
 		return new BulletScript;
 	if (L"CCameraMoveScript" == _strScriptName)
@@ -89,8 +97,14 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::BOSSBULLETSCRIPT:
 		return new BossBulletScript;
 		break;
+	case (UINT)SCRIPT_TYPE::BOSSPLANETS:
+		return new BossPlanets;
+		break;
 	case (UINT)SCRIPT_TYPE::BOSSSCRIPT:
 		return new BossScript;
+		break;
+	case (UINT)SCRIPT_TYPE::BOSSSHILED:
+		return new BossShiled;
 		break;
 	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
 		return new BulletScript;
@@ -150,8 +164,16 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"BossBulletScript";
 		break;
 
+	case SCRIPT_TYPE::BOSSPLANETS:
+		return L"BossPlanets";
+		break;
+
 	case SCRIPT_TYPE::BOSSSCRIPT:
 		return L"BossScript";
+		break;
+
+	case SCRIPT_TYPE::BOSSSHILED:
+		return L"BossShiled";
 		break;
 
 	case SCRIPT_TYPE::BULLETSCRIPT:

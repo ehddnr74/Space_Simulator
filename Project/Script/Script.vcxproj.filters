@@ -72,6 +72,12 @@
     <ClInclude Include="Fading.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="BossShiled.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="BossPlanets.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -132,6 +138,12 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="Fading.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="BossShiled.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="BossPlanets.cpp">
       <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
