@@ -24,6 +24,7 @@ private:
     CGameObject* Muzzle;
     CGameObject* m_Target;
     CGameObject* HitPostProcess;
+    CGameObject* SkyBox;
 
    
 
@@ -41,6 +42,9 @@ public:
     Vec3 GetvRight() { return vRight; }
 
     void SetHitPost(bool hitpost) { HitPost = hitpost; }
+
+    void SetSkyBox(CGameObject* SB) { SkyBox = SB; }
+    CGameObject* GetSkyBox() { return SkyBox; }
 
 private:
     void Camera3DMove();

@@ -2,18 +2,18 @@
 #include "BossScript.h"
 #include "BossBulletScript.h"
 #include "time.h"
+#include "BossShiled.h"
+#include "CPlanet_Lotating.h"
+#include "BossPlanets.h"
 
 BossScript::BossScript()
 	: CScript((UINT)SCRIPT_TYPE::BOSSSCRIPT)
 	, HP(100)
-	, RandomPos(1)
 	, MoveTime(0.f)
 	, Bulletbool(false)
 	, ShotTime(3.0f)
-	, ContactTime(0.f)
-	, ContackFinish(false)
-	, Bossnear(false)
-	, BossnearTime(0.f)
+	, RoomEffectCheck(false)
+
 {
 }
 
@@ -24,86 +24,171 @@ BossScript::~BossScript()
 void BossScript::begin()
 {
 	CameraScript = PlayerScript->GetOwner()->GetParent()->GetScript<CCameraScript>();
+	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+	Vec3 BossPos = CameraPos;
+	Vec3 CameraFront = CameraScript->GetvFront();
+	BossPos += CameraFront * 8000.f;
+	Transform()->SetRelativeScale(Vec3(250.f, 250.f, 250.f));
+	Transform()->SetRelativeRot(Vec3(XM_PI / 3.7f, XM_PI / 1.33f, XM_PI / 36.f));
+	Transform()->SetRelativePos(Vec3(BossPos));
+
+	{	//Sirius
+		CGameObject* Sirius = new CGameObject;
+		Sirius->SetName(L"Sirius");
+		Sirius->AddComponent(new CTransform);
+		Sirius->AddComponent(new CMeshRender);
+		Sirius->AddComponent(new CPlanet_Lotating);
+		Sirius->AddComponent(new BossPlanets);
+
+		BossPlanets* SBP = Sirius->GetScript<BossPlanets>();
+		SBP->SetCameraScript(CameraScript);
+		SBP->SetSirius(Sirius);
+		SBP->SetBossScript(this);
+
+		Sirius->Transform()->SetRelativeScale(Vec3(10000.f, 10000.f, 10000.f));
+		Sirius->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+		Sirius->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, -0.1f, 0.f));
+
+		Sirius->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		Sirius->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"SiriusMtrl"), 0);
+		Sirius->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Sirius.jpg"));
+		SpawnGameObject(Sirius, Vec3(0.f, 0.f, 30000000.f), L"Sirius");
+	}
+
+	{	//Volcanic
+		CGameObject* Volcanic = new CGameObject;
+		Volcanic->SetName(L"Volcanic");
+		Volcanic->AddComponent(new CTransform);
+		Volcanic->AddComponent(new CMeshRender);
+		Volcanic->AddComponent(new CPlanet_Lotating);
+		Volcanic->AddComponent(new BossPlanets);
+
+		BossPlanets* VBP = Volcanic->GetScript<BossPlanets>();
+		VBP->SetCameraScript(CameraScript);
+		VBP->SetVolcanic(Volcanic);
+		VBP->SetBossScript(this);
+		
+
+		Volcanic->Transform()->SetRelativeScale(Vec3(10000.f, 10000.f, 10000.f));
+		Volcanic->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+		Volcanic->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+		Volcanic->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		Volcanic->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"VolcanicMtrl"), 0);
+		Volcanic->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Volcanic_01.png"));
+
+		SpawnGameObject(Volcanic, Vec3(50000.f, 0.f, 30500000.f), L"Volcanic");
+	}
+
+	//{	//Volcanic_Lava
+	//	CGameObject* Volcanic_Lava = new CGameObject;
+	//	Volcanic_Lava->SetName(L"Volcanic_Lava");
+	//	Volcanic_Lava->AddComponent(new CTransform);
+	//	Volcanic_Lava->AddComponent(new CMeshRender);
+	//	Volcanic_Lava->AddComponent(new CPlanet_Lotating);
+
+	//	Volcanic_Lava->Transform()->SetRelativeScale(Vec3(20050.f, 20050.f, 20050.f));
+	//	Volcanic_Lava->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+	//	Volcanic_Lava->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+	//	Volcanic_Lava->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	//	Volcanic_Lava->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Volcanic_LavaMtrl"), 0);
+	//	Volcanic_Lava->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Volcanic\\Volcanic_Lava.png"));
+
+	//	SpawnGameObject(Volcanic_Lava, Vec3(50000.f, 0.f, 30500000.f), L"Volcanic_Lava");
+	//}
+
+	//{	//Nar_Shaddaa
+	//	CGameObject* Nar_Shaddaa = new CGameObject;
+	//	Nar_Shaddaa->SetName(L"Nar_Shaddaa");
+	//	Nar_Shaddaa->AddComponent(new CTransform);
+	//	Nar_Shaddaa->AddComponent(new CMeshRender);
+	//	Nar_Shaddaa->AddComponent(new CPlanet_Lotating);
+	//	Nar_Shaddaa->AddComponent(new BossPlanets);
+
+	//	BossPlanets* NBP = Nar_Shaddaa->GetScript<BossPlanets>();
+	//	NBP->SetCameraScript(CameraScript);
+	//	NBP->SetNarShaddaa(Nar_Shaddaa);
+	//	NBP->SetBossScript(this);
+
+	//	Nar_Shaddaa->Transform()->SetRelativeScale(Vec3(20000.f, 20000.f, 20000.f));
+	//	Nar_Shaddaa->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+	//	Nar_Shaddaa->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
+
+
+
+	//	Nar_Shaddaa->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	//	Nar_Shaddaa->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Nar_ShaddaaDMtrl"), 0);
+	//	Nar_Shaddaa->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Nar_Shaddaa01.png"));
+
+	//	SpawnGameObject(Nar_Shaddaa, Vec3(50000.f, 400.000f, 30450000.f), L"Nar_Shaddaa");
+	//}
 }
 
 void BossScript::tick()
 {
-	Vec3 CameraPos = CameraScript->Transform()->GetRelativePos();
-	// 카메라와 보스 거리 계산
-	float Distance = Transform()->GetRelativePos().z - CameraScript->Transform()->GetRelativePos().z;
+	// 보스의 프레임마다 위치 조정 
+	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+	Vec3 CameraRot = CameraScript->GetOwner()->Transform()->GetRelativeRot();
+	Vec3 BossPos = Transform()->GetRelativePos();
+	Vec3 CameraFront = CameraScript->GetvFront();
 
-	if (ContackFinish == false)
+	if (BossPos.z - CameraPos.z >= 12000.f)
 	{
-		ContactTime += DT;
+		return;
 	}
-	//if (ContackFinish == false && 0.f <= ContactTime && ContactTime <= 2.25f)
+	else
+	{
+		BossPos.z += CameraFront.z * DT * 1200.f;
+	}
+	Transform()->SetRelativePos(BossPos);
+
+	if (RoomEffectCheck == false)
+	{
+		RoomEffectCheck = true;
+		CreateRoomEffect();
+	}
+
+	//if (HP <= 0)
 	//{
-	//	Vec3 CameraRot = CameraScript->Transform()->GetRelativeRot();
-	//	if (CameraRot.y >= -(XM_PI / 2.4))
-	//	{
-	//		CameraRot.y -= DT * 0.5f;
-	//			CameraScript->Transform()->SetRelativeRot(CameraRot);
-	//	}
-	//	
+	//	DestroyObject(GetOwner());
 	//}
-	//if (ContackFinish == false && 2.25f <= ContactTime && ContactTime <= 4.0f)
+
+	//ShotTime += DT;
+
+	//if (ShotTime >= 5.0f && Bulletbool == false)
 	//{
-	//	Vec3 CameraRot = CameraScript->Transform()->GetRelativeRot();
-	//	CameraRot.y -= DT * 0.5f;
-	//	CameraScript->Transform()->SetRelativeRot(CameraRot);
+	//	ShotTime = 0.f;
+	//	Bulletbool = true;
+	//	//CreateBossBullet();
+	//	//CreateBossMissile();
+	//	//CreateBossRazer();
 	//}
-	if (Bossnear == false && ContackFinish == false && ContactTime >= 1.5f && CameraPos.z <= 998000.f)
+
+	switch (eBossState)
 	{
-		if(CameraPos.z >=997900.f)
-			Bossnear = true;
-
-		Vec3 CameraFront = CameraScript->GetOwner()->Transform()->GetRelativeDir(DIR_TYPE::FRONT);
-
-		CameraPos += CameraFront * DT * 2000.f;
-		CameraScript->Transform()->SetRelativePos(CameraPos);
-
-		//ContactBoss();
-	}
-
-	if (ContackFinish == false && Bossnear)
-	{
-		BossnearTime += DT;
-		if (BossnearTime >= 8.0f)
-		{
-			ContackFinish = true;
-			CameraScript->Transform()->SetRelativePos(Vec3(23797.109f, -2210.932f, 990286.562f));
-			PlayerScript->Transform()->SetRelativeScale(0.3f, 0.3f, 0.3f);
-		}
-	}
-	
-	
-
-	//if (ContackFinish == false && ContactTime > 8.5f)
-	//{
-	//	CameraScript->Transform()->SetRelativePos(Vec3(23797.109f, -2210.932f, 990286.562f));
-	//	ContackFinish = true;
-	//	ContactTime = 0.0f;
-	//}
-	
-	//Vec3 Rot = Transform()->GetRelativeRot();
-	//Rot.z += DT * 1.0f;
-	//
-	//Transform()->SetRelativeRot(Rot);
-
-	ShotTime += DT;
-
-	if (HP <= 0)
-	{
-		DestroyObject(GetOwner());
-	}
-
-	if (ShotTime >= 5.0f && Bulletbool == false)
-	{
-		ShotTime = 0.f;
-		Bulletbool = true;
-		//CreateBossBullet();
-		CreateBossMissile();
-		//CreateBossRazer();
+	case BossScript::BossState::Razer:
+		razer();
+		break;
+	case BossScript::BossState::Missile:
+		missile();
+		break;
+	case BossScript::BossState::MonsterSpawn:
+		monsterspawn();
+		break;
+	case BossScript::BossState::TelePort:
+		teleport();
+		break;
+	case BossScript::BossState::ForceShield:
+		forceshield();
+		break;
+	case BossScript::BossState::Die:
+		die();
+		break;
 	}
 }
 
@@ -138,7 +223,7 @@ void BossScript::CreateBossBullet()
 
 	Vec3 BossPos = Transform()->GetRelativePos();
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
-	SpawnGameObject(Bullet, BossPos, L"Boss");
+	SpawnGameObject(Bullet, BossPos, L"Monster");
 }
 
 void BossScript::CreateBossMissile()
@@ -164,7 +249,7 @@ void BossScript::CreateBossMissile()
 	Missile->SetName(L"Missile");
 	Vec3 BossPos = Transform()->GetRelativePos();
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
-	SpawnGameObject(Missile, BossPos, L"Boss");
+	SpawnGameObject(Missile, BossPos, L"Monster");
 }
 
 void BossScript::CreateBossRazer()
@@ -192,24 +277,55 @@ void BossScript::CreateBossRazer()
 	Vec3 BossPos = Transform()->GetRelativePos();
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 
-	SpawnGameObject(Razer, BossPos, L"Boss");
+	SpawnGameObject(Razer, BossPos, L"Monster");
 }
 
-void BossScript::ContactBoss()
+void BossScript::CreateRoomEffect()
 {
-	Vec3 CameraPos = CameraScript->Transform()->GetRelativePos();
-	Vec3 CameraFront = CameraScript->GetvFront();
-	Vec3 BossPos = Transform()->GetRelativePos();
-
-	//if (CameraPos.y - BossPos.y < 1500.f)
-	//{
-	//	CameraPos.x += DT * 200.f;
-	//	CameraScript->Transform()->SetRelativePos(CameraPos);
-	//}
-
-	Vec3 CameraToBossDir = (BossPos - CameraPos).Normalize();
-	CameraPos -= -CameraToBossDir * DT * 400.f;
-
-	CameraScript->Transform()->SetRelativePos(CameraPos);
+	CGameObject* RoomEffect = new CGameObject;
+	RoomEffect->SetName(L"RoomEffect");
 	
+	RoomEffect->AddComponent(new CTransform);
+	RoomEffect->AddComponent(new CMeshRender);
+	RoomEffect->AddComponent(new BossShiled);
+	BossShiled* BS = RoomEffect->GetScript<BossShiled>();
+	BS->SetCameraScript(CameraScript);
+
+
+	RoomEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	RoomEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ShiledMtrl"), 0);
+	RoomEffect->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Shield\\Shiled3.jpg"));
+
+	RoomEffect->Transform()->SetRelativeScale(Vec3(10000.f, 10000.f, 10000.f));
+
+	Vec3 BossPos = Transform()->GetRelativePos();
+	BossPos.y += 500.f;
+
+	SpawnGameObject(RoomEffect, BossPos, 0);
+}
+
+
+
+void BossScript::razer()
+{
+}
+
+void BossScript::missile()
+{
+}
+
+void BossScript::monsterspawn()
+{
+}
+
+void BossScript::teleport()
+{
+}
+
+void BossScript::forceshield()
+{
+}
+
+void BossScript::die()
+{
 }

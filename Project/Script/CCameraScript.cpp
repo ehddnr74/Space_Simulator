@@ -190,18 +190,5 @@ void CCameraScript::Camera3DMove()
 		SpawnGameObject(HitPostProcess, Vec3(0.f, 0.f, 0.f), 0);
 	}
 
-	if (_Fading == false)
-	{
-		_Fading = true;
-		Fadein = new CGameObject;
-		Fadein->SetName(L"Fading");
-		Fadein->AddComponent(new CTransform);
-		Fadein->AddComponent(new CMeshRender);
-		Fadein->AddComponent(new Fading);
-		Fadein->GetScript<Fading>()->SetFadingState(Fading::FadingState::FadeOut);
-		Fadein->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-		Fadein->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"FadingMtrl"), 0);
-		SpawnGameObject(Fadein, Vec3(0.f, 0.f, 0.f), 0);
-	}
 
 }

@@ -7,6 +7,8 @@ Fading::Fading()
 	: CScript((UINT)SCRIPT_TYPE::FADING)
 	, ratio(1.f)
 	, init(false)
+	, fadeout(false)
+	, fadein(false)
 {
 }
 
@@ -28,6 +30,9 @@ void Fading::tick()
 		break;
 	case Fading::FadingState::FadeOut:
 		FadeOut();
+		break;
+	case Fading::FadingState::FadeOutAndIn:
+		FadeOutAndIn();
 		break;
 	}
 }
@@ -62,6 +67,39 @@ void Fading::FadeOut()
 		ratio = 0.f;
 		init = true;
 	}
+
+}
+
+void Fading::FadeOutAndIn()
+{
+	if (init == false)
+	{
+		fadeout = true;
+		ratio = 0.f;
+		init = true;
+	}
+
+	if (fadeout)
+	{
+		ratio += DT * 0.7f;
+		if (ratio >= 1.f)
+		{
+			fadeout = false;
+			fadein = true;
+		}
+	}
+	
+	if (fadein)
+	{
+		ratio -= DT * 0.15f;
+		if (ratio <= 0.f)
+		{
+			DestroyObject(GetOwner());
+			ratio = 0.f;
+		}
+	}
+
+	GetOwner()->MeshRender()->SetRatio(ratio);
 }
 
 

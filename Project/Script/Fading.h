@@ -14,6 +14,7 @@ public:
     {
         FadeIn,
         FadeOut,
+        FadeOutAndIn,
     };
 
     void SetFadingState(FadingState FS) { eFadingState = FS; }
@@ -30,7 +31,12 @@ private:
     void FadeIn();
     void FadeOut();
 
+    void FadeOutAndIn();
+
     bool init;
+
+    bool fadeout;
+    bool fadein;
 
 };
 
