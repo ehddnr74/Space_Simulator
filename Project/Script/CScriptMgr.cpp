@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CScriptMgr.h"
 
+#include "AsteroidbeltScript.h"
 #include "BlackholeScript.h"
 #include "BossBulletScript.h"
 #include "BossPlanets.h"
@@ -24,6 +25,7 @@
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"AsteroidbeltScript");
 	_vec.push_back(L"BlackholeScript");
 	_vec.push_back(L"BossBulletScript");
 	_vec.push_back(L"BossPlanets");
@@ -48,6 +50,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
+	if (L"AsteroidbeltScript" == _strScriptName)
+		return new AsteroidbeltScript;
 	if (L"BlackholeScript" == _strScriptName)
 		return new BlackholeScript;
 	if (L"BossBulletScript" == _strScriptName)
@@ -95,22 +99,25 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
-	case (UINT)SCRIPT_TYPE::LACKHOLESCRIPT:
+	case (UINT)SCRIPT_TYPE::ASTEROIDBELTSCRIPT:
+		return new AsteroidbeltScript;
+		break;
+	case (UINT)SCRIPT_TYPE::BLACKHOLESCRIPT:
 		return new BlackholeScript;
 		break;
-	case (UINT)SCRIPT_TYPE::OSSBULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::BOSSBULLETSCRIPT:
 		return new BossBulletScript;
 		break;
-	case (UINT)SCRIPT_TYPE::OSSPLANETS:
+	case (UINT)SCRIPT_TYPE::BOSSPLANETS:
 		return new BossPlanets;
 		break;
-	case (UINT)SCRIPT_TYPE::OSSSCRIPT:
+	case (UINT)SCRIPT_TYPE::BOSSSCRIPT:
 		return new BossScript;
 		break;
-	case (UINT)SCRIPT_TYPE::OSSSHILED:
+	case (UINT)SCRIPT_TYPE::BOSSSHILED:
 		return new BossShiled;
 		break;
-	case (UINT)SCRIPT_TYPE::ULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
 		return new BulletScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -137,22 +144,22 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::TESTSCRIPT:
 		return new CTestScript;
 		break;
-	case (UINT)SCRIPT_TYPE::EBUGSCRIPT:
+	case (UINT)SCRIPT_TYPE::DEBUGSCRIPT:
 		return new DebugScript;
 		break;
-	case (UINT)SCRIPT_TYPE::ADING:
+	case (UINT)SCRIPT_TYPE::FADING:
 		return new Fading;
 		break;
-	case (UINT)SCRIPT_TYPE::ITPOSTSCRIPT:
+	case (UINT)SCRIPT_TYPE::HITPOSTSCRIPT:
 		return new HitPostScript;
 		break;
-	case (UINT)SCRIPT_TYPE::YPERLOOPSCRIPT:
+	case (UINT)SCRIPT_TYPE::HYPERLOOPSCRIPT:
 		return new HyperLoopScript;
 		break;
-	case (UINT)SCRIPT_TYPE::ETEOSCRIPT:
+	case (UINT)SCRIPT_TYPE::METEOSCRIPT:
 		return new MeteoScript;
 		break;
-	case (UINT)SCRIPT_TYPE::ONSTERBULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::MONSTERBULLETSCRIPT:
 		return new MonsterBulletScript;
 		break;
 	}
@@ -163,27 +170,31 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
-	case SCRIPT_TYPE::LACKHOLESCRIPT:
+	case SCRIPT_TYPE::ASTEROIDBELTSCRIPT:
+		return L"AsteroidbeltScript";
+		break;
+
+	case SCRIPT_TYPE::BLACKHOLESCRIPT:
 		return L"BlackholeScript";
 		break;
 
-	case SCRIPT_TYPE::OSSBULLETSCRIPT:
+	case SCRIPT_TYPE::BOSSBULLETSCRIPT:
 		return L"BossBulletScript";
 		break;
 
-	case SCRIPT_TYPE::OSSPLANETS:
+	case SCRIPT_TYPE::BOSSPLANETS:
 		return L"BossPlanets";
 		break;
 
-	case SCRIPT_TYPE::OSSSCRIPT:
+	case SCRIPT_TYPE::BOSSSCRIPT:
 		return L"BossScript";
 		break;
 
-	case SCRIPT_TYPE::OSSSHILED:
+	case SCRIPT_TYPE::BOSSSHILED:
 		return L"BossShiled";
 		break;
 
-	case SCRIPT_TYPE::ULLETSCRIPT:
+	case SCRIPT_TYPE::BULLETSCRIPT:
 		return L"BulletScript";
 		break;
 
@@ -219,27 +230,27 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CTestScript";
 		break;
 
-	case SCRIPT_TYPE::EBUGSCRIPT:
+	case SCRIPT_TYPE::DEBUGSCRIPT:
 		return L"DebugScript";
 		break;
 
-	case SCRIPT_TYPE::ADING:
+	case SCRIPT_TYPE::FADING:
 		return L"Fading";
 		break;
 
-	case SCRIPT_TYPE::ITPOSTSCRIPT:
+	case SCRIPT_TYPE::HITPOSTSCRIPT:
 		return L"HitPostScript";
 		break;
 
-	case SCRIPT_TYPE::YPERLOOPSCRIPT:
+	case SCRIPT_TYPE::HYPERLOOPSCRIPT:
 		return L"HyperLoopScript";
 		break;
 
-	case SCRIPT_TYPE::ETEOSCRIPT:
+	case SCRIPT_TYPE::METEOSCRIPT:
 		return L"MeteoScript";
 		break;
 
-	case SCRIPT_TYPE::ONSTERBULLETSCRIPT:
+	case SCRIPT_TYPE::MONSTERBULLETSCRIPT:
 		return L"MonsterBulletScript";
 		break;
 

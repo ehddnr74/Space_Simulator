@@ -172,6 +172,7 @@ call CodeGen.exe</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AsteroidbeltScript.h" />
     <ClInclude Include="BlackholeScript.h" />
     <ClInclude Include="BossBulletScript.h" />
     <ClInclude Include="BossPlanets.h" />
@@ -197,6 +198,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AsteroidbeltScript.cpp" />
     <ClCompile Include="BlackholeScript.cpp" />
     <ClCompile Include="BossBulletScript.cpp" />
     <ClCompile Include="BossPlanets.cpp" />

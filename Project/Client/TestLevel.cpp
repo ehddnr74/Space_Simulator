@@ -19,6 +19,7 @@
 #include <Script\BossScript.h>
 #include <Script\HyperLoopScript.h>
 #include <Script\DebugScript.h>
+#include <Script\AsteroidbeltScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -53,7 +54,6 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(17)->SetName(L"09_Neptune");
 	pCurLevel->GetLayer(18)->SetName(L"Hyperloop");
 	pCurLevel->GetLayer(19)->SetName(L"blackhole");
-	pCurLevel->GetLayer(20)->SetName(L"BlackHole_Ring");
 	pCurLevel->GetLayer(21)->SetName(L"Sirius");
 	pCurLevel->GetLayer(22)->SetName(L"Volcanic");
 	pCurLevel->GetLayer(23)->SetName(L"Volcanic_Lava");
@@ -486,21 +486,21 @@ void CreateTestLevel()
 			BlackHole->SetName(L"blackhole");
 			BlackHole->AddComponent(new CTransform);
 			BlackHole->AddComponent(new CMeshRender);
-			BlackHole->AddComponent(new CCollider2D);
+			//BlackHole->AddComponent(new CCollider2D);
 
 			BlackHole->AddComponent(new CPlanet_Lotating);
-			BlackHole->AddComponent(new BlackholeScript);
+			//BlackHole->AddComponent(new BlackholeScript);
 
 			//블랙홀 스크립트 안에 플레이어 스크립트 정보를 넣어준다.
-			BlackholeScript* BS = BlackHole->GetScript<BlackholeScript>();
-			CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
-			BS->SetPlayerScript(CPS);
+			//BlackholeScript* BS = BlackHole->GetScript<BlackholeScript>();
+			//CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
+			//BS->SetPlayerScript(CPS);
 
-			BlackHole->Transform()->SetRelativeScale(Vec3(3000.f, 3000.f, 3000.f));
+			BlackHole->Transform()->SetRelativeScale(Vec3(10000.f, 10000.f, 10000.f));
 			BlackHole->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
 
-			BlackHole->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-			BlackHole->Collider2D()->SetOffsetScale(Vec3(5.f, 5.f, 5.f));
+			//BlackHole->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+			//BlackHole->Collider2D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
 
 			BlackHole->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
 
@@ -516,15 +516,24 @@ void CreateTestLevel()
 			BlackHole_Ring->AddComponent(new CTransform);
 			BlackHole_Ring->AddComponent(new CMeshRender);
 			BlackHole_Ring->AddComponent(new CPlanet_Lotating);
+			BlackHole_Ring->AddComponent(new BlackholeScript);
+			BlackHole_Ring->AddComponent(new CCollider2D);
 
-			BlackHole_Ring->Transform()->SetRelativeScale(Vec3(10000.f, 100.f, 10000.f));
+			BlackholeScript* BS = BlackHole_Ring->GetScript<BlackholeScript>();
+			CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
+			BS->SetPlayerScript(CPS);
+
+			BlackHole_Ring->Transform()->SetRelativeScale(Vec3(30000.f, 100.f, 30000.f));
 			BlackHole_Ring->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 10.f, 0.f));
+
+			BlackHole_Ring->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+			BlackHole_Ring->Collider2D()->SetOffsetScale(Vec3(1.f, 20.f, 1.f));
 
 			BlackHole_Ring->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 			BlackHole_Ring->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"BlackholeRingMtrl"), 0);
 			BlackHole_Ring->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\skybox_03.jpeg"));
 
-			SpawnGameObject(BlackHole_Ring, Vec3(0.f, 0.f, 11000000.f), L"BlackHole_Ring");
+			SpawnGameObject(BlackHole_Ring, Vec3(0.f, 0.f, 11000000.f), L"blackhole");
 		}
 	}
 
@@ -618,23 +627,34 @@ void CreateTestLevel()
 		//	//}
 	}
 
-	{
-		Ptr<CMeshData> MeteoMeshData = nullptr;
-		CGameObject* pMeteo = nullptr;
-		MeteoMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\04_meteo.fbx");
-
-		for (int i = 0; i < 10; ++i)
-		{
-			MeteoMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\04_meteo.mdat");
-			pMeteo = MeteoMeshData->Instantiate();
-			pMeteo->Transform()->SetRelativeScale(Vec3(100.0f, 100.0f, 100.0f));
-			//pMeteo->AddComponent(new CCollider2D);
-			//pMeteo->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-			//pMeteo->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
-			pMeteo->SetName(L"Meteo");
-			SpawnGameObject(pMeteo, Vec3(i * 1000, 0.f, 4000000.f), L"Meteo");
-		}
-	}
+	// ============
+	// Meteo
+	// ============	
+	//{
+	//	Ptr<CMeshData> MeteoMeshData = nullptr;
+	//	CGameObject* pMeteo = nullptr;
+	//	MeteoMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\04_meteo.fbx");
+	//
+	//	for (int i = 0; i < 100; ++i)
+	//	{
+	//		MeteoMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\04_meteo.mdat");
+	//		pMeteo = MeteoMeshData->Instantiate();
+	//		pMeteo->Transform()->SetRelativeScale(Vec3(100.0f, 100.0f, 100.0f));
+	//		//pMeteo->AddComponent(new AsteroidbeltScript);
+	//		//pMeteo->GetScript<AsteroidbeltScript>()->tick();
+	//		//Vec3 pos = pMeteo->GetScript<AsteroidbeltScript>()->GetPosition();
+	//		//pMeteo->AddComponent(new CCollider2D);
+	//		//pMeteo->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	//		//pMeteo->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
+	//		pMeteo->SetName(L"Meteo");
+	//		std::srand(static_cast<unsigned int>(std::time(nullptr)));
+	//
+	//		float x = std::rand() % 1000000 + 1;
+	//		float y = std::rand() % 10000 + 1;
+	//		float z = std::rand() % (3500000 - 3000000 + 1) + 3000000;
+	//		SpawnGameObject(pMeteo, Vec3(x, y, z), L"Meteo");
+	//	}
+	//}
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");

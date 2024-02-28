@@ -60,7 +60,7 @@ float4 PS_DebugShape_Sphere(VS_DEBUG_OUT _in) : SV_Target
         
     float3 vEye = -normalize(_in.vViewPos);        
     float fOutLine = 1.f - saturate(abs(dot(vEye, _in.vViewNormal)));        
-    fOutLine = pow(fOutLine, 1.0);
+    fOutLine = pow(fOutLine, 2.5);
     
     vOutColor = g_vec4_0;
     vOutColor.a = fOutLine;    

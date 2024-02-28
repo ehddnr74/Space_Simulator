@@ -28,7 +28,7 @@ void BlackholeScript::tick()
 
 	float Distance = Transform()->GetRelativePos().z - CameraPos.z;
 
-	if (Dist == false && Distance <= 10000.f)
+	if (Dist == false && Distance <= 25000.f)
 	{
 		Dist = true;
 		Distortion = new CGameObject;
@@ -43,9 +43,9 @@ void BlackholeScript::tick()
 
 	if (Distortion != nullptr)
 	{
-		if (Distance >= 10000.f)
+		if (Distance >= 25000.f)
 		{
-			Dist = false;
+			//Dist = false;
 			DestroyObject(Distortion);
 		}
 	}
@@ -95,24 +95,28 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 
 		// FadeOut
 
-			CGameObject* Fadein = new CGameObject;
-			Fadein->SetName(L"Fading");
-			Fadein->AddComponent(new CTransform);
-			Fadein->AddComponent(new CMeshRender);
-			Fadein->AddComponent(new Fading);
-			Fadein->GetScript<Fading>()->SetFadingState(Fading::FadingState::FadeOutAndIn);
-			Fadein->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-			Fadein->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"FadingMtrl"), 0);
-			SpawnGameObject(Fadein, Vec3(0.f, 0.f, 0.f), 0);
-
+		CGameObject* Fadein = new CGameObject;
+		Fadein->SetName(L"Fading");
+		Fadein->AddComponent(new CTransform);
+		Fadein->AddComponent(new CMeshRender);
+		Fadein->AddComponent(new Fading);
+		Fadein->GetScript<Fading>()->SetFadingState(Fading::FadingState::FadeOutAndIn);
+		Fadein->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+		Fadein->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"FadingMtrl"), 0);
+		SpawnGameObject(Fadein, Vec3(0.f, 0.f, 0.f), 0);
 
 
 		//Boss
 		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
-		CameraPos = Vec3(0.f, 0.f, 30500000.f);
+		Vec3 CameraRot = CameraScript->GetOwner()->Transform()->GetRelativeRot();
+		CameraPos = Vec3(852.712f, -4368.983f, 30498532.000f);
+		CameraRot = Vec3(0.f, 0.f, 0.f);
 		CameraScript->GetOwner()->Transform()->SetRelativePos(CameraPos);
+		CameraScript->GetOwner()->Transform()->SetRelativeRot(CameraRot);
+
 		if (Distortion != nullptr)
-			DestroyObject(Distortion);
+				DestroyObject(Distortion);
+
 		{
 			Ptr<CMeshData> BossStageMeshData = nullptr;
 			CGameObject* Boss = nullptr;

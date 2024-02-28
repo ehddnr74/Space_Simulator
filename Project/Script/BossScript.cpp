@@ -28,6 +28,8 @@ void BossScript::begin()
 	Vec3 BossPos = CameraPos;
 	Vec3 CameraFront = CameraScript->GetvFront();
 	BossPos += CameraFront * 8000.f;
+	BossPos.x -= 600.f;
+	BossPos.y += 1200.f;
 	Transform()->SetRelativeScale(Vec3(250.f, 250.f, 250.f));
 	Transform()->SetRelativeRot(Vec3(XM_PI / 3.7f, XM_PI / 1.33f, XM_PI / 36.f));
 	Transform()->SetRelativePos(Vec3(BossPos));

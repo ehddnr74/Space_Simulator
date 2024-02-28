@@ -79,6 +79,7 @@
       <Filter>Script</Filter>
     </ClInclude>
     <ClInclude Include="DebugScript.h" />
+    <ClInclude Include="AsteroidbeltScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -148,5 +149,6 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="DebugScript.cpp" />
+    <ClCompile Include="AsteroidbeltScript.cpp" />
   </ItemGroup>
 </Project>
