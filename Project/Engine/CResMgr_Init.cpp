@@ -678,6 +678,25 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddRes(pShader->GetKey(), pShader);
 
+	//============================
+	//	FlashShader
+	//	RS_TYPE : CULL_NONE
+	//	DS_TYPE : NO_TEST_NO_WRITE
+	//	BS_TYPE : DEFAULT
+	//	Domain : POSTPROCESS
+	//	============================
+
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"FlashShader");
+	pShader->CreateVertexShader(L"shader\\postprocess.fx", "VS_GrayShader");
+	pShader->CreatePixelShader(L"shader\\postprocess.fx", "PS_FlashShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
 	// ============================
 	// Distortion Shader
 	// RS_TYPE : CULL_NONE
@@ -1283,4 +1302,9 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"MonsterTargetShader"));
 	AddRes(L"MonsterTargetMtrl", pMtrl);
+
+	// FlashMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"FlashShader"));
+	AddRes(L"FlashMtrl", pMtrl);
 }

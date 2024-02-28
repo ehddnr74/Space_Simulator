@@ -105,7 +105,7 @@ void CreateTestLevel()
 
 	pSkyBox->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 	pSkyBox->SkyBox()->SetSkyBoxType(SKYBOX_TYPE::SPHERE);
-	pSkyBox->SkyBox()->SetSkyBoxTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\Space.png"));
+	pSkyBox->SkyBox()->SetSkyBoxTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\Sky02.jpg"));
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), L"Player");
 
@@ -616,15 +616,16 @@ void CreateTestLevel()
 		//	SpawnGameObject(Nar_Shaddaa, Vec3(50000.f, 400.000f, 30450000.f), L"Nar_Shaddaa");
 		//}
 
-		//	//{	// PostProcess Test 
-		//	//	CGameObject* pPostProcess = new CGameObject;
-		//	//	pPostProcess->SetName(L"PostProcess");
-		//	//	pPostProcess->AddComponent(new CTransform);
-		//	//	pPostProcess->AddComponent(new CMeshRender);
-		//	//	pPostProcess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-		//	//	pPostProcess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl"), 0);
-		//	//	SpawnGameObject(pPostProcess, Vec3(0.f, 0.f, 0.f), 0);
-		//	//}
+			//{	// PostProcess Test 
+			//	CGameObject* pPostProcess = new CGameObject;
+			//	pPostProcess->SetName(L"PostProcess");
+			//	pPostProcess->AddComponent(new CTransform);
+			//	pPostProcess->AddComponent(new CMeshRender);
+			//	pPostProcess->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+			//	pPostProcess->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"FlashMtrl"), 0);
+			//	pPostProcess->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Flash\\Flash.png"));
+			//	SpawnGameObject(pPostProcess, Vec3(0.f, 0.f, 0.f), 0);
+			//}
 	}
 
 	// ============
