@@ -12,6 +12,7 @@ struct VS_IN
 struct VS_OUT
 {
     float4 vPosition : SV_Position; // System Value
+    float4 vColor : COLOR;
     float2 vUV : TEXCOORD;
 };
 
@@ -56,6 +57,42 @@ float4 PS_GrayShader(VS_OUT _in) : SV_Target
     //vColor = float4(1.f, 0.f, 0.f, 0.5f);
   
     return vColor;
+}
+
+
+
+float4 PS_FlashShader(VS_OUT _in) : SV_Target
+{
+	//// ÇÈ¼¿ ÁÂÇ¥
+ //   // _in.vPosition.xy;
+ //   float2 vUV = _in.vPosition.xy / g_Resolution;
+    
+ //   float4 vOutColor = (float4) 0.f;
+   
+ //   if (g_btex_0)
+ //   {
+ //       vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+ //   }
+    
+ //   if(vOutColor.a == 0.f)
+ //       discard;
+      
+    
+ //   vOutColor = (1.0f, 0.f, 0.f, 1.0f);
+    
+ //   return vOutColor;
+    
+    float4 vOutColor = (float4) 0.f;
+        
+    if (g_btex_0)
+    {
+        vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    } 
+    
+    if(vOutColor.a != 1)
+        discard;
+    
+    return vOutColor;
 }
 
 

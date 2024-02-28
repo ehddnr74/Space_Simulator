@@ -20,6 +20,7 @@ public:
     };
 
 private:
+    double InitTime;
     BossState eBossState;
     CPlayerScript* PlayerScript;
     CCameraScript* CameraScript;
@@ -31,6 +32,8 @@ private:
     double ShotTime;
     bool Bulletbool;
     bool RoomEffectCheck;
+
+    bool Once = false;
 
 public:
     virtual void begin() override;

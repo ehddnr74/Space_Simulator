@@ -86,7 +86,6 @@ float4 PS_Sphere_Shiled(VS_DEBUG_OUT _in) : SV_Target
     {
         vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
         vOutColor.a = fOutLine;
-
     }
     
     return vOutColor;

@@ -71,6 +71,7 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 {
 	if (L"Empty" == _Other->GetOwner()->GetName())
 	{
+		PlayerScript->GetOwner()->Transform()->SetRelativeScale(0.f, 0.f, 0.f);
 		CameraScript->GetSkyBox()->SkyBox()->SetSkyBoxTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\skybox_05.jpg"));
 
 		//CGameObject* Shield = new CGameObject;
@@ -121,8 +122,8 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 			Ptr<CMeshData> BossStageMeshData = nullptr;
 			CGameObject* Boss = nullptr;
 		
-			//BossStageMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss.fbx"); // юс╫ц╥н Enemy
-			BossStageMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\boss.mdat");
+			//BossStageMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss_Test.fbx"); 
+			BossStageMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\boss_Test.mdat");
 			Boss = BossStageMeshData->Instantiate();
 		
 			Boss->AddComponent(new CCollider2D);

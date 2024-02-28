@@ -13,6 +13,7 @@ BossScript::BossScript()
 	, Bulletbool(false)
 	, ShotTime(3.0f)
 	, RoomEffectCheck(false)
+	, InitTime(0.f)
 
 {
 }
@@ -27,9 +28,11 @@ void BossScript::begin()
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 	Vec3 BossPos = CameraPos;
 	Vec3 CameraFront = CameraScript->GetvFront();
-	BossPos += CameraFront * 8000.f;
+	BossPos += CameraFront * 10000.f;
 	BossPos.x -= 600.f;
-	BossPos.y += 1200.f;
+	//BossPos.y += 2000.f;
+	CameraPos.y -= 4000.f;
+	CameraScript->GetOwner()->Transform()->SetRelativePos(CameraPos);
 	Transform()->SetRelativeScale(Vec3(250.f, 250.f, 250.f));
 	Transform()->SetRelativeRot(Vec3(XM_PI / 3.7f, XM_PI / 1.33f, XM_PI / 36.f));
 	Transform()->SetRelativePos(Vec3(BossPos));
@@ -133,67 +136,76 @@ void BossScript::begin()
 
 void BossScript::tick()
 {
+	InitTime += DT;
+
 	// 보스의 프레임마다 위치 조정 
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 	Vec3 CameraRot = CameraScript->GetOwner()->Transform()->GetRelativeRot();
 	Vec3 BossPos = Transform()->GetRelativePos();
 	Vec3 CameraFront = CameraScript->GetvFront();
-
-	if (BossPos.z - CameraPos.z >= 12000.f)
+	if (BossPos.z - CameraPos.z >= 14000.f)
 	{
-		return;
+		BossPos.z = BossPos.z;
 	}
 	else
 	{
-		BossPos.z += CameraFront.z * DT * 1200.f;
+		BossPos.z += CameraFront.z * DT * 2500.f;
 	}
 	Transform()->SetRelativePos(BossPos);
 
-	if (RoomEffectCheck == false)
+	if (InitTime >= 5.f)
 	{
-		RoomEffectCheck = true;
-		CreateRoomEffect();
-	}
+		if (Once == false)
+		{
+			Once = true;
+			PlayerScript->GetOwner()->Transform()->SetRelativeScale(0.1f, 0.1f, 0.1f);
+		}
 
-	//if (HP <= 0)
-	//{
-	//	DestroyObject(GetOwner());
-	//}
+		if (RoomEffectCheck == false)
+		{
+			RoomEffectCheck = true;
+			CreateRoomEffect();
+		}
 
-	//ShotTime += DT;
+		//if (HP <= 0)
+		//{
+		//	DestroyObject(GetOwner());
+		//}
 
-	//if (ShotTime >= 5.0f && Bulletbool == false)
-	//{
-	//	ShotTime = 0.f;
-	//	Bulletbool = true;
-	//	//CreateBossBullet();
-	//	//CreateBossMissile();
-	//	//CreateBossRazer();
-	//}
+		//ShotTime += DT;
 
-	switch (eBossState)
-	{
-	case BossScript::BossState::Razer:
-		razer();
-		break;
-	case BossScript::BossState::Missile:
-		missile();
-		break;
-	case BossScript::BossState::MonsterSpawn:
-		monsterspawn();
-		break;
-	case BossScript::BossState::TelePort:
-		teleport();
-		break;
-	case BossScript::BossState::ForceShield:
-		forceshield();
-		break;
-	case BossScript::BossState::Die:
-		die();
-		break;
+		//if (ShotTime >= 5.0f && Bulletbool == false)
+		//{
+		//	ShotTime = 0.f;
+		//	Bulletbool = true;
+		//	//CreateBossBullet();
+		//	//CreateBossMissile();
+		//	//CreateBossRazer();
+		//}
+
+		switch (eBossState)
+		{
+		case BossScript::BossState::Razer:
+			razer();
+			break;
+		case BossScript::BossState::Missile:
+			missile();
+			break;
+		case BossScript::BossState::MonsterSpawn:
+			monsterspawn();
+			break;
+		case BossScript::BossState::TelePort:
+			teleport();
+			break;
+		case BossScript::BossState::ForceShield:
+			forceshield();
+			break;
+		case BossScript::BossState::Die:
+			die();
+			break;
+		}
 	}
 }
-
 void BossScript::BeginOverlap(CCollider2D* _Other)
 {
 	if (L"Bullet" == _Other->GetOwner()->GetName())
@@ -301,7 +313,8 @@ void BossScript::CreateRoomEffect()
 	RoomEffect->Transform()->SetRelativeScale(Vec3(10000.f, 10000.f, 10000.f));
 
 	Vec3 BossPos = Transform()->GetRelativePos();
-	BossPos.y += 500.f;
+	//Vec3 CameraPos = CameraScript->Transform()->GetRelativePos();
+	//CameraPos.y += 3000.f;
 
 	SpawnGameObject(RoomEffect, BossPos, 0);
 }
