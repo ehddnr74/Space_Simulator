@@ -15,6 +15,7 @@
 #include "CPlanet_Lotating.h"
 #include "CPlayerScript.h"
 #include "CTestScript.h"
+#include "DebugScript.h"
 #include "Fading.h"
 #include "HitPostScript.h"
 #include "HyperLoopScript.h"
@@ -37,6 +38,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CPlanet_Lotating");
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CTestScript");
+	_vec.push_back(L"DebugScript");
 	_vec.push_back(L"Fading");
 	_vec.push_back(L"HitPostScript");
 	_vec.push_back(L"HyperLoopScript");
@@ -74,6 +76,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CPlayerScript;
 	if (L"CTestScript" == _strScriptName)
 		return new CTestScript;
+	if (L"DebugScript" == _strScriptName)
+		return new DebugScript;
 	if (L"Fading" == _strScriptName)
 		return new Fading;
 	if (L"HitPostScript" == _strScriptName)
@@ -91,22 +95,22 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
-	case (UINT)SCRIPT_TYPE::BLACKHOLESCRIPT:
+	case (UINT)SCRIPT_TYPE::LACKHOLESCRIPT:
 		return new BlackholeScript;
 		break;
-	case (UINT)SCRIPT_TYPE::BOSSBULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::OSSBULLETSCRIPT:
 		return new BossBulletScript;
 		break;
-	case (UINT)SCRIPT_TYPE::BOSSPLANETS:
+	case (UINT)SCRIPT_TYPE::OSSPLANETS:
 		return new BossPlanets;
 		break;
-	case (UINT)SCRIPT_TYPE::BOSSSCRIPT:
+	case (UINT)SCRIPT_TYPE::OSSSCRIPT:
 		return new BossScript;
 		break;
-	case (UINT)SCRIPT_TYPE::BOSSSHILED:
+	case (UINT)SCRIPT_TYPE::OSSSHILED:
 		return new BossShiled;
 		break;
-	case (UINT)SCRIPT_TYPE::BULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::ULLETSCRIPT:
 		return new BulletScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -133,19 +137,22 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::TESTSCRIPT:
 		return new CTestScript;
 		break;
-	case (UINT)SCRIPT_TYPE::FADING:
+	case (UINT)SCRIPT_TYPE::EBUGSCRIPT:
+		return new DebugScript;
+		break;
+	case (UINT)SCRIPT_TYPE::ADING:
 		return new Fading;
 		break;
-	case (UINT)SCRIPT_TYPE::HITPOSTSCRIPT:
+	case (UINT)SCRIPT_TYPE::ITPOSTSCRIPT:
 		return new HitPostScript;
 		break;
-	case (UINT)SCRIPT_TYPE::HYPERLOOPSCRIPT:
+	case (UINT)SCRIPT_TYPE::YPERLOOPSCRIPT:
 		return new HyperLoopScript;
 		break;
-	case (UINT)SCRIPT_TYPE::METEOSCRIPT:
+	case (UINT)SCRIPT_TYPE::ETEOSCRIPT:
 		return new MeteoScript;
 		break;
-	case (UINT)SCRIPT_TYPE::MONSTERBULLETSCRIPT:
+	case (UINT)SCRIPT_TYPE::ONSTERBULLETSCRIPT:
 		return new MonsterBulletScript;
 		break;
 	}
@@ -156,27 +163,27 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
-	case SCRIPT_TYPE::BLACKHOLESCRIPT:
+	case SCRIPT_TYPE::LACKHOLESCRIPT:
 		return L"BlackholeScript";
 		break;
 
-	case SCRIPT_TYPE::BOSSBULLETSCRIPT:
+	case SCRIPT_TYPE::OSSBULLETSCRIPT:
 		return L"BossBulletScript";
 		break;
 
-	case SCRIPT_TYPE::BOSSPLANETS:
+	case SCRIPT_TYPE::OSSPLANETS:
 		return L"BossPlanets";
 		break;
 
-	case SCRIPT_TYPE::BOSSSCRIPT:
+	case SCRIPT_TYPE::OSSSCRIPT:
 		return L"BossScript";
 		break;
 
-	case SCRIPT_TYPE::BOSSSHILED:
+	case SCRIPT_TYPE::OSSSHILED:
 		return L"BossShiled";
 		break;
 
-	case SCRIPT_TYPE::BULLETSCRIPT:
+	case SCRIPT_TYPE::ULLETSCRIPT:
 		return L"BulletScript";
 		break;
 
@@ -212,23 +219,27 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CTestScript";
 		break;
 
-	case SCRIPT_TYPE::FADING:
+	case SCRIPT_TYPE::EBUGSCRIPT:
+		return L"DebugScript";
+		break;
+
+	case SCRIPT_TYPE::ADING:
 		return L"Fading";
 		break;
 
-	case SCRIPT_TYPE::HITPOSTSCRIPT:
+	case SCRIPT_TYPE::ITPOSTSCRIPT:
 		return L"HitPostScript";
 		break;
 
-	case SCRIPT_TYPE::HYPERLOOPSCRIPT:
+	case SCRIPT_TYPE::YPERLOOPSCRIPT:
 		return L"HyperLoopScript";
 		break;
 
-	case SCRIPT_TYPE::METEOSCRIPT:
+	case SCRIPT_TYPE::ETEOSCRIPT:
 		return L"MeteoScript";
 		break;
 
-	case SCRIPT_TYPE::MONSTERBULLETSCRIPT:
+	case SCRIPT_TYPE::ONSTERBULLETSCRIPT:
 		return L"MonsterBulletScript";
 		break;
 

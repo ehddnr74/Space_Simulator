@@ -78,6 +78,7 @@
     <ClInclude Include="BossPlanets.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="DebugScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -146,5 +147,6 @@
     <ClCompile Include="BossPlanets.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="DebugScript.cpp" />
   </ItemGroup>
 </Project>

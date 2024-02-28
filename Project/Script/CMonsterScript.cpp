@@ -2,6 +2,7 @@
 #include "CMonsterScript.h"
 #include "CCameraScript.h"
 #include "MonsterBulletScript.h"
+#include "DebugScript.h"
 #include "time.h"
 
 
@@ -25,7 +26,6 @@ CMonsterScript::~CMonsterScript()
 void CMonsterScript::begin()
 {
 	CameraScript = PlayerScript->GetOwner()->GetParent()->GetScript<CCameraScript>();
-
 	//Vec3 MonsterPos = Transform()->GetRelativePos();
 	//Vec3 CameraFront = CameraScript->GetvFront();
 
@@ -39,6 +39,13 @@ void CMonsterScript::tick()
 	if (HP <= 0) // 추후 폭발 애니메이션 추가 // 셰이더 맞으면 빨갛게 하이라이트 
 	{
 		DestroyObject(GetOwner());
+
+		if (Debug != nullptr)
+		{
+			DestroyObject(Debug);
+			DebugScript* DS = Debug->GetScript<DebugScript>();
+			DS->SetMonsterScript(nullptr);
+		}
 	}
 
 	Vec3 MonsterPos = Transform()->GetRelativePos();
@@ -49,7 +56,7 @@ void CMonsterScript::tick()
 	Vec3 CameraRot = CameraScript->GetOwner()->Transform()->GetRelativeRot();
 	Transform()->SetRelativeRot(CameraRot);
 
-	
+
 	if (abs(MonsterPos.z - CameraPos.z) <= abs(CameraFront.z * 1000))
 	{
 		MoveTime += DT;
@@ -81,7 +88,7 @@ void CMonsterScript::tick()
 
 		if (Bulletbool == false) // 총알이 발사중이 아니라면 시간이 흐른다. 
 			ShotTime += DT;
-	
+
 
 		if (ShotTime >= 5.0f && Bulletbool == false)
 		{
@@ -89,6 +96,12 @@ void CMonsterScript::tick()
 			Bulletbool = true;
 			CreateMonsterBullet();
 		}
+	}
+
+	if (test)
+	{
+		CreateMonsterDebug();
+		test = false;
 	}
 	//{
 	//	if (Bulletbool == false)
@@ -104,6 +117,7 @@ void CMonsterScript::tick()
 	//		BulletPos -= BulletDir * DT * 300.f;
 	//		Bullet->Transform()->SetRelativePos(BulletPos);
 	//	}
+
 }
 
 void CMonsterScript::BeginOverlap(CCollider2D* _Other)
@@ -111,10 +125,11 @@ void CMonsterScript::BeginOverlap(CCollider2D* _Other)
 	if (L"Bullet" == _Other->GetOwner()->GetName()) //5방컷
 	{
 		HP -= 10;
+		Check = true;
 	}
 }
 
-void CMonsterScript::CreateMonsterBullet() 
+void CMonsterScript::CreateMonsterBullet()
 {
 	Ptr<CMeshData> BulletMeshData = nullptr;
 	Bullet = nullptr;
@@ -133,5 +148,26 @@ void CMonsterScript::CreateMonsterBullet()
 	Vec3 MonsterPos = Transform()->GetRelativePos();
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 	SpawnGameObject(Bullet, MonsterPos, L"Monster");
+}
+
+void CMonsterScript::CreateMonsterDebug()
+{
+	Debug = new CGameObject;
+
+	Debug->AddComponent(new CTransform);
+	Debug->AddComponent(new CMeshRender);
+	Debug->AddComponent(new DebugScript);
+
+	DebugScript* DS = Debug->GetScript<DebugScript>();
+	DS->SetMonsterScript(this);
+
+	Debug->Transform()->SetRelativeScale(Vec3(700.f, 700.f, 700.f));
+	Debug->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+	Debug->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	Debug->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MonsterTargetMtrl"), 0);
+
+	Debug->SetName(L"Debug");
+	SpawnGameObject(Debug, Vec3(0.f, 0.f, 0.f), L"TargetAim");
 }
 

@@ -18,6 +18,7 @@
 #include <Script\BlackholeScript.h>
 #include <Script\BossScript.h>
 #include <Script\HyperLoopScript.h>
+#include <Script\DebugScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -58,7 +59,7 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(23)->SetName(L"Volcanic_Lava");
 	pCurLevel->GetLayer(24)->SetName(L"Nar_Shaddaa");
 	pCurLevel->GetLayer(25)->SetName(L"Meteo");
-
+	pCurLevel->GetLayer(26)->SetName(L"TargetAim");
 
 	// Main Camera Object 생성
 	CGameObject* pMainCam = new CGameObject;
@@ -163,31 +164,31 @@ void CreateTestLevel()
 		pMainCam->AddChild(Plane);
 	}
 
-	//// ============
-	//// 몬스터 FBX
-	//// ============	
-	//{
-	//	Ptr<CMeshData> MonsterMeshData = nullptr;
-	//	CGameObject* Monster = nullptr;
-	//
-	//	MonsterMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Enemy.fbx");
-	//	//HouseMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\test78678678.mdat");
-	//	Monster = MonsterMeshData->Instantiate();
-	//	Monster->AddComponent(new CMonsterScript);
-	//	CMonsterScript* MS = Monster->GetScript<CMonsterScript>();
-	//	CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
-	//	MS->SetPlayerScript(CPS);
-	//	//CPlayerScript* PS = Plane->GetScript<CPlayerScript>();
-	//	//PS->SetEnemy(pHouse);
-	//	Monster->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 50.f));
-	//	Monster->Transform()->SetRelativeRot(Vec3(50.f, 0.f, 0.f));
-	//	Monster->AddComponent(new CCollider2D);
-	//	Monster->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	//	Monster->Collider2D()->SetOffsetScale(Vec3(8.f, 8.f, 8.f));
-	//	Monster->SetName(L"Monster");
-	//	SpawnGameObject(Monster, Vec3(0.f, 0.f, 3000.f), L"Monster");
-	//	MS->begin();
-	//}
+	// ============
+	// 몬스터 FBX
+	// ============	
+	{
+		Ptr<CMeshData> MonsterMeshData = nullptr;
+		CGameObject* Monster = nullptr;
+	
+		MonsterMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Enemy.fbx");
+		//HouseMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\test78678678.mdat");
+		Monster = MonsterMeshData->Instantiate();
+		Monster->AddComponent(new CMonsterScript);
+		CMonsterScript* MS = Monster->GetScript<CMonsterScript>();
+		CPlayerScript* CPS = Plane->GetScript<CPlayerScript>();
+		MS->SetPlayerScript(CPS);
+		//CPlayerScript* PS = Plane->GetScript<CPlayerScript>();
+		//PS->SetEnemy(pHouse);
+		Monster->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 50.f));
+		Monster->Transform()->SetRelativeRot(Vec3(50.f, 0.f, 0.f));
+		Monster->AddComponent(new CCollider2D);
+		Monster->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		Monster->Collider2D()->SetOffsetScale(Vec3(8.f, 8.f, 8.f));
+		Monster->SetName(L"Monster");
+		SpawnGameObject(Monster, Vec3(0.f, 0.f, 3000.f), L"Monster");
+		MS->begin();
+	}
 
 		//Ptr<CMeshData> Meteo1MeshData = nullptr;
 		//CGameObject* pMeteo1 = nullptr;
@@ -639,4 +640,5 @@ void CreateTestLevel()
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"blackhole");
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Hyperloop");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"TargetAim");
 }

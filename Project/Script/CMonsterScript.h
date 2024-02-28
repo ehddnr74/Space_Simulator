@@ -10,6 +10,7 @@ private:
     CPlayerScript* PlayerScript;
     CCameraScript* CameraScript;
     CGameObject* Bullet;
+    CGameObject* Debug;
 
     double MoveTime;
     double ShotTime;
@@ -17,7 +18,9 @@ private:
     int RandomPos;
     bool Bulletbool;
 
+    bool Check = false;
 
+    bool test = true;
 
 public:
     virtual void begin() override;
@@ -28,7 +31,14 @@ public:
 
     void CreateMonsterBullet();
 
+    void CreateMonsterDebug();
+
     void SetBulletBool(bool b) { Bulletbool = b; }
+
+    void SetCheck(bool a) { Check = a; }
+
+    CPlayerScript* GetPlayerScript() { return PlayerScript; }
+    bool GetCheck() { return Check; }
 
     CLONE(CMonsterScript);
 public:

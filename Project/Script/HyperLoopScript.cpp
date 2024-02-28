@@ -22,17 +22,20 @@ void HyperLoopScript::tick()
 {
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 
-	if (collision)
+	if (Active)
 	{
-		mTime += DT;
-		CameraPos.z += DT * 5000.f;
-
-		if (mTime >= 5.f)
+		if (collision)
 		{
-			collision = false;
-			mTime = 0.f;
+			mTime += DT;
+			CameraPos.z += DT * 5000.f;
+
+			if (mTime >= 5.f)
+			{
+				collision = false;
+				mTime = 0.f;
+			}
+			CameraScript->Transform()->SetRelativePos(CameraPos);
 		}
-		CameraScript->Transform()->SetRelativePos(CameraPos);
 	}
 }
 

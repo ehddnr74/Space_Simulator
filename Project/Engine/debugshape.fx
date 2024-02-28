@@ -92,10 +92,17 @@ float4 PS_Sphere_Shiled(VS_DEBUG_OUT _in) : SV_Target
     return vOutColor;
 }
 
-
-
-
-
-
+float4 PS_MonsterTargetShape(VS_DEBUG_OUT _in) : SV_Target
+{
+    float4 vOutColor = float4(1.0f, 0.f, 0.f, 1.f);
+        
+    float3 vEye = -normalize(_in.vViewPos);
+    float fOutLine = 1.f - saturate(abs(dot(vEye, _in.vViewNormal)));
+    fOutLine = pow(fOutLine, 2.5);
+    
+    vOutColor.a = fOutLine;
+    
+    return vOutColor;
+}
 
 #endif

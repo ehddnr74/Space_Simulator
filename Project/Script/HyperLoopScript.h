@@ -12,6 +12,8 @@ private:
     CGameObject* Camera;
 
     bool collision = false;
+    bool Active = false;
+
     double mTime;
 
 public:
@@ -20,6 +22,7 @@ public:
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
     void SetPlayerScript(CPlayerScript* CS) { PlayerScript = CS; }
+    void SetActive(bool active) { Active = active; }
 
     CLONE(HyperLoopScript);
 public:
