@@ -136,21 +136,44 @@ bool CCollisionMgr::CollisionBtwCollider(CCollider2D* _pLeft, CCollider2D* _pRig
 	Vec3 LocalRadiusY = Vec3(0.f, 0.5f, 0.f);
 	Vec3 LocalRadiusZ = Vec3(0.f, 0.f, 0.5f);
 
+	Vec3 LeftWorldPos = XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pLeft->GetColliderWorldMat());
+	Vec3 RightWorldPos = XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pRight->GetColliderWorldMat());
 
-	Vec3 LeftRadiusX = XMVector3TransformCoord(LocalRadiusX, _pLeft->GetColliderWorldMat()) - XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pLeft->GetColliderWorldMat());
-	Vec3 RightRadiusX = XMVector3TransformCoord(LocalRadiusX, _pRight->GetColliderWorldMat()) - XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pRight->GetColliderWorldMat());
+	Vec3 LeftRadiusX = XMVector3TransformCoord(LocalRadiusX, _pLeft->GetColliderWorldMat());
+	LeftRadiusX -= LeftWorldPos;
+	Vec3 RightRadiusX = XMVector3TransformCoord(LocalRadiusX, _pRight->GetColliderWorldMat());
+	RightRadiusX -= RightWorldPos;
 
-	Vec3 LeftRadiusY = XMVector3TransformCoord(LocalRadiusY, _pLeft->GetColliderWorldMat()) - XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pLeft->GetColliderWorldMat());
-	Vec3 RightRadiusY = XMVector3TransformCoord(LocalRadiusY, _pRight->GetColliderWorldMat()) - XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pRight->GetColliderWorldMat());
+	Vec3 LeftRadiusY = XMVector3TransformCoord(LocalRadiusY, _pLeft->GetColliderWorldMat());
+	LeftRadiusY -= LeftWorldPos;
+	Vec3 RightRadiusY = XMVector3TransformCoord(LocalRadiusY, _pRight->GetColliderWorldMat());
+	RightRadiusY -= RightWorldPos;
 
-	Vec3 LeftRadiusZ = XMVector3TransformCoord(LocalRadiusZ, _pLeft->GetColliderWorldMat()) - XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pLeft->GetColliderWorldMat());
-	Vec3 RightRadiusZ = XMVector3TransformCoord(LocalRadiusZ, _pRight->GetColliderWorldMat()) - XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pRight->GetColliderWorldMat());
+	Vec3 LeftRadiusZ = XMVector3TransformCoord(LocalRadiusZ, _pLeft->GetColliderWorldMat());
+	LeftRadiusZ -= LeftWorldPos;
+	Vec3 RightRadiusZ = XMVector3TransformCoord(LocalRadiusZ, _pRight->GetColliderWorldMat());
+	RightRadiusZ -= RightWorldPos;
 
-	Vec3 Center = XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pRight->GetColliderWorldMat()) - XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), _pLeft->GetColliderWorldMat());
+	float L_RadiusX = sqrt((LeftRadiusX.x * LeftRadiusX.x) + (LeftRadiusX.y + LeftRadiusX.y) + (LeftRadiusX.z + LeftRadiusX.z));
+	float R_RadiusX = sqrt((RightRadiusX.x * RightRadiusX.x) + (RightRadiusX.y + RightRadiusX.y) + (RightRadiusX.z + RightRadiusX.z));
 
+	float L_RadiusY = sqrt((LeftRadiusY.x * LeftRadiusY.x) + (LeftRadiusY.y + LeftRadiusY.y) + (LeftRadiusY.z + LeftRadiusY.z));
+	float R_RadiusY = sqrt((RightRadiusY.x * RightRadiusY.x) + (RightRadiusY.y + RightRadiusY.y) + (RightRadiusY.z + RightRadiusY.z));
 
-	if (abs(Center.x + 20) < (LeftRadiusX.x + RightRadiusX.x) && abs(Center.y + 20) < (LeftRadiusY.y + RightRadiusY.y)
-		&& abs(Center.z + 20) < (LeftRadiusZ.z + RightRadiusZ.z))
+	float L_RadiusZ = sqrt((LeftRadiusZ.x * LeftRadiusZ.x) + (LeftRadiusZ.y + LeftRadiusZ.y) + (LeftRadiusZ.z + LeftRadiusZ.z));
+	float R_RadiusZ = sqrt((RightRadiusZ.x * RightRadiusZ.x) + (RightRadiusZ.y + RightRadiusZ.y) + (RightRadiusZ.z + RightRadiusZ.z));
+
+	Vec3 Center = RightWorldPos - LeftWorldPos;
+	float fDistance = sqrt((Center.x * Center.x) + (Center.y + Center.y) + (Center.z + Center.z));
+
+	//if (abs(Center.x + 20) < (LeftRadiusX.x + RightRadiusX.x) && abs(Center.y + 20) < (LeftRadiusY.y + RightRadiusY.y)
+		//&& abs(Center.z + 20) < (LeftRadiusZ.z + RightRadiusZ.z))
+	//return true;
+
+	if (fDistance <= (L_RadiusX + R_RadiusX) && fDistance <= (L_RadiusY + R_RadiusY) && fDistance <= (L_RadiusZ + R_RadiusZ))
+		return true;
+
+	if (pow(Center.x, 2) + pow(Center.y, 2) + pow(Center.z, 2) < pow(LeftRadiusX.x + RightRadiusX.x, 2))
 		return true;
 
 	return false;

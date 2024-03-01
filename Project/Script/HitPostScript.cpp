@@ -5,6 +5,7 @@
 HitPostScript::HitPostScript()
 	: CScript((UINT)SCRIPT_TYPE::HITPOSTSCRIPT)
 	, HitPostProcessTime(0.f)
+	, ratio(0.7f)
 {
 }
 
@@ -18,7 +19,7 @@ void HitPostScript::begin()
 
 void HitPostScript::tick()
 {
-	ratio -= DT * 0.5f;
+	ratio -= DT * 1.0f;
 	GetOwner()->MeshRender()->SetHitRatio(ratio);
 
 	HitPostProcessTime += DT;

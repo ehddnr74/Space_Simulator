@@ -38,7 +38,7 @@ void BulletScript::tick()
 	ShotTime += DT;
 
 	Vec3 BulletPos = Transform()->GetRelativePos();
-	BulletPos += ShootDir * DT * 1500.f;
+	BulletPos += ShootDir * DT * 3000.f;
 	Transform()->SetRelativePos(BulletPos);
 
 
@@ -63,4 +63,10 @@ void BulletScript::BeginOverlap(CCollider2D* _Other)
 	{
 		DestroyObject(GetOwner());
 	}
+
+	if (L"Boss" == _Other->GetOwner()->GetName())
+	{
+		DestroyObject(GetOwner());
+	}
+
 }

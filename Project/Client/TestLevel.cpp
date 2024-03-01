@@ -181,7 +181,7 @@ void CreateTestLevel()
 		//CPlayerScript* PS = Plane->GetScript<CPlayerScript>();
 		//PS->SetEnemy(pHouse);
 		Monster->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 50.f));
-		Monster->Transform()->SetRelativeRot(Vec3(50.f, 0.f, 0.f));
+		Monster->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
 		Monster->AddComponent(new CCollider2D);
 		Monster->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
 		Monster->Collider2D()->SetOffsetScale(Vec3(8.f, 8.f, 8.f));
@@ -656,6 +656,33 @@ void CreateTestLevel()
 	//		SpawnGameObject(pMeteo, Vec3(x, y, z), L"Meteo");
 	//	}
 	//}
+
+	Ptr<CMeshData> BossStageMeshData = nullptr;
+	CGameObject* Boss = nullptr;
+
+	//BossStageMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss_Test.fbx"); 
+	BossStageMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\boss_Test.mdat");
+	Boss = BossStageMeshData->Instantiate();
+
+	Boss->AddComponent(new CCollider2D);
+	//Boss->AddComponent(new BossScript);
+
+	//BossScript* BS = Boss->GetScript<BossScript>();
+	//BS->SetPlayerScript(PlayerScript);
+
+	//Boss->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
+
+	//Boss->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+
+	//CameraScript->Transform()->SetRelativeRot(Vec3(0.f, -10.f, 0.f));
+
+	Boss->Collider2D()->SetOffsetPos(Vec3(-771.f, -390.f, -530.f));
+	Boss->Collider2D()->SetOffsetScale(Vec3(700.f, 700.f, 700.f));
+
+	Boss->SetName(L"Boss");
+	SpawnGameObject(Boss, Vec3(0.f, 0.f, 0.f), L"Monster");
+
+
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
