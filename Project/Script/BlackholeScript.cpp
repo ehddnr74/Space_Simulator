@@ -110,7 +110,7 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 		//Boss
 		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 		Vec3 CameraRot = CameraScript->GetOwner()->Transform()->GetRelativeRot();
-		CameraPos = Vec3(852.712f, -4368.983f, 30498532.000f);
+		CameraPos = Vec3(0.f, 0.f, 30498532.000f);
 		CameraRot = Vec3(0.f, 0.f, 0.f);
 		CameraScript->GetOwner()->Transform()->SetRelativePos(CameraPos);
 		CameraScript->GetOwner()->Transform()->SetRelativeRot(CameraRot);
@@ -118,7 +118,6 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 		if (Distortion != nullptr)
 				DestroyObject(Distortion);
 
-		{
 			Ptr<CMeshData> BossStageMeshData = nullptr;
 			CGameObject* Boss = nullptr;
 		
@@ -126,11 +125,12 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 			BossStageMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\boss_Test.mdat");
 			Boss = BossStageMeshData->Instantiate();
 		
-			Boss->AddComponent(new CCollider2D);
+			//Boss->AddComponent(new CCollider2D);
 			Boss->AddComponent(new BossScript);
 		
 			BossScript* BS = Boss->GetScript<BossScript>();
 			BS->SetPlayerScript(PlayerScript);
+			//PlayerScript->SetBossScript(BS);
 		
 			//Boss->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 		
@@ -138,12 +138,11 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 		
 			//CameraScript->Transform()->SetRelativeRot(Vec3(0.f, -10.f, 0.f));
 		
-			Boss->Collider2D()->SetOffsetPos(Vec3(-771.f, -390.f, -530.f));
-			Boss->Collider2D()->SetOffsetScale(Vec3(700.f, 700.f, 700.f));
+			//Boss->Collider2D()->SetOffsetPos(Vec3(10.f, 10.f, 10.f));
+			//Boss->Collider2D()->SetOffsetScale(Vec3(50.f, 50.f, 50.f));
 		
 			Boss->SetName(L"Boss");
 			SpawnGameObject(Boss, Vec3(0.f, 0.f, 0.f), L"Monster");
 			//SpawnGameObject(Boss, Vec3(0.0f, 0.0f, 5000.f), L"Boss");
-		}
 	}
 }

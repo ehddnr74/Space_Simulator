@@ -7,6 +7,7 @@
 #include "CMissileScript.h"
 #include "CCameraScript.h"
 #include "BulletScript.h"
+#include "BossScript.h"
 
 
 CPlayerScript::CPlayerScript()
@@ -73,8 +74,17 @@ void CPlayerScript::Move()
 	if (KEY_RELEASE(KEY::Q))
 		m_Booster = false;
 
+	if (KEY_TAP(KEY::T))
+	{
+		MissileCheck = true;
+		if(MissileCheck)
+		CreateMissile();
+	}
+
 	if (KEY_TAP(KEY::F))
 	{
+		BulletCheck = true;
+		if (BulletCheck)
 		CreateBullet();
 	}
 
@@ -106,6 +116,7 @@ void CPlayerScript::Booster()
 
 void CPlayerScript::CreateBullet()
 {
+	BulletCheck = false;
 	//Bullet = new CGameObject;
 	//Bullet->SetName(L"Bullet");
 	//Bullet->AddComponent(new CTransform);
@@ -128,7 +139,6 @@ void CPlayerScript::CreateBullet()
 
 	Ptr<CMeshData> BulletMeshData = nullptr;
 	CGameObject* Bullet = nullptr;
-
 	BulletMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\08_Uranus.mdat");
 	Bullet = BulletMeshData->Instantiate();
 	Bullet->AddComponent(new BulletScript);
@@ -139,6 +149,27 @@ void CPlayerScript::CreateBullet()
 	Bullet->Collider2D()->SetOffsetScale(Vec3(1000.f, 1000.f, 1000.f));
 	Bullet->SetName(L"Bullet");
 	SpawnGameObject(Bullet, Vec3(0.f, 0.f, 200.f), L"Player");
+}
+
+
+void CPlayerScript::CreateMissile()
+{
+	MissileCheck = false;
+	Ptr<CMeshData> MissileMeshData = nullptr;
+	CGameObject* Missile = nullptr;
+	//BulletMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss_missile_02.fbx");
+	MissileMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\boss_missile_02.mdat");
+	Missile = MissileMeshData->Instantiate();
+	Missile->AddComponent(new CMissileScript);
+	CMissileScript* MS = Missile->GetScript<CMissileScript>();
+	MS->SetPlayerScript(this);
+	
+	//Bullet->AddComponent(new CCollider2D);
+	//Bullet->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	//Bullet->Collider2D()->SetOffsetScale(Vec3(1000.f, 1000.f, 1000.f));
+	Missile->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
+	Missile->SetName(L"Missile");
+	SpawnGameObject(Missile, Vec3(0.f, 0.f, 200.f), L"Player");
 }
 
 void CPlayerScript::BeginOverlap(CCollider2D* _Other)

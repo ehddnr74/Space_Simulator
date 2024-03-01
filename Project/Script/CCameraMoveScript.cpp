@@ -81,7 +81,7 @@ void CCameraMoveScript::Camera3DMove()
 	float fSpeed = m_fCamSpeed;
 
 	if (KEY_PRESSED(KEY::LSHIFT))
-		fSpeed *= 500.f;
+		fSpeed *= 5.f;
 
 	if (KEY_PRESSED(KEY::W))
 	{

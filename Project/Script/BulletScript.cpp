@@ -64,7 +64,7 @@ void BulletScript::BeginOverlap(CCollider2D* _Other)
 		DestroyObject(GetOwner());
 	}
 
-	if (L"Boss" == _Other->GetOwner()->GetName())
+	if (L"BossEmpty" == _Other->GetOwner()->GetName())
 	{
 		DestroyObject(GetOwner());
 	}

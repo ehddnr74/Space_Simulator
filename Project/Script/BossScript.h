@@ -22,10 +22,11 @@ public:
 private:
     double InitTime;
     BossState eBossState;
-    CPlayerScript* PlayerScript;
     CCameraScript* CameraScript;
+    CPlayerScript* PlayerScript;
     CGameObject* Bullet;
     CGameObject* Missile;
+    CGameObject* BossEmpty;
 
     int HP;
     double MoveTime;
@@ -40,7 +41,8 @@ public:
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
-    void SetPlayerScript(CPlayerScript* CS) { PlayerScript = CS; }
+    void SetPlayerScript(CPlayerScript* PS) { PlayerScript = PS; }
+    //CPlayerScript* GetPlayerScript() { return PlayerScript; }
 
     void CreateBossBullet();
     void CreateBossMissile();

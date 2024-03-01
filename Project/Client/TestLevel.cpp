@@ -11,6 +11,7 @@
 #include <Engine\CCollisionMgr.h>
 
 #include <Script\CPlayerScript.h>
+#include <Script\CMissileScript.h>
 #include <Script\CMonsterScript.h>
 #include <Script\CCameraScript.h>
 #include <Script\CPlanet_Lotating.h>
@@ -657,32 +658,19 @@ void CreateTestLevel()
 	//	}
 	//}
 
-	Ptr<CMeshData> BossStageMeshData = nullptr;
-	CGameObject* Boss = nullptr;
+	Ptr<CMeshData> BulletMeshData = nullptr;
+	CGameObject* Bullet = nullptr;
+    BulletMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss_missile_02.fbx");
+	//BulletMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\08_Uranus.mdat");
 
-	//BossStageMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss_Test.fbx"); 
-	BossStageMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\boss_Test.mdat");
-	Boss = BossStageMeshData->Instantiate();
+	//Bullet->AddComponent(new CMissileScript);
+	//CMissileScript*
 
-	Boss->AddComponent(new CCollider2D);
-	//Boss->AddComponent(new BossScript);
-
-	//BossScript* BS = Boss->GetScript<BossScript>();
-	//BS->SetPlayerScript(PlayerScript);
-
-	//Boss->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
-
-	//Boss->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
-
-	//CameraScript->Transform()->SetRelativeRot(Vec3(0.f, -10.f, 0.f));
-
-	Boss->Collider2D()->SetOffsetPos(Vec3(-771.f, -390.f, -530.f));
-	Boss->Collider2D()->SetOffsetScale(Vec3(700.f, 700.f, 700.f));
-
-	Boss->SetName(L"Boss");
-	SpawnGameObject(Boss, Vec3(0.f, 0.f, 0.f), L"Monster");
-
-
+	Bullet = BulletMeshData->Instantiate();
+	Bullet->SetName(L"Bullet");
+	Bullet->Transform()->SetRelativeScale(Vec3(40.f,40.f,40.f));
+	Bullet->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
+	SpawnGameObject(Bullet, Vec3(0.f, 0.f, 500.f), L"Player");
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");

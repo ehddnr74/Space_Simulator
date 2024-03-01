@@ -2,6 +2,7 @@
 #include <Engine\CScript.h>
 #include "CCameraScript.h"
 
+//#include "CMissileScript.h"
 #include <Engine\CFrustum.h>
 
 class CPlayerScript :
@@ -10,8 +11,10 @@ class CPlayerScript :
 private:
     CGameObject* Camera;
     CGameObject* Bullet;
+    CGameObject* Missile;
     CGameObject* Enemy;
     CCameraScript* CameraScript;
+    //CMissileScript* MissileScript;
     Vec2        PrevMousePos;
     float       m_fSpeed;
     bool        m_Booster;
@@ -19,6 +22,9 @@ private:
     Vec3        OffSet;
     Vec3        ShootDir;
     Vec3        vFront;
+
+    bool BulletCheck = false;
+    bool MissileCheck = false;
 
 
 public:
@@ -39,12 +45,16 @@ public:
     void SetEnemy(CGameObject* enemy) { Enemy = enemy; }
     Vec3 GetvFront() { return vFront; }
 
+    //void SetMissileScript(CMissileScript* MS) { MissileScript = MS; }
+    //CMissileScript* GetMissileScript() { return MissileScript; }
+    //void SetBossScript(BossScript* BS) { bossScript = BS; }
 
 private:
     void Shoot();
     void Move();
     void Booster();
     void CreateBullet();
+    void CreateMissile();
    
 
 public:
