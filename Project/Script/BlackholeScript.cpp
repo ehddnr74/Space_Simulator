@@ -41,14 +41,14 @@ void BlackholeScript::tick()
 		SpawnGameObject(Distortion, Vec3(0.f, 0.f, 0.f), 0);
 	}
 
-	if (Distortion != nullptr)
-	{
-		if (Distance >= 25000.f)
-		{
-			//Dist = false;
-			DestroyObject(Distortion);
-		}
-	}
+	//if (Distortion != nullptr)
+	//{
+	//	if (Distance >= 26000.f)
+	//	{
+	//		//Dist = false;
+	//		DestroyObject(Distortion);
+	//	}
+	//}
 
 	//if (Tele_in)
 	//{
@@ -138,8 +138,8 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 		
 			//CameraScript->Transform()->SetRelativeRot(Vec3(0.f, -10.f, 0.f));
 		
-			//Boss->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-			//Boss->Collider2D()->SetOffsetScale(Vec3(100.f, 100.f, 100.f));
+			Boss->Collider2D()->SetOffsetPos(Vec3(-771.f, -390.f, -530.f));
+			Boss->Collider2D()->SetOffsetScale(Vec3(700.f, 700.f, 700.f));
 		
 			Boss->SetName(L"Boss");
 			SpawnGameObject(Boss, Vec3(0.f, 0.f, 0.f), L"Monster");

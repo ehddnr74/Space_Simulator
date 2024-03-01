@@ -23,6 +23,9 @@ public:
     void SetAbsolute(bool _bSet) { m_bAbsolute = _bSet; }
     void SetCollider2DType(COLLIDER2D_TYPE _Type) { m_Shape = _Type; }
 
+    Vec3 GetOffsetPos() { return m_vOffsetPos; }
+    Vec3 GetOffsetScale() { return m_vOffsetScale; }
+
     const Matrix& GetColliderWorldMat() { return m_matCollider2D; }
 
 
