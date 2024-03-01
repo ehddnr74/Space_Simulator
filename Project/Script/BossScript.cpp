@@ -4,7 +4,9 @@
 #include "time.h"
 #include "BossShiled.h"
 #include "CPlanet_Lotating.h"
+#include "CPlayerScript.h"
 #include "BossPlanets.h"
+#include "CCameraScript.h"
 
 BossScript::BossScript()
 	: CScript((UINT)SCRIPT_TYPE::BOSSSCRIPT)
@@ -24,6 +26,21 @@ BossScript::~BossScript()
 
 void BossScript::begin()
 {
+	BossEmpty = new CGameObject;
+	BossEmpty->SetName(L"BossEmpty");
+	BossEmpty->AddComponent(new CTransform);
+	BossEmpty->AddComponent(new CMeshRender);
+	BossEmpty->Transform()->SetRelativeScale(Vec3(0.001f, 0.001f, 0.001f));
+	//Empty->Transform()->SetRelativePos()
+	BossEmpty->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	BossEmpty->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+
+	BossEmpty->AddComponent(new CCollider2D);
+	BossEmpty->Collider2D()->SetOffsetPos(Vec3(1200000.000f, -500000.000f, -7000000.000f));
+	BossEmpty->Collider2D()->SetOffsetScale(Vec3(5000000.000f, 5000000.000f, 5000000.000f));
+
+	SpawnGameObject(BossEmpty, Vec3(0.f, 0.f, 0.f), L"Monster");
+
 	CameraScript = PlayerScript->GetOwner()->GetParent()->GetScript<CCameraScript>();
 	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 	Vec3 BossPos = CameraPos;
@@ -73,7 +90,7 @@ void BossScript::begin()
 		VBP->SetCameraScript(CameraScript);
 		VBP->SetVolcanic(Volcanic);
 		VBP->SetBossScript(this);
-		
+
 
 		Volcanic->Transform()->SetRelativeScale(Vec3(10000.f, 10000.f, 10000.f));
 		Volcanic->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
@@ -136,6 +153,14 @@ void BossScript::begin()
 
 void BossScript::tick()
 {
+	Vec3 vFront = CameraScript->Transform()->GetRelativeDir(DIR_TYPE::FRONT);
+	Vec3 EmptyPos = BossEmpty->Transform()->GetRelativePos();
+	Vec3 BossToEmptyPos = Transform()->GetRelativePos();
+
+	EmptyPos = BossToEmptyPos - vFront * 2000;
+	//EmptyPos.y -= vUp.y * 70;
+	BossEmpty->Transform()->SetRelativePos(EmptyPos);
+
 	InitTime += DT;
 
 	// 보스의 프레임마다 위치 조정 
@@ -208,10 +233,10 @@ void BossScript::tick()
 }
 void BossScript::BeginOverlap(CCollider2D* _Other)
 {
-	if (L"Bullet" == _Other->GetOwner()->GetName())
-	{
-		HP -= 10;
-	}
+	//if (L"Bullet" == _Other->GetOwner()->GetName())
+	//{
+	//	HP -= 10;
+	//}
 }
 
 void BossScript::CreateBossBullet()
