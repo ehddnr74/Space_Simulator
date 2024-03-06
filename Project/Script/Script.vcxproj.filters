@@ -80,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="DebugScript.h" />
     <ClInclude Include="AsteroidbeltScript.h" />
+    <ClInclude Include="BossEmptyScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletParticleScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -150,5 +156,11 @@
     </ClCompile>
     <ClCompile Include="DebugScript.cpp" />
     <ClCompile Include="AsteroidbeltScript.cpp" />
+    <ClCompile Include="BossEmptyScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletParticleScript.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

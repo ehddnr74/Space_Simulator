@@ -3,6 +3,7 @@
 #include "CPlayerScript.h"
 #include "CCameraScript.h"
 #include "BossScript.h"
+#include <DirectXMath.h>
 
 class CMissileScript :
     public CScript
@@ -22,6 +23,8 @@ private:
     //Vector3 ShootLeftDir;
     double ShotTime;
 
+    double UpdateDirTime = 0.f;
+
 public:
 
 public:
@@ -33,7 +36,20 @@ public:
 
     void SetPlayerScript(CPlayerScript* CS) { PlayerScript = CS; }
 
-   // void SetBossScript(BossScript* BS) { Boss_Script = BS; }
+    XMFLOAT3 QuaternionToEulerAngles(const XMVECTOR& quaternion)
+    {
+        XMFLOAT3 eulerAngle;
+        XMVECTOR rotation = quaternion;
+        XMMATRIX rotationMatrix = XMMatrixRotationQuaternion(rotation);
+        XMVECTOR eulerVector = XMQuaternionRotationMatrix(rotationMatrix);
+        XMFLOAT4 euler;
+        XMStoreFloat4(&euler, eulerVector);
+        eulerAngle.x = euler.x;
+        eulerAngle.y = euler.y;
+        eulerAngle.z = euler.z;
+        return eulerAngle;
+    }
+
 
     CLONE(CMissileScript);
 public:

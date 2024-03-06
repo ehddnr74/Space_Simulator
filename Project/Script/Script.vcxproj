@@ -175,9 +175,11 @@ call CodeGen.exe</Command>
     <ClInclude Include="AsteroidbeltScript.h" />
     <ClInclude Include="BlackholeScript.h" />
     <ClInclude Include="BossBulletScript.h" />
+    <ClInclude Include="BossEmptyScript.h" />
     <ClInclude Include="BossPlanets.h" />
     <ClInclude Include="BossScript.h" />
     <ClInclude Include="BossShiled.h" />
+    <ClInclude Include="BulletParticleScript.h" />
     <ClInclude Include="BulletScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CCameraScript.h" />
@@ -201,9 +203,11 @@ call CodeGen.exe</Command>
     <ClCompile Include="AsteroidbeltScript.cpp" />
     <ClCompile Include="BlackholeScript.cpp" />
     <ClCompile Include="BossBulletScript.cpp" />
+    <ClCompile Include="BossEmptyScript.cpp" />
     <ClCompile Include="BossPlanets.cpp" />
     <ClCompile Include="BossScript.cpp" />
     <ClCompile Include="BossShiled.cpp" />
+    <ClCompile Include="BulletParticleScript.cpp" />
     <ClCompile Include="BulletScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CCameraScript.cpp" />

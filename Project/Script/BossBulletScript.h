@@ -17,6 +17,7 @@ private:
     double ShotTime;
     double BulletLife;
 
+
     bool BulletCheck = false;
 
 public:

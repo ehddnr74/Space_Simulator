@@ -8,6 +8,7 @@
 
 #include "HitPostScript.h"
 #include "Fading.h"
+#include "BossEmptyScript.h"
 
 CCameraScript::CCameraScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERASCRIPT)
@@ -49,6 +50,8 @@ void CCameraScript::begin()
 	Empty->SetName(L"Empty");
 	Empty->AddComponent(new CTransform);
 	Empty->AddComponent(new CMeshRender);
+	//Empty->AddComponent(new BossEmptyScript);
+
 	Empty->Transform()->SetRelativeScale(Vec3(0.001f, 0.001f, 0.001f));
 	//Empty->Transform()->SetRelativePos()
 	Empty->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
@@ -67,6 +70,9 @@ void CCameraScript::tick()
 	vFront = Transform()->GetRelativeDir(DIR_TYPE::FRONT);
 	Vec3 EmptyPos = Empty->Transform()->GetRelativePos();
 	Vec3 vPos = Transform()->GetRelativePos();
+
+	//BossEmptyScript* BES = Empty->GetScript<BossEmptyScript>();
+	//->SetPlayerEmpty(Empty);
 
 	EmptyPos = vPos + vFront * 300;
 	EmptyPos.y -= vUp.y * 70;
