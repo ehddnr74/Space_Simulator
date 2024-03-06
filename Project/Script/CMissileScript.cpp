@@ -52,6 +52,8 @@ void CMissileScript::begin()
 	Transform()->SetRelativeScale(Vec3(50.0f, 50.0f, 50.0f));
 	Transform()->SetRelativeRot(Vec3(ParentRot+MissileRot));
 	Transform()->SetRelativePos(Vec3(ParentPos));
+
+	//SpawnGameObject(GetOwner(), ParentPos , L"Player");
 }
 
 void CMissileScript::tick()
@@ -66,30 +68,58 @@ void CMissileScript::tick()
 	MissileEmpty->Transform()->SetRelativePos(EmptyPos);
 
 	ShotTime += DT;
+	//UpdateDirTime += DT;
 
 		//if (m_TargetObject != nullptr)
 		//{
+		//	Vec3 TargetRot = m_TargetObject->Transform()->GetRelativeRot();
 		//	Vec3 TargetPos = m_TargetObject->Transform()->GetRelativePos();
 		//	Vec3 MissilePos = Transform()->GetRelativePos();
+		//	Vec3 MissileDir = -Transform()->GetWorldDir(DIR_TYPE::RIGHT); // 미사일의 현재 전방 방향 벡터 구하기 
 
-		//	Vec3 Dir = MissilePos - TargetPos;
+		//	Vec3 TargetDir = (TargetPos - MissilePos).Normalize(); // 목표물을 향하는 방향 벡터 
 
-		//	MissilePos += Dir * DT * 1000.f;
-		//	Transform()->SetRelativePos(MissilePos);
+
+		//	// 목표 방향 벡터를 사용하여 미사일의 회전 계산
+		//	float dot = MissileDir.Dot(TargetDir);
+		//	float angle = acos(dot) * (180.0f / XM_PI); // 두 벡터 사이의 각도
+		//	Vec3 axis = MissileDir.Cross(TargetDir).Normalize(); // 회전 축
+		//	Quaternion newRotation = Quaternion::CreateFromAxisAngle(axis, angle); // 회전 쿼터니언
+		//	
+		//	Transform()->SetRelativeRot(TargetRot + QuaternionToEulerAngles(newRotation));
+
+		//	// 목표물을 향해 회전된 방향으로 미사일을 이동합니다.
+		//	Vec3 MoveDir = MissileDir + TargetDir; // 회전된 방향과 목표물을 향하는 방향을 결합합니다.
+		//	MoveDir.Normalize(); // 정규화합니다.
+		//	Vec3 NewPos = MissilePos + MoveDir * DT * 1000.f; // 새로운 위치를 계산합니다.
+		//	Transform()->SetRelativePos(NewPos);
+
+		//	
+
+		//	if (ShotTime > 5.0f)
+		//	{
+		//		ShotTime = 0.f;
+		//		DestroyObject(MissileEmpty);
+		//		DestroyObject(GetOwner());
+		//		PlayerScript->SetMissileCheck(true);
+		//	}
 		//}
 
-	//if (m_TargetObject == nullptr)
-	//{
-		Vec3 BulletPos = Transform()->GetRelativePos();
-		BulletPos += ShootDir * DT * 1000.f;
-		Transform()->SetRelativePos(BulletPos);
+		//if (m_TargetObject == nullptr)
+		//{
+			Vec3 BulletPos = Transform()->GetRelativePos();
+			BulletPos += ShootDir * DT * 1000.f;
+			Transform()->SetRelativePos(BulletPos);
 
 
-		if (ShotTime > 5.0f)
-		{
-			ShotTime = 0.f;
-			DestroyObject(GetOwner());
-		}
+			if (ShotTime > 5.0f)
+			{
+				ShotTime = 0.f;
+				DestroyObject(MissileEmpty);
+				DestroyObject(GetOwner());
+				PlayerScript->SetMissileCheck(true);
+			}
+		//}
 
 }
 
@@ -109,7 +139,9 @@ void CMissileScript::BeginOverlap(CCollider2D* _Other)
 
 	if (L"BossEmpty" == _Other->GetOwner()->GetName())
 	{
-		DestroyObject(MissileEmpty);
 		DestroyObject(GetOwner());
+		DestroyObject(MissileEmpty);
 	}
 }
+
+

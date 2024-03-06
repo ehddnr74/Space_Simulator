@@ -18,8 +18,8 @@ CParticleSystem::CParticleSystem()
 	m_ModuleData.iMaxParticleCount = 3000;
 	
 	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::PARTICLE_SPAWN] = true;
-	m_ModuleData.SpawnRate = 50;
-	m_ModuleData.vSpawnColor = Vec3(0.4f, 1.f, 0.4f);
+	m_ModuleData.SpawnRate = 1;
+	m_ModuleData.vSpawnColor = Vec3(0.0f, 1.f, 0.0f);
 	m_ModuleData.vSpawnScaleMin = Vec3(15.f, 15.f, 1.f);
 	m_ModuleData.vSpawnScaleMax = Vec3(20.f, 20.f, 1.f);
 
@@ -30,21 +30,21 @@ CParticleSystem::CParticleSystem()
 	m_ModuleData.MinLifeTime = 3.f;
 	m_ModuleData.MaxLifeTime = 5.f;
 
-	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::SCALE_CHANGE] = true;
-	m_ModuleData.StartScale = 1.5f;
-	m_ModuleData.EndScale = 0.2f;
+	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::SCALE_CHANGE] = false;
+	m_ModuleData.StartScale = 3.0f;
+	m_ModuleData.EndScale = 3.0f;
 
-	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::COLOR_CHANGE] = true;
-	m_ModuleData.vStartColor = Vec3(0.2f, 0.3f, 1.0f);
-	m_ModuleData.vEndColor = Vec3(0.4f, 1.f, 0.4f);
+	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::COLOR_CHANGE] = false;
+	m_ModuleData.vStartColor = Vec3(1.0f, 0.0f, 0.0f);
+	m_ModuleData.vEndColor = Vec3(1.0f, 0.0f, 0.0f);
 
-	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = true;
+	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = false;
 	m_ModuleData.AddVelocityType = 0; // From Center
 	m_ModuleData.Speed = 300.f;
 	m_ModuleData.vVelocityDir = Vec3(0.f, 1.f, 0.f);
 	m_ModuleData.OffsetAngle;
 
-	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::DRAG] = true;
+	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::DRAG] = false;
 	m_ModuleData.StartDrag = 500.f;
 	m_ModuleData.EndDrag = -500.f;
 
@@ -52,7 +52,7 @@ CParticleSystem::CParticleSystem()
 	m_ModuleData.fNoiseTerm = 1.f;
 	m_ModuleData.fNoiseForce = 100.f;
 
-	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::RENDER] = true;
+	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::RENDER] = false;
 	m_ModuleData.VelocityAlignment = true;
 	m_ModuleData.VelocityScale = true;
 	m_ModuleData.vMaxVelocityScale = Vec3(15.f, 1.f, 1.f);
@@ -101,9 +101,10 @@ void CParticleSystem::finaltick()
 	// 스폰 레이트 계산
 	// 1개 스폰 시간
 	float fTimePerCount = 1.f / (float)m_ModuleData.SpawnRate;
+	//fTimePerCount / (float)m_ModuleData.SpawnRate;
 	m_AccTime += DT;
 
-	// 누적시간이 개당 생성시간을 넘어서면
+	 //누적시간이 개당 생성시간을 넘어서면
 	if (fTimePerCount < m_AccTime)
 	{
 		// 초과 배율 ==> 생성 개수
@@ -141,8 +142,8 @@ void CParticleSystem::render()
 	m_ModuleDataBuffer->UpdateData(21, PIPELINE_STAGE::PS_GEOMETRY);
 
 	// Particle Render	
-	Ptr<CTexture> pParticleTex = CResMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Bubbles99px.png", L"texture\\particle\\Bubbles99px.png");
-	GetMaterial(0)->SetTexParam(TEX_0, pParticleTex);
+	//Ptr<CTexture> pParticleTex = CResMgr::GetInst()->Load<CTexture>(L"Smoke", L"texture\\particle\\flame_two.png");
+	//GetMaterial(0)->SetTexParam(TEX_0, pParticleTex);
 
 	GetMaterial(0)->UpdateData();
 	GetMesh()->render_particle(m_ModuleData.iMaxParticleCount);

@@ -233,6 +233,9 @@
     <ClInclude Include="CLevelSaveLoad.h">
       <Filter>Manager\LevelSaveLoad</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleSystemUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\08. ParticleSystemUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -363,6 +366,9 @@
     </ClCompile>
     <ClCompile Include="CLevelSaveLoad.cpp">
       <Filter>Manager\LevelSaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystemUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\08. ParticleSystemUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

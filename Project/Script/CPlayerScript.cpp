@@ -76,16 +76,25 @@ void CPlayerScript::Move()
 
 	if (KEY_TAP(KEY::T))
 	{
-		MissileCheck = true;
+		//MissileCheck = true;
 		if(MissileCheck)
 		CreateMissile();
 	}
 
 	if (KEY_TAP(KEY::F))
 	{
-		BulletCheck = true;
+		//BulletCheck = false;
 		if (BulletCheck)
 		CreateBullet();
+	}
+	if (BulletCheck == false)
+	{
+		BulletTime += DT;
+		if (BulletTime >= 0.5f)
+		{
+			BulletCheck = true;
+			BulletTime = 0.f;
+		}
 	}
 
 	if (KEY_PRESSED(KEY::W))
@@ -163,10 +172,17 @@ void CPlayerScript::CreateMissile()
 	Missile->AddComponent(new CMissileScript);
 	CMissileScript* MS = Missile->GetScript<CMissileScript>();
 	MS->SetPlayerScript(this);
+
+	if (m_Target != nullptr)
+	{
+		MS->SetTargetObject(m_Target);
+	}
+
+
 	
 	//Bullet->AddComponent(new CCollider2D);
 	//Bullet->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	//Bullet->Collider2D()->SetOffsetScale(Vec3(1000.f, 1000.f, 1000.f));
+	Missile->Transform()->SetRelativeScale(Vec3(0.f, 0.f, 0.f));
 	Missile->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
 	Missile->SetName(L"Missile");
 	SpawnGameObject(Missile, Vec3(0.f, 0.f, 200.f), L"Player");

@@ -144,5 +144,6 @@ void BlackholeScript::BeginOverlap(CCollider2D* _Other)
 			Boss->SetName(L"Boss");
 			SpawnGameObject(Boss, Vec3(0.f, 0.f, 0.f), L"Monster");
 			//SpawnGameObject(Boss, Vec3(0.0f, 0.0f, 5000.f), L"Boss");
+
 	}
 }

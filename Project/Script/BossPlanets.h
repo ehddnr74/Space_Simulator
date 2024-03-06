@@ -23,6 +23,10 @@ public:
 
     void SetCameraScript(CCameraScript* CS) { CameraScript = CS; }
     void SetBossScript(BossScript* BS) { BossScript = BS; }
+    void SetBossShiled(CGameObject* B_S) { bossshiled = B_S; }
+
+
+
 private:
     CGameObject* Sirius;
     CGameObject* Volcanic;
@@ -30,5 +34,15 @@ private:
 
     CCameraScript* CameraScript;
     BossScript* BossScript;
+
+    CGameObject* bossshiled;
+
+    CGameObject* FinalVolcanic;
+    CGameObject* FinalNarShaddaa;
+
+    double bossshiledtime;
+
+    int BossHP;
+    bool VolcanicStealth = false;
 
 };

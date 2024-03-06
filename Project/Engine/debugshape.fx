@@ -91,6 +91,57 @@ float4 PS_Sphere_Shiled(VS_DEBUG_OUT _in) : SV_Target
     return vOutColor;
 }
 
+
+float4 PS_Boss_Shiled(VS_DEBUG_OUT _in) : SV_Target
+{
+    float4 vOutColor = (float4) 0.f;
+        
+    float3 vEye = -normalize(_in.vViewPos);
+    float fOutLine = 1.f - saturate(abs(dot(vEye, _in.vViewNormal)));
+    fOutLine = pow(fOutLine, 0.3);
+    
+    
+   // vOutColor = g_vec4_0;
+   // vOutColor = float4(1.f, 0.f, 1.f, fOutLine);
+    //vOutColor.a = fOutLine;
+    
+    if (g_btex_0)
+    {
+        vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+        vOutColor.a = fOutLine;
+    }
+    
+    return vOutColor;
+}
+
+float4 PS_Lerp_Shiled(VS_DEBUG_OUT _in) : SV_Target
+{
+    float4 vOutColor = (float4) 0.f;
+    
+    float4 vOutColor1 = (float4) 0.f;
+    float4 vOutColor2 = (float4) 0.f;
+        
+    float3 vEye = -normalize(_in.vViewPos);
+    float fOutLine = saturate(abs(dot(vEye, _in.vViewNormal)));
+   // fOutLine = pow(fOutLine, 0.5);
+    
+    if (g_btex_0)
+    {
+        vOutColor1 = g_tex_0.Sample(g_sam_0, _in.vUV);
+        vOutColor1.a = fOutLine;
+    }
+    if (g_btex_1)
+    {
+        vOutColor2 = g_tex_1.Sample(g_sam_0, _in.vUV);
+        vOutColor2.a = fOutLine;
+    }
+    
+    vOutColor = lerp(vOutColor1, vOutColor2, 0.6f); //1 - vOutColor1.a);
+    vOutColor.a = 1.0f;
+    
+    return vOutColor;
+}
+
 float4 PS_MonsterTargetShape(VS_DEBUG_OUT _in) : SV_Target
 {
     float4 vOutColor = float4(1.0f, 0.f, 0.f, 1.f);

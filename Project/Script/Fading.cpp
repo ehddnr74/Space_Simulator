@@ -34,6 +34,9 @@ void Fading::tick()
 	case Fading::FadingState::FadeOutAndIn:
 		FadeOutAndIn();
 		break;
+	case Fading::FadingState::FadeOuting:
+		fadeouting();
+		break;
 	}
 }
 void Fading::FadeIn()
@@ -101,6 +104,21 @@ void Fading::FadeOutAndIn()
 
 	GetOwner()->MeshRender()->SetRatio(ratio);
 }
+
+void Fading::fadeouting()
+{
+	if (init == false)
+	{
+		ratio = 0.f;
+		init = true;
+	}
+
+	ratio += DT * 0.15f;
+
+	GetOwner()->MeshRender()->SetRatio(ratio);
+}
+
+
 
 
 
