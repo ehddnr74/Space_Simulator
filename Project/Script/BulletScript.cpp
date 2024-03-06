@@ -2,6 +2,9 @@
 #include "BulletScript.h"
 #include "CPlayerScript.h"
 #include "CCameraScript.h"
+#include "BossScript.h"
+#include "BossEmptyScript.h"
+#include "BulletParticleScript.h"
 
 BulletScript::BulletScript()
 	: CScript((UINT)SCRIPT_TYPE::BULLETSCRIPT)
@@ -28,7 +31,7 @@ void BulletScript::begin()
 	ParentPos += OffsetX * 50.f;
 	ParentPos += ShootDir * 500.f;
 
-	Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
+	Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 	Transform()->SetRelativeRot(Vec3(ParentRot));
 	Transform()->SetRelativePos(Vec3(ParentPos));
 }
@@ -66,6 +69,34 @@ void BulletScript::BeginOverlap(CCollider2D* _Other)
 
 	if (L"BossEmpty" == _Other->GetOwner()->GetName())
 	{
+		BossEmptyScript* BES = _Other->GetOwner()->GetScript< BossEmptyScript>();
+		bool Col = BES->GetBossScript()->GetColliderCheck();
+		if (Col)
+		{
+			BES->GetBossScript()->SetDamage(10);
+			// Particle Object
+			Vec3 BulletPos = Transform()->GetRelativePos();
+			CGameObject* pParticleObj = new CGameObject;
+			pParticleObj->SetName(L"BulletParticle");
+			pParticleObj->AddComponent(new CTransform);
+			pParticleObj->AddComponent(new CParticleSystem);
+			pParticleObj->AddComponent(new BulletParticleScript);
+
+			//pParticleObj->ParticleSystem()->SetTimePerCount(5.f);
+			pParticleObj->ParticleSystem()->SetSpawnRate(1);
+			pParticleObj->ParticleSystem()->SetSpawnColor(Vec3(0.f,1.f,1.f));
+			pParticleObj->ParticleSystem()->SetSpawnScaleMin(Vec3(100.f,100.f,100.f));
+			pParticleObj->ParticleSystem()->SetSpawnScaleMax(Vec3(100.f,100.f,100.f));
+			pParticleObj->ParticleSystem()->SetSpace(0);
+			pParticleObj->ParticleSystem()->SetMinLifeTime(1.0f);
+			pParticleObj->ParticleSystem()->SetMaxLifeTime(1.5f);
+
+			pParticleObj->ParticleSystem()->SetScaleChangeMoudule(true);
+			pParticleObj->ParticleSystem()->SetStartScale(1.f);
+			pParticleObj->ParticleSystem()->SetEndScale(200.f);
+			pParticleObj->ParticleSystem()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\particle\\Bubbles99px.png"));
+			SpawnGameObject(pParticleObj, BulletPos, 0);
+		}
 		DestroyObject(GetOwner());
 	}
 

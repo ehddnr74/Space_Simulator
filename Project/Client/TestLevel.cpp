@@ -21,6 +21,7 @@
 #include <Script\HyperLoopScript.h>
 #include <Script\DebugScript.h>
 #include <Script\AsteroidbeltScript.h>
+#include <Engine\CParticleSystem.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -657,20 +658,6 @@ void CreateTestLevel()
 	//		SpawnGameObject(pMeteo, Vec3(x, y, z), L"Meteo");
 	//	}
 	//}
-
-	Ptr<CMeshData> BulletMeshData = nullptr;
-	CGameObject* Bullet = nullptr;
-    BulletMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\boss_missile_02.fbx");
-	//BulletMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\08_Uranus.mdat");
-
-	//Bullet->AddComponent(new CMissileScript);
-	//CMissileScript*
-
-	Bullet = BulletMeshData->Instantiate();
-	Bullet->SetName(L"Bullet");
-	Bullet->Transform()->SetRelativeScale(Vec3(40.f,40.f,40.f));
-	Bullet->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
-	SpawnGameObject(Bullet, Vec3(0.f, 0.f, 500.f), L"Player");
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");

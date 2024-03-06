@@ -5,6 +5,7 @@
 //#include "CMissileScript.h"
 #include <Engine\CFrustum.h>
 
+
 class CPlayerScript :
     public CScript
 {
@@ -23,9 +24,11 @@ private:
     Vec3        ShootDir;
     Vec3        vFront;
 
-    bool BulletCheck = false;
-    bool MissileCheck = false;
+    double BulletTime = 0.f;
+    bool BulletCheck = true;
+    bool MissileCheck = true;
 
+    CGameObject* m_Target = nullptr;
 
 public:
     virtual void begin() override;
@@ -49,13 +52,19 @@ public:
     //CMissileScript* GetMissileScript() { return MissileScript; }
     //void SetBossScript(BossScript* BS) { bossScript = BS; }
 
+    void SetMissileCheck(bool Mcheck) { MissileCheck = Mcheck; }
+    void SetBulletCheck(bool Bcheck) { BulletCheck = Bcheck; }
+
+    void SetTarGetObject(CGameObject* tgobj) { m_Target = tgobj; }
+
 private:
     void Shoot();
     void Move();
     void Booster();
     void CreateBullet();
     void CreateMissile();
-   
+
+
 
 public:
     virtual void SaveToLevelFile(FILE* _File) override;

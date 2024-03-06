@@ -46,6 +46,7 @@ public:
     void SetSkyBox(CGameObject* SB) { SkyBox = SB; }
     CGameObject* GetSkyBox() { return SkyBox; }
 
+    CGameObject* GetPlayerEmpty() { return Empty; }
 private:
     void Camera3DMove();
 

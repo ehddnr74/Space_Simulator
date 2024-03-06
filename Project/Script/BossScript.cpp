@@ -7,10 +7,13 @@
 #include "CPlayerScript.h"
 #include "BossPlanets.h"
 #include "CCameraScript.h"
+#include "BossEmptyScript.h"
+#include "Fading.h"
+#include "time.h"
 
 BossScript::BossScript()
 	: CScript((UINT)SCRIPT_TYPE::BOSSSCRIPT)
-	, HP(100)
+	, HP(300)
 	, MoveTime(0.f)
 	, Bulletbool(false)
 	, ShotTime(3.0f)
@@ -26,10 +29,14 @@ BossScript::~BossScript()
 
 void BossScript::begin()
 {
+	PlayerScript->SetTarGetObject(GetOwner());
 	BossEmpty = new CGameObject;
 	BossEmpty->SetName(L"BossEmpty");
 	BossEmpty->AddComponent(new CTransform);
 	BossEmpty->AddComponent(new CMeshRender);
+	BossEmpty->AddComponent(new BossEmptyScript);
+	BossEmptyScript* BES = BossEmpty->GetScript<BossEmptyScript>();
+	BES->SetBossScript(this);
 	BossEmpty->Transform()->SetRelativeScale(Vec3(0.001f, 0.001f, 0.001f));
 	//Empty->Transform()->SetRelativePos()
 	BossEmpty->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
@@ -103,52 +110,6 @@ void BossScript::begin()
 
 		SpawnGameObject(Volcanic, Vec3(50000.f, 0.f, 30500000.f), L"Volcanic");
 	}
-
-	//{	//Volcanic_Lava
-	//	CGameObject* Volcanic_Lava = new CGameObject;
-	//	Volcanic_Lava->SetName(L"Volcanic_Lava");
-	//	Volcanic_Lava->AddComponent(new CTransform);
-	//	Volcanic_Lava->AddComponent(new CMeshRender);
-	//	Volcanic_Lava->AddComponent(new CPlanet_Lotating);
-
-	//	Volcanic_Lava->Transform()->SetRelativeScale(Vec3(20050.f, 20050.f, 20050.f));
-	//	Volcanic_Lava->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
-
-	//	Volcanic_Lava->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-
-	//	Volcanic_Lava->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	//	Volcanic_Lava->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Volcanic_LavaMtrl"), 0);
-	//	Volcanic_Lava->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Volcanic\\Volcanic_Lava.png"));
-
-	//	SpawnGameObject(Volcanic_Lava, Vec3(50000.f, 0.f, 30500000.f), L"Volcanic_Lava");
-	//}
-
-	//{	//Nar_Shaddaa
-	//	CGameObject* Nar_Shaddaa = new CGameObject;
-	//	Nar_Shaddaa->SetName(L"Nar_Shaddaa");
-	//	Nar_Shaddaa->AddComponent(new CTransform);
-	//	Nar_Shaddaa->AddComponent(new CMeshRender);
-	//	Nar_Shaddaa->AddComponent(new CPlanet_Lotating);
-	//	Nar_Shaddaa->AddComponent(new BossPlanets);
-
-	//	BossPlanets* NBP = Nar_Shaddaa->GetScript<BossPlanets>();
-	//	NBP->SetCameraScript(CameraScript);
-	//	NBP->SetNarShaddaa(Nar_Shaddaa);
-	//	NBP->SetBossScript(this);
-
-	//	Nar_Shaddaa->Transform()->SetRelativeScale(Vec3(20000.f, 20000.f, 20000.f));
-	//	Nar_Shaddaa->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
-
-	//	Nar_Shaddaa->GetScript<CPlanet_Lotating>()->SetRot(Vec3(0.f, 0.1f, 0.f));
-
-
-
-	//	Nar_Shaddaa->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	//	Nar_Shaddaa->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Nar_ShaddaaDMtrl"), 0);
-	//	Nar_Shaddaa->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Nar_Shaddaa01.png"));
-
-	//	SpawnGameObject(Nar_Shaddaa, Vec3(50000.f, 400.000f, 30450000.f), L"Nar_Shaddaa");
-	//}
 }
 
 void BossScript::tick()
@@ -170,11 +131,11 @@ void BossScript::tick()
 	Vec3 CameraFront = CameraScript->GetvFront();
 	if (BossPos.z - CameraPos.z >= 14000.f)
 	{
-		BossPos.z = BossPos.z;
+	  BossPos.z = BossPos.z;
 	}
 	else
 	{
-		BossPos.z += CameraFront.z * DT * 2500.f;
+	  BossPos.z += CameraFront.z * DT * 2500.f;
 	}
 	Transform()->SetRelativePos(BossPos);
 
@@ -192,21 +153,32 @@ void BossScript::tick()
 			CreateRoomEffect();
 		}
 
-		//if (HP <= 0)
-		//{
-		//	DestroyObject(GetOwner());
-		//}
+		ShotTime += DT;
 
-		//ShotTime += DT;
+		if (ShotTime >= 5.0f && Bulletbool == false)
+		{
+			srand(time(NULL));
+			for (int i = 0; i < 6; i++)
+				Count.push_back(rand() & 6 + 1);
 
-		//if (ShotTime >= 5.0f && Bulletbool == false)
-		//{
-		//	ShotTime = 0.f;
-		//	Bulletbool = true;
-		//	//CreateBossBullet();
-		//	//CreateBossMissile();
-		//	//CreateBossRazer();
-		//}
+			// 벡터 정렬 후 연속된 중복 원소를 vector의 제일 뒷부분(쓰레기값)으로 보내버린다 : unique
+			// 중복된 원소들이 모여있는 뒷부분을 erase로 삭제한다.
+
+			sort(Count.begin(), Count.end());
+			Count.erase(unique(Count.begin(), Count.end()), Count.end());
+
+			// 중복된 원소가 제거되어 남은 숫자에 해당하는 레이저들만 발사한다.
+			// 가로로 3개 세로로 3개에 각각 가로 상단부터 하단으로 1번 , 2번 , 3번 세로 좌부터 우로 4번 , 5번 , 6번 해당  
+
+			ShotTime = 0.f;
+			Bulletbool = true;
+			if (Ending == false)
+			{
+				for (int i = 0; i < Count.size(); i++)
+						CreateBossRazer(Count[i]);
+			}
+			Count.clear();
+		}
 
 		switch (eBossState)
 		{
@@ -228,6 +200,137 @@ void BossScript::tick()
 		case BossScript::BossState::Die:
 			die();
 			break;
+		}
+	}
+
+	if (LerpShiled && ShiledCheck == false)
+	{
+		ShiledCheck = true;
+		// 보스 실드 소환 
+		BossLerpShiled = new CGameObject;
+		BossLerpShiled->SetName(L"LerpShiled");
+
+		BossLerpShiled->AddComponent(new CTransform);
+		BossLerpShiled->AddComponent(new CMeshRender);
+		BossLerpShiled->AddComponent(new BossShiled);
+		BossShiled* BS = BossLerpShiled->GetScript<BossShiled>();
+
+		BossLerpShiled->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		BossLerpShiled->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"LerpShiledMtrl"), 0);
+		BossLerpShiled->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Nar_Shaddaa01.png"));
+		BossLerpShiled->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Planet\\Volcanic_01.png"));
+
+		BossLerpShiled->Transform()->SetRelativeScale(Vec3(13000.f, 13000.f, 13000.f));
+
+		Vec3 BossPos = Transform()->GetRelativePos();
+		BossPos.x += 600.f;
+		BossPos.y += 2000.f;
+		BossPos.z -= 1800.f;
+		//Vec3 CameraPos = CameraScript->Transform()->GetRelativePos();
+		//CameraPos.y += 3000.f;
+
+		SpawnGameObject(BossLerpShiled, BossPos, 0);
+	}
+
+	if (BossLerpShiled != nullptr)
+	{
+		Ending = true;
+		lerpshiledtime += DT;
+
+		Vec3 BossPos = Transform()->GetRelativePos();
+		Vec3 ShiledPos = BossLerpShiled->Transform()->GetRelativePos();
+
+		ShiledPos = BossPos;
+		ShiledPos.x = BossPos.x + 800.f;
+		ShiledPos.y = BossPos.y + 2000.f;
+		ShiledPos.z = BossPos.z - 1800.f;
+
+		BossLerpShiled->Transform()->SetRelativePos(ShiledPos);
+
+		if (lerpshiledtime >= 8.f && fading)
+		{
+			fading = false;
+			CGameObject* Fadein = new CGameObject;
+			Fadein->SetName(L"Fading");
+			Fadein->AddComponent(new CTransform);
+			Fadein->AddComponent(new CMeshRender);
+			Fadein->AddComponent(new Fading);
+			Fadein->GetScript<Fading>()->SetFadingState(Fading::FadingState::FadeOuting);
+			Fadein->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+			Fadein->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"FadingMtrl"), 0);
+			SpawnGameObject(Fadein, Vec3(0.f, 0.f, 0.f), 0);
+		}
+
+		if (lerpshiledtime >= 4.5f && DestroyParticle)
+		{
+			Transform()->SetRelativeScale(Vec3(0.f, 0.f, 0.f));
+			DestroyParticle = false;
+
+			pParticleObj = new CGameObject;
+			pParticleObj->SetName(L"BulletParticle");
+			pParticleObj->AddComponent(new CTransform);
+			pParticleObj->AddComponent(new CParticleSystem);
+			pParticleObj->ParticleSystem()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\particle\\Sparks.png"));
+			pParticleObj->ParticleSystem()->SetSpawnRate(1000);
+			pParticleObj->ParticleSystem()->SetSpawnColor(Vec3(1.f, 1.f, 1.f));
+			pParticleObj->ParticleSystem()->SetSpawnScaleMin(Vec3(150.f, 150.f, 150.f));
+			pParticleObj->ParticleSystem()->SetSpawnScaleMax(Vec3(150.f, 150.f, 150.f));
+			pParticleObj->ParticleSystem()->SetBoxShapeScale(Vec3(50000.f, 50000.f, 50000.f));
+			pParticleObj->ParticleSystem()->SetSpace(0);
+			pParticleObj->ParticleSystem()->SetMinLifeTime(3.0f);
+			pParticleObj->ParticleSystem()->SetMaxLifeTime(3.0f);
+
+			pParticleObj->ParticleSystem()->SetScaleChangeMoudule(true);
+			pParticleObj->ParticleSystem()->SetStartScale(1.f);
+			pParticleObj->ParticleSystem()->SetEndScale(0.f);
+
+			pParticleObj->ParticleSystem()->SetAddVelocityModule(true);
+			pParticleObj->ParticleSystem()->SetAddVelocityType(1);
+			pParticleObj->ParticleSystem()->SetSpeed(500.f);
+			pParticleObj->ParticleSystem()->SetVelocityDir(Vec3(0.f, 1.f, 0.f));
+			pParticleObj->ParticleSystem()->SetOffsetAngle(500.f);
+
+			pParticleObj->ParticleSystem()->SetRenderModule(true);
+			pParticleObj->ParticleSystem()->SetVelocityAlignment(true);
+			pParticleObj->ParticleSystem()->SetVelocityScale(true);
+			pParticleObj->ParticleSystem()->SetMaxVelocityScale(Vec3(15.f, 1.f, 1.f));
+			pParticleObj->ParticleSystem()->SetMaxSpeed(500.f);
+
+			SpawnGameObject(pParticleObj, BossLerpShiled->Transform()->GetRelativePos(), 0);
+
+		}
+
+		if (BossLerpShiled != nullptr && lerpshiledtime >= 5.f)
+		{
+			Vec3 BossLerpShiledScale = BossLerpShiled->Transform()->GetRelativeScale();
+
+			if (BossLerpShiledScale.x >= 0.f || BossLerpShiledScale.y >= 0.f || BossLerpShiledScale.z >= 0.f)
+			{
+				BossLerpShiledScale.x -= DT * 3000.f;
+				BossLerpShiledScale.y -= DT * 3000.f;
+				BossLerpShiledScale.z -= DT * 3000.f;
+				BossLerpShiled->Transform()->SetRelativeScale(BossLerpShiledScale);
+			}
+		}
+
+		if (lerpshiledtime >= 6.f && pParticleObj != nullptr)
+		{
+				int SpawnRate = pParticleObj->ParticleSystem()->GetSpawnRate();
+				if (SpawnRate >= 150)
+				{
+					SpawnRate -= 50;
+					pParticleObj->ParticleSystem()->SetSpawnRate(SpawnRate);
+				}
+		}
+
+		if (lerpshiledtime >= 10.f)
+		{
+			DestroyObject(pParticleObj);
+			lerpshiledtime = 0.f;
+			DestroyObject(BossLerpShiled);
+			SetShiled(nullptr);
+			DestroyObject(GetOwner());
+			DestroyObject(BossEmpty);
 		}
 	}
 }
@@ -291,32 +394,188 @@ void BossScript::CreateBossMissile()
 	SpawnGameObject(Missile, BossPos, L"Monster");
 }
 
-void BossScript::CreateBossRazer()
+void BossScript::CreateBossRazer(int Count)
 {
-	CGameObject* Razer = new CGameObject;
-	Razer->SetName(L"Razer");
+	if (Count == 1)
+	{
+		CGameObject* Razer = new CGameObject;
+		Razer->SetName(L"Razer");
 
-	Razer->AddComponent(new CTransform);
-	Razer->AddComponent(new CMeshRender);
-	Razer->AddComponent(new CCollider2D);
-	Razer->AddComponent(new BossBulletScript);
+		Razer->AddComponent(new CTransform);
+		Razer->AddComponent(new CMeshRender);
+		Razer->AddComponent(new CCollider2D);
+		Razer->AddComponent(new BossBulletScript);
 
-	Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
+		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
 
-	Razer->Transform()->SetRelativeScale(Vec3(500.f, 10.f, 10.f));
+		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 150.f));
 
-	BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
-	BBS->SetPlayerScript(PlayerScript);
-	BBS->SetBossScript(this);
+		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
+		BBS->SetPlayerScript(PlayerScript);
+		BBS->SetBossScript(this);
 
-	Razer->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	//Razer->Collider2D()->SetOffsetScale(Vec3(20.f, 20.f, 500.f));
+		Razer->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		Razer->Collider2D()->SetOffsetScale(Vec3(0.2f, 1.f, 1.f));
 
-	Vec3 BossPos = Transform()->GetRelativePos();
-	Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+		Vec3 BossPos = Transform()->GetRelativePos();
+		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x;
+		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y + 1000.f;
+		//BossPos.z -= 18000.f;
+		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 
-	SpawnGameObject(Razer, BossPos, L"Monster");
+		SpawnGameObject(Razer, BossPos, L"Monster");
+	}
+	if (Count == 2)
+	{
+		CGameObject* Razer = new CGameObject;
+		Razer->SetName(L"Razer");
+
+		Razer->AddComponent(new CTransform);
+		Razer->AddComponent(new CMeshRender);
+		Razer->AddComponent(new CCollider2D);
+		Razer->AddComponent(new BossBulletScript);
+
+		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
+
+		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 150.f));
+
+		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
+		BBS->SetPlayerScript(PlayerScript);
+		BBS->SetBossScript(this);
+
+		Razer->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		Razer->Collider2D()->SetOffsetScale(Vec3(0.2f, 1.f, 1.f));
+
+		Vec3 BossPos = Transform()->GetRelativePos();
+		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x;
+		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y;
+		//BossPos.z -= 18000.f;
+		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+
+		SpawnGameObject(Razer, BossPos, L"Monster");
+	}
+	if (Count == 3)
+	{
+		CGameObject* Razer = new CGameObject;
+		Razer->SetName(L"Razer");
+
+		Razer->AddComponent(new CTransform);
+		Razer->AddComponent(new CMeshRender);
+		Razer->AddComponent(new CCollider2D);
+		Razer->AddComponent(new BossBulletScript);
+
+		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
+
+		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 150.f));
+
+		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
+		BBS->SetPlayerScript(PlayerScript);
+		BBS->SetBossScript(this);
+
+		Razer->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		Razer->Collider2D()->SetOffsetScale(Vec3(0.2f, 1.f, 1.f));
+
+		Vec3 BossPos = Transform()->GetRelativePos();
+		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x;
+		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y - 1000;
+		//BossPos.z -= 18000.f;
+		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+
+		SpawnGameObject(Razer, BossPos, L"Monster");
+	}
+	if (Count == 4)
+	{
+		CGameObject* Razer = new CGameObject;
+		Razer->SetName(L"Razer");
+
+		Razer->AddComponent(new CTransform);
+		Razer->AddComponent(new CMeshRender);
+		Razer->AddComponent(new CCollider2D);
+		Razer->AddComponent(new BossBulletScript);
+
+		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
+
+		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 150.f));
+
+		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
+		BBS->SetPlayerScript(PlayerScript);
+		BBS->SetBossScript(this);
+
+		Razer->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		Razer->Collider2D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+
+		Vec3 BossPos = Transform()->GetRelativePos();
+		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x - 1500;
+		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y;
+		//BossPos.z -= 18000.f;
+		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+
+		SpawnGameObject(Razer, BossPos, L"Monster");
+	}
+	if (Count == 5)
+	{
+		CGameObject* Razer = new CGameObject;
+		Razer->SetName(L"Razer");
+
+		Razer->AddComponent(new CTransform);
+		Razer->AddComponent(new CMeshRender);
+		Razer->AddComponent(new CCollider2D);
+		Razer->AddComponent(new BossBulletScript);
+
+		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
+
+		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 150.f));
+
+		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
+		BBS->SetPlayerScript(PlayerScript);
+		BBS->SetBossScript(this);
+
+		Razer->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		Razer->Collider2D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+
+		Vec3 BossPos = Transform()->GetRelativePos();
+		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x;
+		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y;
+		//BossPos.z -= 18000.f;
+		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+
+		SpawnGameObject(Razer, BossPos, L"Monster");
+	}
+	if (Count == 6)
+	{
+		CGameObject* Razer = new CGameObject;
+		Razer->SetName(L"Razer");
+
+		Razer->AddComponent(new CTransform);
+		Razer->AddComponent(new CMeshRender);
+		Razer->AddComponent(new CCollider2D);
+		Razer->AddComponent(new BossBulletScript);
+
+		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
+
+		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 150.f));
+
+		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
+		BBS->SetPlayerScript(PlayerScript);
+		BBS->SetBossScript(this);
+
+		Razer->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+		Razer->Collider2D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+
+		Vec3 BossPos = Transform()->GetRelativePos();
+		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x + 1500;
+		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y;
+		//BossPos.z -= 18000.f;
+		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
+
+		SpawnGameObject(Razer, BossPos, L"Monster");
+	}
 }
 
 void BossScript::CreateRoomEffect()

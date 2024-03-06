@@ -93,7 +93,6 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
             NewPos[3] = NewPos[3] * fScale;            
         }
         
-        
         if (ModuleData.VelocityAlignment)
         {
             // 파티클 월드 기준 속도를 View 공간으로 변환
@@ -113,9 +112,9 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
             // 구한 각도로 Z 축 회전 행렬을 만든다.
             float3x3 matRotZ =
             {
-                cos(fTheta),  sin(fTheta),      0,
-                -sin(fTheta), cos(fTheta),      0,
-                          0,            0,    1.f,
+                cos(fTheta), sin(fTheta), 0,
+                -sin(fTheta), cos(fTheta), 0,
+                          0, 0, 1.f,
             };
             
             // 4개의 정점을 회전시킨다.
@@ -123,7 +122,7 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
             {
                 NewPos[i] = mul(NewPos[i], matRotZ);
             }
-        }        
+        }
     }
     
     
