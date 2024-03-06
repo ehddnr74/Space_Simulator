@@ -147,12 +147,12 @@ void CCameraScript::Camera3DMove()
 		vPos += DT * vFront * fSpeed;
 	}
 
-	if (KEY_PRESSED(KEY::RBTN))
-	{
-		Vec2 vMouseDir = CKeyMgr::GetInst()->GetMouseDir();
-		vRot.y += DT * vMouseDir.x * 5.f;
-		vRot.x -= DT * vMouseDir.y * 5.f;
-	}
+	//if (KEY_PRESSED(KEY::RBTN))
+	//{
+	//	Vec2 vMouseDir = CKeyMgr::GetInst()->GetMouseDir();
+	//	vRot.y += DT * vMouseDir.x * 5.f;
+	//	vRot.x -= DT * vMouseDir.y * 5.f;
+	//}
 
 	if (m_Target != nullptr)
 	{

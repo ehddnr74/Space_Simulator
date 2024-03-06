@@ -409,7 +409,7 @@ void BossScript::CreateBossRazer(int Count)
 		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
 
-		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 150.f));
+		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 1.f));
 
 		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
 		BBS->SetPlayerScript(PlayerScript);
@@ -420,7 +420,7 @@ void BossScript::CreateBossRazer(int Count)
 
 		Vec3 BossPos = Transform()->GetRelativePos();
 		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x;
-		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y + 1000.f;
+		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y + 2000.f;
 		//BossPos.z -= 18000.f;
 		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 
@@ -439,7 +439,7 @@ void BossScript::CreateBossRazer(int Count)
 		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
 
-		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 150.f));
+		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 1.f));
 
 		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
 		BBS->SetPlayerScript(PlayerScript);
@@ -469,7 +469,7 @@ void BossScript::CreateBossRazer(int Count)
 		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
 
-		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 150.f));
+		Razer->Transform()->SetRelativeScale(Vec3(15000.f, 150.f, 1.f));
 
 		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
 		BBS->SetPlayerScript(PlayerScript);
@@ -480,7 +480,7 @@ void BossScript::CreateBossRazer(int Count)
 
 		Vec3 BossPos = Transform()->GetRelativePos();
 		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x;
-		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y - 1000;
+		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y - 2000;
 		//BossPos.z -= 18000.f;
 		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
 
@@ -499,7 +499,7 @@ void BossScript::CreateBossRazer(int Count)
 		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
 
-		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 150.f));
+		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 1.f));
 
 		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
 		BBS->SetPlayerScript(PlayerScript);
@@ -509,7 +509,7 @@ void BossScript::CreateBossRazer(int Count)
 		Razer->Collider2D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
 
 		Vec3 BossPos = Transform()->GetRelativePos();
-		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x - 1500;
+		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x - 3000;
 		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y;
 		//BossPos.z -= 18000.f;
 		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();
@@ -529,7 +529,7 @@ void BossScript::CreateBossRazer(int Count)
 		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
 
-		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 150.f));
+		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 1.f));
 
 		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
 		BBS->SetPlayerScript(PlayerScript);
@@ -559,7 +559,7 @@ void BossScript::CreateBossRazer(int Count)
 		Razer->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 		Razer->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"RazerMtrl"), 0);
 
-		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 150.f));
+		Razer->Transform()->SetRelativeScale(Vec3(150.f, 15000.f, 1.f));
 
 		BossBulletScript* BBS = Razer->GetScript<BossBulletScript>();
 		BBS->SetPlayerScript(PlayerScript);
@@ -569,7 +569,7 @@ void BossScript::CreateBossRazer(int Count)
 		Razer->Collider2D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
 
 		Vec3 BossPos = Transform()->GetRelativePos();
-		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x + 1500;
+		BossPos.x = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().x + 3000;
 		BossPos.y = CameraScript->GetPlayerEmpty()->Transform()->GetRelativePos().y;
 		//BossPos.z -= 18000.f;
 		Vec3 CameraPos = CameraScript->GetOwner()->Transform()->GetRelativePos();

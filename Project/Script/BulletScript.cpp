@@ -41,7 +41,15 @@ void BulletScript::tick()
 	ShotTime += DT;
 
 	Vec3 BulletPos = Transform()->GetRelativePos();
-	BulletPos += ShootDir * DT * 3000.f;
+
+	if (PlayerScript->GetBooster())
+	{
+		BulletPos += (ShootDir * DT * 3000.f) * 2;
+	}
+	else
+	{
+		BulletPos += ShootDir * DT * 3000.f;
+	}
 	Transform()->SetRelativePos(BulletPos);
 
 
